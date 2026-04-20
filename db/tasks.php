@@ -34,4 +34,13 @@ $tasks = [
         'month'     => '*',
         'dayofweek' => '*',
     ],
+    [
+        'classname' => '\local_esmed_compliance\task\aggregate_activity_task',
+        'blocking'  => 0,
+        'minute'    => '*/15',
+        'hour'      => '*',
+        'day'       => '*',
+        'month'     => '*',
+        'dayofweek' => '*',
+    ],
 ];

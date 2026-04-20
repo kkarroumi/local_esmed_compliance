@@ -33,6 +33,33 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool
  */
 function xmldb_local_esmed_compliance_upgrade($oldversion) {
-    // No upgrade steps yet: 2026042000 is the initial schema.
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2026042003) {
+        $table = new xmldb_table('local_esmed_assessment_tag');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('cmid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('assessment_type', XMLDB_TYPE_CHAR, '30', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('created_by', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('uk_cmid', XMLDB_KEY_UNIQUE, ['cmid']);
+        $table->add_key('fk_courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
+        $table->add_key('fk_cmid', XMLDB_KEY_FOREIGN, ['cmid'], 'course_modules', ['id']);
+        $table->add_key('fk_created_by', XMLDB_KEY_FOREIGN, ['created_by'], 'user', ['id']);
+        $table->add_index('idx_course_type', XMLDB_INDEX_NOTUNIQUE, ['courseid', 'assessment_type']);
+
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2026042003, 'local', 'esmed_compliance');
+    }
+
     return true;
 }

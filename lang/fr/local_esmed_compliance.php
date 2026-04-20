@@ -34,6 +34,13 @@ $string['no'] = 'Non';
 
 // Tâches planifiées.
 $string['task_session_timeout'] = 'Clore les sessions de conformité inactives';
+$string['task_aggregate_activity'] = 'Agréger l\'activité apprenante dans le journal de conformité';
+
+// Catégories réglementaires d\'évaluations.
+$string['assessment_type_quiz_pedago'] = 'Quiz pédagogique';
+$string['assessment_type_devoir_formatif'] = 'Devoir formatif';
+$string['assessment_type_examen_blanc'] = 'Examen blanc';
+$string['assessment_type_evaluation_sommative'] = 'Évaluation sommative';
 
 // Modes de clôture de session (exposés dans les rapports).
 $string['closure_logout'] = 'Déconnexion';

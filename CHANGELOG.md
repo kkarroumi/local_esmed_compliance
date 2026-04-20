@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 4 — activity aggregation and assessment indexing)
+- `db/install.xml` + `db/upgrade.php`: new `local_esmed_assessment_tag`
+  table letting compliance managers explicitly classify each cmid as
+  `quiz_pedago`, `devoir_formatif`, `examen_blanc` or
+  `evaluation_sommative`. Plugin version bumped to `2026042003`.
+- `classes/activity/time_calculator.php`: pure, framework-free function
+  turning an ordered module-view stream into per-cmid aggregates, with a
+  configurable transition cap (defuses pages left open overnight) and
+  tail credit so a single view is not counted as zero.
+- `classes/activity/activity_repository.php`: incremental upsert on
+  `{local_esmed_activity_log}` preserving `first_access` / `last_access`
+  bounds and a separate `set_completion_state` path that creates a bare
+  row when completion fires before any view.
+- `classes/activity/aggregator.php`: resumable driver reading new
+  `target=course_module, action=viewed` entries from
+  `{logstore_standard_log}` strictly above a checkpoint stored in plugin
+  config, grouping per-user and folding into the activity log.
+- `classes/assessment/{tag_repository,assessment_repository,indexer}.php`:
+  tag CRUD with a whitelisted category set, deduplicated index on
+  (source table, source attempt id), and an indexer that refuses to
+  record attempts on untagged modules (no implicit classification).
+- `classes/task/aggregate_activity_task.php` + `db/tasks.php`:
+  scheduled every fifteen minutes to drain the logstore.
+- `classes/observer.php` + `db/events.php`: subscribe to
+  `\core\event\course_module_completion_updated`,
+  `\mod_quiz\event\attempt_submitted` and
+  `\mod_assign\event\submission_graded` to reflect completion state and
+  index graded attempts in real time.
+- `tests/time_calculator_test.php`, `tests/activity_aggregator_test.php`
+  and `tests/assessment_indexer_test.php`: 15 PHPUnit tests covering
+  cap / tail rules, accumulation across passes, completion without view,
+  untagged-module short-circuit, zero-max-score percent safety, attempt
+  deduplication and category whitelisting.
+- Lang FR/EN extended with the new scheduled task name and the four
+  assessment category labels.
+
 ### Added (iteration 3 — session tracking)
 - `classes/session/session_repository.php`: data access layer for
   `{local_esmed_sessions}` with atomic heartbeat/close (`WHERE session_end

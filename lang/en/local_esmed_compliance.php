@@ -34,6 +34,13 @@ $string['no'] = 'No';
 
 // Scheduled tasks.
 $string['task_session_timeout'] = 'Close idle compliance sessions';
+$string['task_aggregate_activity'] = 'Aggregate learner activity into the compliance log';
+
+// Assessment regulatory categories.
+$string['assessment_type_quiz_pedago'] = 'Pedagogical quiz';
+$string['assessment_type_devoir_formatif'] = 'Formative assignment';
+$string['assessment_type_examen_blanc'] = 'Mock exam';
+$string['assessment_type_evaluation_sommative'] = 'Summative assessment';
 
 // Session closure types (exposed in reports).
 $string['closure_logout'] = 'Logout';

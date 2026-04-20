@@ -37,4 +37,22 @@ $observers = [
         'priority'  => 0,
         'internal'  => true,
     ],
+    [
+        'eventname' => '\core\event\course_module_completion_updated',
+        'callback'  => '\local_esmed_compliance\observer::course_module_completion_updated',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\mod_quiz\event\attempt_submitted',
+        'callback'  => '\local_esmed_compliance\observer::quiz_attempt_submitted',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\mod_assign\event\submission_graded',
+        'callback'  => '\local_esmed_compliance\observer::assign_submission_graded',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
 ];

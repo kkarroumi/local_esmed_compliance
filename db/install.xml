@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/esmed_compliance/db" VERSION="20260420" COMMENT="ESMED Compliance - certifiable session tracking, activity aggregation, assessments, funders, archives and alerts."
+<XMLDB PATH="local/esmed_compliance/db" VERSION="20260420" COMMENT="ESMED Compliance - certifiable session tracking, activity aggregation, assessment tagging and indexing, funders, archives and alerts."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -111,6 +111,28 @@
         <INDEX NAME="idx_user_attempt" UNIQUE="false" FIELDS="userid, attempt_date"/>
         <INDEX NAME="idx_course_type" UNIQUE="false" FIELDS="courseid, assessment_type"/>
         <INDEX NAME="idx_attempt_date" UNIQUE="false" FIELDS="attempt_date"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_assessment_tag" COMMENT="Regulatory classification assigned to a course module by compliance managers.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="assessment_type" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="quiz_pedago, devoir_formatif, examen_blanc, evaluation_sommative"/>
+        <FIELD NAME="created_by" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="uk_cmid" TYPE="unique" FIELDS="cmid"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_cmid" TYPE="foreign" FIELDS="cmid" REFTABLE="course_modules" REFFIELDS="id"/>
+        <KEY NAME="fk_created_by" TYPE="foreign" FIELDS="created_by" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_course_type" UNIQUE="false" FIELDS="courseid, assessment_type"/>
       </INDEXES>
     </TABLE>
 
