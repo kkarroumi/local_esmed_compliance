@@ -1,0 +1,38 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * Upgrade script.
+ *
+ * New upgrade blocks are appended here as the plugin version increases.
+ *
+ * @package    local_esmed_compliance
+ * @copyright  2026 ESMED
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Apply schema and data migrations between versions.
+ *
+ * @param int $oldversion The previously installed plugin version.
+ * @return bool
+ */
+function xmldb_local_esmed_compliance_upgrade($oldversion) {
+    // No upgrade steps yet: 2026042000 is the initial schema.
+    return true;
+}

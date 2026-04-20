@@ -1,0 +1,22 @@
+# Composer
+/vendor/
+composer.lock
+
+# Node / AMD build output
+/node_modules/
+/amd/build/
+
+# Moodle plugin-ci and PHPUnit artefacts
+/.phpunit.result.cache
+/build/
+/coverage/
+/moodledata/
+
+# IDE & OS
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+
+# Local Docker volumes
+/.docker/

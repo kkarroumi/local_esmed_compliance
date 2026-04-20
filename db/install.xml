@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/esmed_compliance/db" VERSION="20260420" COMMENT="ESMED Compliance - certifiable session tracking, activity aggregation, assessments, funders, archives and alerts."
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_esmed_funder_link" COMMENT="Links a Moodle course to a funding body and official training action.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="funder_type" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="CPF, FT, OPCO, REGION, AUTRE"/>
+        <FIELD NAME="dossier_number" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="total_hours_planned" TYPE="number" LENGTH="6" NOTNULL="false" SEQUENCE="false" DECIMALS="2"/>
+        <FIELD NAME="start_date" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="end_date" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="action_intitule" TYPE="char" LENGTH="500" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="opco_name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_funder_type" UNIQUE="false" FIELDS="funder_type"/>
+        <INDEX NAME="idx_dossier_number" UNIQUE="false" FIELDS="dossier_number"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_sessions" COMMENT="Certifiable learner sessions used as attendance evidence (D.6353-4).">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL for out-of-course sessions"/>
+        <FIELD NAME="session_start" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="session_end" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL means session still open"/>
+        <FIELD NAME="duration_seconds" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="last_heartbeat" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="ip_address" TYPE="char" LENGTH="45" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="user_agent" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="closure_type" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="logout, timeout, beacon, crash, manual"/>
+        <FIELD NAME="funderid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="sealed" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_funder_link" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_user_sessionstart" UNIQUE="false" FIELDS="userid, session_start"/>
+        <INDEX NAME="idx_course_sessionstart" UNIQUE="false" FIELDS="courseid, session_start"/>
+        <INDEX NAME="idx_sessionstart" UNIQUE="false" FIELDS="session_start"/>
+        <INDEX NAME="idx_last_heartbeat" UNIQUE="false" FIELDS="last_heartbeat"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_activity_log" COMMENT="Aggregated time spent and view counters per learner and course module.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="modulename" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="first_access" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="last_access" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="time_spent_seconds" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="views_count" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="completion_state" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="0=not completed, 1=completed, 2=completed pass, 3=completed fail"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_cmid" TYPE="foreign" FIELDS="cmid" REFTABLE="course_modules" REFFIELDS="id"/>
+        <KEY NAME="uk_user_cmid" TYPE="unique" FIELDS="userid, cmid"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_courseid" UNIQUE="false" FIELDS="courseid"/>
+        <INDEX NAME="idx_last_access" UNIQUE="false" FIELDS="last_access"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_assessment_index" COMMENT="Regulatory categorisation of each assessment attempt.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="assessment_type" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="quiz_pedago, devoir_formatif, examen_blanc, evaluation_sommative"/>
+        <FIELD NAME="score" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5"/>
+        <FIELD NAME="max_score" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5"/>
+        <FIELD NAME="grade_percent" TYPE="number" LENGTH="5" NOTNULL="false" SEQUENCE="false" DECIMALS="2"/>
+        <FIELD NAME="attempt_date" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="attempt_id_moodle" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Polymorphic reference to quiz_attempts.id or assign_submission.id"/>
+        <FIELD NAME="attempt_source_table" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_cmid" TYPE="foreign" FIELDS="cmid" REFTABLE="course_modules" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_user_attempt" UNIQUE="false" FIELDS="userid, attempt_date"/>
+        <INDEX NAME="idx_course_type" UNIQUE="false" FIELDS="courseid, assessment_type"/>
+        <INDEX NAME="idx_attempt_date" UNIQUE="false" FIELDS="attempt_date"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_archive_index" COMMENT="Index of sealed archived documents (attestations, bordereaux, session logs).">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="funderid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="archive_type" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="attestation_assiduite, bordereau_financeur, session_log_json, evaluation_report"/>
+        <FIELD NAME="file_path" TYPE="char" LENGTH="1000" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="storage_adapter" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="local, s3, ovh"/>
+        <FIELD NAME="sha256_hash" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="verification_token" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timestamp_sealed" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="retention_until" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="metadata_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_funder_link" REFFIELDS="id"/>
+        <KEY NAME="uk_verification_token" TYPE="unique" FIELDS="verification_token"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_sha256_hash" UNIQUE="false" FIELDS="sha256_hash"/>
+        <INDEX NAME="idx_retention_until" UNIQUE="false" FIELDS="retention_until"/>
+        <INDEX NAME="idx_archive_type" UNIQUE="false" FIELDS="archive_type"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="local_esmed_alerts" COMMENT="History of alerts raised for learner dropout and inactivity.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="alert_type" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT="inactivity_7d, completion_late, no_first_login_72h"/>
+        <FIELD NAME="alert_data_json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="triggered_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="notified_at" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="acknowledged_at" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="acknowledged_by" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_acknowledged_by" TYPE="foreign" FIELDS="acknowledged_by" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_user_triggered" UNIQUE="false" FIELDS="userid, triggered_at"/>
+        <INDEX NAME="idx_alert_type" UNIQUE="false" FIELDS="alert_type"/>
+        <INDEX NAME="idx_unacked" UNIQUE="false" FIELDS="acknowledged_at"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

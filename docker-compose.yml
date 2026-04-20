@@ -1,0 +1,61 @@
+services:
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodle
+      MARIADB_CHARACTER_SET: utf8mb4
+      MARIADB_COLLATE: utf8mb4_unicode_ci
+    command:
+      - --innodb-file-per-table=1
+      - --innodb-file-format=Barracuda
+      - --innodb-large-prefix=1
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  moodle:
+    image: bitnami/moodle:4.3
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      MOODLE_DATABASE_TYPE: mariadb
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: moodle
+      MOODLE_USERNAME: admin
+      MOODLE_PASSWORD: admin1234
+      MOODLE_EMAIL: admin@example.com
+      MOODLE_SITE_NAME: "ESMED Compliance - Dev"
+      MOODLE_SKIP_BOOTSTRAP: "no"
+      BITNAMI_DEBUG: "true"
+      ALLOW_EMPTY_PASSWORD: "no"
+      PHP_MEMORY_LIMIT: 512M
+      PHP_MAX_EXECUTION_TIME: 300
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodledata_data:/bitnami/moodledata
+      # Bind-mount the plugin source into the Moodle tree for live editing.
+      - .:/bitnami/moodle/local/esmed_compliance
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+
+volumes:
+  mariadb_data:
+  moodle_data:
+  moodledata_data:
