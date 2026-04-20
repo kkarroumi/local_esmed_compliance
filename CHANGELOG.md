@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 3 — session tracking)
+- `classes/session/session_repository.php`: data access layer for
+  `{local_esmed_sessions}` with atomic heartbeat/close (`WHERE session_end
+  IS NULL`) to defuse races between the AJAX beacon and the timeout task.
+- `classes/session/tracker.php`: business logic exposing
+  `open_session` (idempotent), `record_heartbeat`, `close_session` and
+  `close_stale_sessions`. Distinguishes `timeout` from `crash` based on
+  whether the session ever received a heartbeat.
+- `classes/observer.php` + `db/events.php`: subscribe to
+  `\core\event\user_loggedin` and `\core\event\user_loggedout` to open
+  and close certifiable sessions alongside the Moodle session.
+- `classes/task/session_timeout_task.php` + `db/tasks.php`: scheduled
+  every five minutes to close sessions that exceed the configured idle
+  window.
+- `ajax/heartbeat.php`: secured endpoint (session cookie + sesskey)
+  accepting `heartbeat` and `close` actions; releases the Moodle session
+  lock early via `\core\session\manager::write_close()` to avoid
+  contention with concurrent user requests.
+- `amd/src/heartbeat.js` + matching build artefact: AMD module sending a
+  keep-alive beacon every 30 seconds while `document.visibilityState ===
+  'visible'`, and a `navigator.sendBeacon` close on `beforeunload` /
+  `pagehide`.
+- `lib.php`: `local_esmed_compliance_before_standard_top_of_body_html`
+  callback injecting the AMD module on every page for authenticated
+  non-guest users.
+- `tests/session_tracker_test.php`: 9 PHPUnit tests covering open
+  (idempotency), heartbeat, close, stale categorisation (timeout vs
+  crash) and WHERE-guard on closed sessions.
+- Lang FR/EN extended to 113 keys each (task name, closure types).
+
 ### Added (iteration 2 — capabilities, settings, privacy)
 - `db/access.php` with six capabilities:
   `viewdashboard`, `generateattestation`, `manageconfig`,

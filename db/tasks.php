@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and metadata.
+ * Scheduled task registrations.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -24,10 +24,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042002;
-$plugin->release   = '0.3.0-alpha (Build: 2026042002)';
-$plugin->requires  = 2023100900;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [403, 405];
-$plugin->dependencies = [];
+$tasks = [
+    [
+        'classname' => '\local_esmed_compliance\task\session_timeout_task',
+        'blocking'  => 0,
+        'minute'    => '*/5',
+        'hour'      => '*',
+        'day'       => '*',
+        'month'     => '*',
+        'dayofweek' => '*',
+    ],
+];

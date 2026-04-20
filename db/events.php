@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and metadata.
+ * Event observer registrations.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -24,10 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042002;
-$plugin->release   = '0.3.0-alpha (Build: 2026042002)';
-$plugin->requires  = 2023100900;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [403, 405];
-$plugin->dependencies = [];
+$observers = [
+    [
+        'eventname' => '\core\event\user_loggedin',
+        'callback'  => '\local_esmed_compliance\observer::user_loggedin',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\core\event\user_loggedout',
+        'callback'  => '\local_esmed_compliance\observer::user_loggedout',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+];

@@ -32,6 +32,16 @@ $string['dashboard'] = 'Tableau de bord conformité';
 $string['yes'] = 'Oui';
 $string['no'] = 'Non';
 
+// Tâches planifiées.
+$string['task_session_timeout'] = 'Clore les sessions de conformité inactives';
+
+// Modes de clôture de session (exposés dans les rapports).
+$string['closure_logout'] = 'Déconnexion';
+$string['closure_timeout'] = 'Timeout';
+$string['closure_beacon'] = 'Navigateur fermé';
+$string['closure_crash'] = 'Crash';
+$string['closure_manual'] = 'Manuelle';
+
 // Paramètres - Général.
 $string['settings_general'] = 'Général';
 $string['setting_heartbeat_interval'] = 'Intervalle de heartbeat (secondes)';

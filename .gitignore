@@ -2,9 +2,8 @@
 /vendor/
 composer.lock
 
-# Node / AMD build output
+# Node tooling (build output is versioned because Moodle distributes it at install time).
 /node_modules/
-/amd/build/
 
 # Moodle plugin-ci and PHPUnit artefacts
 /.phpunit.result.cache

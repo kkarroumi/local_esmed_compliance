@@ -32,6 +32,16 @@ $string['dashboard'] = 'Compliance dashboard';
 $string['yes'] = 'Yes';
 $string['no'] = 'No';
 
+// Scheduled tasks.
+$string['task_session_timeout'] = 'Close idle compliance sessions';
+
+// Session closure types (exposed in reports).
+$string['closure_logout'] = 'Logout';
+$string['closure_timeout'] = 'Timeout';
+$string['closure_beacon'] = 'Browser closed';
+$string['closure_crash'] = 'Crash';
+$string['closure_manual'] = 'Manual';
+
 // Settings - General.
 $string['settings_general'] = 'General';
 $string['setting_heartbeat_interval'] = 'Heartbeat interval (seconds)';
