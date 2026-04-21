@@ -77,6 +77,22 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
+    $general->add(new admin_setting_configtext(
+        'local_esmed_compliance/dashboard_refresh_seconds',
+        get_string('setting_dashboard_refresh_seconds', 'local_esmed_compliance'),
+        get_string('setting_dashboard_refresh_seconds_desc', 'local_esmed_compliance'),
+        30,
+        PARAM_INT
+    ));
+
+    $general->add(new admin_setting_configtext(
+        'local_esmed_compliance/integrity_batch_size',
+        get_string('setting_integrity_batch_size', 'local_esmed_compliance'),
+        get_string('setting_integrity_batch_size_desc', 'local_esmed_compliance'),
+        50,
+        PARAM_INT
+    ));
+
     $funderoptions = [
         ''       => get_string('funder_none', 'local_esmed_compliance'),
         'CPF'    => get_string('funder_cpf', 'local_esmed_compliance'),
@@ -237,4 +253,14 @@ if ($hassiteconfig) {
     ));
 
     $category->add('local_esmed_compliance', $archive);
+
+    // ---------------------------------------------------------------
+    // External page: compliance dashboard.
+    // ---------------------------------------------------------------
+    $category->add('local_esmed_compliance', new admin_externalpage(
+        'local_esmed_compliance_dashboard',
+        get_string('dashboard', 'local_esmed_compliance'),
+        new moodle_url('/local/esmed_compliance/dashboard.php'),
+        'local/esmed_compliance:viewdashboard'
+    ));
 }

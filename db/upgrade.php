@@ -61,5 +61,25 @@ function xmldb_local_esmed_compliance_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2026042003, 'local', 'esmed_compliance');
     }
 
+    if ($oldversion < 2026042006) {
+        $table = new xmldb_table('local_esmed_integrity_event');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('archive_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('checked_at', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('status', XMLDB_TYPE_CHAR, '20', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('observed_hash', XMLDB_TYPE_CHAR, '64', null, null, null, null);
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('fk_archive_id', XMLDB_KEY_FOREIGN, ['archive_id'], 'local_esmed_archive_index', ['id']);
+        $table->add_index('idx_archive_checked', XMLDB_INDEX_NOTUNIQUE, ['archive_id', 'checked_at']);
+        $table->add_index('idx_status', XMLDB_INDEX_NOTUNIQUE, ['status']);
+
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2026042006, 'local', 'esmed_compliance');
+    }
+
     return true;
 }

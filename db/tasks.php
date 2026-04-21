@@ -43,4 +43,13 @@ $tasks = [
         'month'     => '*',
         'dayofweek' => '*',
     ],
+    [
+        'classname' => '\local_esmed_compliance\task\verify_archive_integrity_task',
+        'blocking'  => 0,
+        'minute'    => '37',
+        'hour'      => '*/6',
+        'day'       => '*',
+        'month'     => '*',
+        'dayofweek' => '*',
+    ],
 ];

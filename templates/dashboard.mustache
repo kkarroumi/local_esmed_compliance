@@ -1,0 +1,89 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_esmed_compliance/dashboard
+
+    Compliance dashboard rendering: four counter cards (sessions, archives,
+    alerts, integrity) plus a "last refreshed" timestamp. The data-field
+    attributes let amd/src/dashboard.js update values in place on poll.
+
+    Example context (json):
+    {
+        "generated_at": "21 April 2026, 12:00",
+        "sessions": { "open": 3, "closed_last_24h": 8, "hours_today": "4.25" },
+        "archives": { "total": 42, "attestations": 30, "bordereaux": 12 },
+        "alerts":   { "unacknowledged": 1, "last_7_days": 3, "has_unacked": true },
+        "integrity": { "valid": 40, "tampered": 0, "missing": 0, "has_problems": false }
+    }
+}}
+<div class="local-esmed-compliance-dashboard" id="esmed-compliance-dashboard">
+    <header class="esmed-dashboard-header">
+        <h2>{{#str}} dashboard_heading, local_esmed_compliance {{/str}}</h2>
+        <p class="esmed-dashboard-generated">
+            {{#str}} dashboard_generated_at, local_esmed_compliance {{/str}}
+            <span data-field="generated_at">{{generated_at}}</span>
+        </p>
+    </header>
+
+    <section class="esmed-dashboard-cards">
+        <article class="esmed-card esmed-card-sessions">
+            <h3>{{#str}} dashboard_sessions, local_esmed_compliance {{/str}}</h3>
+            <dl>
+                <dt>{{#str}} dashboard_sessions_open, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="sessions.open">{{sessions.open}}</dd>
+                <dt>{{#str}} dashboard_sessions_closed_24h, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="sessions.closed_last_24h">{{sessions.closed_last_24h}}</dd>
+                <dt>{{#str}} dashboard_sessions_hours_today, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="sessions.hours_today">{{sessions.hours_today}}</dd>
+            </dl>
+        </article>
+
+        <article class="esmed-card esmed-card-archives">
+            <h3>{{#str}} dashboard_archives, local_esmed_compliance {{/str}}</h3>
+            <dl>
+                <dt>{{#str}} dashboard_archives_total, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="archives.total">{{archives.total}}</dd>
+                <dt>{{#str}} dashboard_archives_attestations, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="archives.attestations">{{archives.attestations}}</dd>
+                <dt>{{#str}} dashboard_archives_bordereaux, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="archives.bordereaux">{{archives.bordereaux}}</dd>
+            </dl>
+        </article>
+
+        <article class="esmed-card esmed-card-alerts {{#alerts.has_unacked}}esmed-card-warn{{/alerts.has_unacked}}">
+            <h3>{{#str}} dashboard_alerts, local_esmed_compliance {{/str}}</h3>
+            <dl>
+                <dt>{{#str}} dashboard_alerts_unacknowledged, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="alerts.unacknowledged">{{alerts.unacknowledged}}</dd>
+                <dt>{{#str}} dashboard_alerts_last_7_days, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="alerts.last_7_days">{{alerts.last_7_days}}</dd>
+            </dl>
+        </article>
+
+        <article class="esmed-card esmed-card-integrity {{#integrity.has_problems}}esmed-card-warn{{/integrity.has_problems}}">
+            <h3>{{#str}} dashboard_integrity, local_esmed_compliance {{/str}}</h3>
+            <dl>
+                <dt>{{#str}} dashboard_integrity_valid, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="integrity.valid">{{integrity.valid}}</dd>
+                <dt>{{#str}} dashboard_integrity_tampered, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="integrity.tampered">{{integrity.tampered}}</dd>
+                <dt>{{#str}} dashboard_integrity_missing, local_esmed_compliance {{/str}}</dt>
+                <dd data-field="integrity.missing">{{integrity.missing}}</dd>
+            </dl>
+        </article>
+    </section>
+</div>
