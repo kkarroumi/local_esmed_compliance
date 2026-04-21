@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 15 — operator CRUD for funder links)
+- `funders.php`: single-URL controller with four branches — list
+  (default), course picker (`action=pick`), create/edit form
+  (`action=edit&courseid=…`), delete (POST `action=delete` +
+  `require_sesskey()`). Whole page gated by
+  `local/esmed_compliance:manageconfig` at system context.
+- `classes/funder/funder_link_listing.php`: `all()` joins
+  `local_esmed_funder_link` with `course` and returns one row per
+  linked course, ordered alphabetically by course full name, with
+  funder type, dossier number, OPCO name, planned hours, action
+  intitulé and the period boundaries.
+- `classes/form/funder_link_form.php`: Moodle form for create/edit —
+  funder-type select, dossier number, OPCO name (shown only for OPCO),
+  planned hours, action intitulé, optional start/end dates with
+  `end ≥ start` validation and non-negative hours validation.
+- `classes/output/renderer.php`: `render_funder_links_list()` and
+  `render_funder_course_picker()`.
+- `templates/funder_links_list.mustache`: table with inline edit +
+  POST-form delete (JS confirm) per row.
+- `templates/funder_course_picker.mustache`: course list for the
+  create flow, restricted to courses without an existing link.
+- `settings.php`: admin-menu entry "Financeurs & dispositifs" under
+  the plugin category, gated on `manageconfig`.
+- `lang/en/` + `lang/fr/`: 34 new strings — page title, column and
+  field labels, funder-type options, action labels, success / error
+  notifications, delete confirmation prompt.
+- `tests/funder_link_listing_test.php`: verifies alphabetical
+  ordering, funder metadata projection and empty-table behaviour.
+
 ### Added (iteration 14 — operator screen to generate attendance certificates)
 - `attestations.php`: single-URL controller that dispatches four
   actions — course picker (no courseid), per-course enrolled-learner

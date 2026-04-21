@@ -281,4 +281,14 @@ if ($hassiteconfig) {
         new moodle_url('/local/esmed_compliance/attestations.php'),
         'local/esmed_compliance:viewdashboard'
     ));
+
+    // ---------------------------------------------------------------
+    // External page: funder links management.
+    // ---------------------------------------------------------------
+    $category->add('local_esmed_compliance', new admin_externalpage(
+        'local_esmed_compliance_funders',
+        get_string('funders_page_title', 'local_esmed_compliance'),
+        new moodle_url('/local/esmed_compliance/funders.php'),
+        'local/esmed_compliance:manageconfig'
+    ));
 }

@@ -1,0 +1,69 @@
+{{!
+    @template local_esmed_compliance/funder_links_list
+
+    List of existing course ↔ funder associations, one row per course.
+    Each row exposes an "Edit" button and a POST-form "Remove" button
+    so the destructive path carries a sesskey token.
+
+    Context variables:
+      * baseurl    — absolute URL of funders.php
+      * sesskey    — Moodle session key
+      * links      — array of row shapes
+      * has_links  — boolean, false shows the empty-state paragraph
+
+    Each links[] item:
+      { id, courseid, course_fullname, course_shortname,
+        funder_type_label, dossier_number, hours, period }
+}}
+<section class="esmed-funder-links">
+    <p>
+        <a class="btn btn-primary"
+           href="{{baseurl}}?action=pick">
+            {{#str}} funders_link_new, local_esmed_compliance {{/str}}
+        </a>
+    </p>
+
+    {{#has_links}}
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th scope="col">{{#str}} funders_col_course, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} funders_col_type, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} funders_col_dossier, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} funders_col_hours, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} funders_col_period, local_esmed_compliance {{/str}}</th>
+                    <th scope="col"><span class="sr-only">{{#str}} funders_col_actions, local_esmed_compliance {{/str}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#links}}
+                    <tr>
+                        <td>{{course_fullname}} <small class="text-muted">({{course_shortname}})</small></td>
+                        <td>{{funder_type_label}}</td>
+                        <td>{{dossier_number}}</td>
+                        <td>{{hours}}</td>
+                        <td>{{period}}</td>
+                        <td>
+                            <a class="btn btn-secondary btn-sm"
+                               href="{{baseurl}}?action=edit&amp;courseid={{courseid}}">
+                                {{#str}} funders_action_edit, local_esmed_compliance {{/str}}
+                            </a>
+                            <form method="post" action="{{baseurl}}" style="display:inline-block; margin-left: 0.25rem;">
+                                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="courseid" value="{{courseid}}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('{{#str}} funders_confirm_delete, local_esmed_compliance {{/str}}');">
+                                    {{#str}} funders_action_delete, local_esmed_compliance {{/str}}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/links}}
+            </tbody>
+        </table>
+    {{/has_links}}
+    {{^has_links}}
+        <p><em>{{#str}} funders_empty, local_esmed_compliance {{/str}}</em></p>
+    {{/has_links}}
+</section>

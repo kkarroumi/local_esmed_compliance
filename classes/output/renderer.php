@@ -166,6 +166,38 @@ class renderer extends plugin_renderer_base {
     }
 
     /**
+     * Render the funder links list.
+     *
+     * @param array<int, array<string, mixed>> $rows   Pre-formatted rows.
+     * @param \moodle_url                      $baseurl
+     * @param string                           $sesskey
+     * @return string
+     */
+    public function render_funder_links_list(array $rows, \moodle_url $baseurl, string $sesskey): string {
+        return $this->render_from_template('local_esmed_compliance/funder_links_list', [
+            'baseurl'   => $baseurl->out(false),
+            'sesskey'   => $sesskey,
+            'links'     => $rows,
+            'has_links' => !empty($rows),
+        ]);
+    }
+
+    /**
+     * Render the course picker for creating a new funder link.
+     *
+     * @param array<int, array{id:int, fullname:string, shortname:string}> $courses
+     * @param \moodle_url                                                  $baseurl
+     * @return string
+     */
+    public function render_funder_course_picker(array $courses, \moodle_url $baseurl): string {
+        return $this->render_from_template('local_esmed_compliance/funder_course_picker', [
+            'baseurl'     => $baseurl->out(false),
+            'courses'     => $courses,
+            'has_courses' => !empty($courses),
+        ]);
+    }
+
+    /**
      * Format seconds as French-style hours "1.50 h".
      *
      * @param int $seconds
