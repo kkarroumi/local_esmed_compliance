@@ -1,0 +1,58 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * Event observer registrations.
+ *
+ * @package    local_esmed_compliance
+ * @copyright  2026 ESMED
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+$observers = [
+    [
+        'eventname' => '\core\event\user_loggedin',
+        'callback'  => '\local_esmed_compliance\observer::user_loggedin',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\core\event\user_loggedout',
+        'callback'  => '\local_esmed_compliance\observer::user_loggedout',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\core\event\course_module_completion_updated',
+        'callback'  => '\local_esmed_compliance\observer::course_module_completion_updated',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\mod_quiz\event\attempt_submitted',
+        'callback'  => '\local_esmed_compliance\observer::quiz_attempt_submitted',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+    [
+        'eventname' => '\mod_assign\event\submission_graded',
+        'callback'  => '\local_esmed_compliance\observer::assign_submission_graded',
+        'priority'  => 0,
+        'internal'  => true,
+    ],
+];
