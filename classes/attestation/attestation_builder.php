@@ -131,7 +131,7 @@ class attestation_builder {
     /**
      * Read the organisation identity from plugin config.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     private static function organisation_identity(): array {
         return [

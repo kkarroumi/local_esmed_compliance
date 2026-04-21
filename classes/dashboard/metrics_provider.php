@@ -41,7 +41,7 @@ class metrics_provider {
      * Build the full metrics bundle.
      *
      * @param int|null $now Override for tests.
-     * @return array<string, mixed>
+     * @return array
      */
     public function collect(?int $now = null): array {
         $now = $now ?? time();
@@ -59,7 +59,7 @@ class metrics_provider {
      * Top-N open alerts enriched with learner and course display labels.
      *
      * @param int $limit
-     * @return array<int, array<string, mixed>>
+     * @return array
      */
     private function open_alerts(int $limit = 20): array {
         return (new alert_repository())->find_open_alerts($limit);
@@ -69,7 +69,7 @@ class metrics_provider {
      * Session counters: currently open, closed in the last 24h and total seconds today.
      *
      * @param int $now
-     * @return array<string, int>
+     * @return array
      */
     private function session_metrics(int $now): array {
         global $DB;
@@ -104,7 +104,7 @@ class metrics_provider {
     /**
      * Archive counters grouped by archive type and a total.
      *
-     * @return array<string, int>
+     * @return array
      */
     private function archive_metrics(): array {
         global $DB;
@@ -127,7 +127,7 @@ class metrics_provider {
     /**
      * Alert counters: unacknowledged and total in the last 7 days.
      *
-     * @return array<string, int>
+     * @return array
      */
     private function alert_metrics(): array {
         global $DB;
@@ -150,7 +150,7 @@ class metrics_provider {
     /**
      * Integrity counters: tampered / missing archives as last checked.
      *
-     * @return array<string, int>
+     * @return array
      */
     private function integrity_metrics(): array {
         $checker = new integrity_checker();

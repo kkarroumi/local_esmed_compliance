@@ -61,7 +61,11 @@ class local_storage_adapter implements storage_adapter {
     }
 
     /**
-     * Inherits from parent.
+     * Store bytes at the given relative path inside the local dataroot tree.
+     *
+     * @param string $bytes
+     * @param string $relativename
+     * @return string
      */
     public function store(string $bytes, string $relativename): string {
         $safe = self::safe_relative_path($relativename);
@@ -95,7 +99,10 @@ class local_storage_adapter implements storage_adapter {
     }
 
     /**
-     * Inherits from parent.
+     * Fetch bytes previously stored at the given relative path.
+     *
+     * @param string $relativename
+     * @return string|null
      */
     public function fetch(string $relativename): ?string {
         $safe = self::safe_relative_path($relativename);

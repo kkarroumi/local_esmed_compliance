@@ -141,10 +141,7 @@ class alert_repository {
      * entries appear at the top.
      *
      * @param int $limit
-     * @return array<int, array{
-     *   id:int, userid:int, courseid:?int, alert_type:string, triggered_at:int,
-     *   user_fullname:string, course_fullname:?string
-     * }>
+     * @return array
      * @throws dml_exception
      */
     public function find_open_alerts(int $limit = 50): array {

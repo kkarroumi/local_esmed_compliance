@@ -127,6 +127,11 @@ final class attestation_listing_test extends \advanced_testcase {
 
     /**
      * Helper: build a valid archive row for a sealed attestation.
+     *
+     * @param int $userid
+     * @param int $courseid
+     * @param int $sealedat
+     * @return stdClass
      */
     private function make_archive(int $userid, int $courseid, int $sealedat): stdClass {
         $r = new stdClass();

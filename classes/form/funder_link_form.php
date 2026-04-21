@@ -137,7 +137,11 @@ class funder_link_form extends moodleform {
     }
 
     /**
-     * Inherits from parent.
+     * Validate submitted funder link data.
+     *
+     * @param array $data
+     * @param array $files
+     * @return array
      */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);

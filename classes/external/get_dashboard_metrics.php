@@ -51,7 +51,7 @@ class get_dashboard_metrics extends external_api {
     /**
      * Execute the webservice call and return the dashboard metrics snapshot.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public static function execute(): array {
         $context = context_system::instance();

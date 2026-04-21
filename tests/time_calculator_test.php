@@ -125,7 +125,7 @@ final class time_calculator_test extends \advanced_testcase {
      * @param int    $courseid
      * @param string $modulename
      * @param int    $timestamp
-     * @return array<string, mixed>
+     * @return array
      */
     private function event(int $cmid, int $courseid, string $modulename, int $timestamp): array {
         return [

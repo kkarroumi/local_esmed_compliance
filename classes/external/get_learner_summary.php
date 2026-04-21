@@ -56,7 +56,7 @@ class get_learner_summary extends external_api {
      *
      * @param int $userid
      * @param int $courseid
-     * @return array<string, mixed>
+     * @return array
      */
     public static function execute(int $userid, int $courseid): array {
         global $DB, $USER;

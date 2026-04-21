@@ -48,14 +48,14 @@ class integrity_checker {
     /** @var archive_repository */
     private archive_repository $archive;
 
-    /** @var array<string, storage_adapter> */
+    /** @var array */
     private array $adapters;
 
     /**
      * Constructor.
      *
      * @param archive_repository|null             $archive  Injectable for tests.
-     * @param array<string, storage_adapter>|null $adapters Map of adapter name => adapter.
+     * @param array|null $adapters Map of adapter name => adapter.
      */
     public function __construct(
         ?archive_repository $archive = null,

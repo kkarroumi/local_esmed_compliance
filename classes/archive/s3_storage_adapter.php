@@ -105,7 +105,11 @@ class s3_storage_adapter implements storage_adapter {
     }
 
     /**
-     * Inherits from parent.
+     * Store bytes at the given relative path.
+     *
+     * @param string $bytes
+     * @param string $relativename
+     * @return string
      */
     public function store(string $bytes, string $relativename): string {
         $key = self::safe_key($relativename);
@@ -123,7 +127,10 @@ class s3_storage_adapter implements storage_adapter {
     }
 
     /**
-     * Inherits from parent.
+     * Fetch bytes previously stored at the given relative path.
+     *
+     * @param string $relativename
+     * @return string|null
      */
     public function fetch(string $relativename): ?string {
         return $this->get_object(self::safe_key($relativename));
@@ -164,7 +171,7 @@ class s3_storage_adapter implements storage_adapter {
      *
      * @param string               $method
      * @param string               $key
-     * @param array<string,string> $extraheaders
+     * @param array $extraheaders
      * @param string               $body
      * @return array{status:int, body:string}
      */
@@ -200,7 +207,7 @@ class s3_storage_adapter implements storage_adapter {
      *
      * @param string               $method
      * @param string               $path
-     * @param array<string,string> $headers
+     * @param array $headers
      * @param string               $payloadhash
      * @param string               $datetime
      * @param string               $date
@@ -258,7 +265,7 @@ class s3_storage_adapter implements storage_adapter {
      *
      * @param string               $method
      * @param string               $url
-     * @param array<string,string> $headers
+     * @param array $headers
      * @param string               $body
      * @return array{status:int, body:string}
      */

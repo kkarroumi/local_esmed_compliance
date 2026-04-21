@@ -55,9 +55,9 @@ class inactivity_detector {
      * considered — users who drift into courses through cohort sync will
      * be picked up naturally.
      *
-     * @param int $thresholddays  How long without a session counts as inactive.
-     * @param int $now
-     * @return array{scanned:int, raised:int, skipped_open:int}
+     * @param int $thresholddays How long without a session counts as inactive.
+     * @param int|null $now
+     * @return array
      */
     public function run(int $thresholddays = 7, ?int $now = null): array {
         global $DB;

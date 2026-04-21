@@ -62,17 +62,10 @@ final class time_calculator {
      *   - time_spent_seconds
      *   - views_count
      *
-     * @param array<int, array{cmid:int,courseid:int,modulename:string,timestamp:int}> $events
+     * @param array $events
      * @param int $capseconds   Maximum delta attributed to a single transition.
      * @param int $tailseconds  Credit assigned to the final view of a run (<= cap).
-     * @return array<int, array{
-     *     courseid:int,
-     *     modulename:string,
-     *     first_access:int,
-     *     last_access:int,
-     *     time_spent_seconds:int,
-     *     views_count:int
-     * }>
+     * @return array
      */
     public static function aggregate(array $events, int $capseconds, int $tailseconds = 60): array {
         if ($capseconds < 0) {

@@ -46,16 +46,7 @@ class attestation_listing {
      * List enrolled learners and their attestation status for `$courseid`.
      *
      * @param int $courseid
-     * @return array<int, array{
-     *     userid:int,
-     *     fullname:string,
-     *     email:string,
-     *     idnumber:string,
-     *     total_seconds:int,
-     *     attestation_count:int,
-     *     last_sealed_at:int|null,
-     *     last_archive_id:int|null
-     * }>
+     * @return array
      */
     public function list_for_course(int $courseid): array {
         global $DB;
@@ -147,7 +138,7 @@ class attestation_listing {
     /**
      * List courses the current user can generate attestations for.
      *
-     * @return array<int, array{id:int, fullname:string, shortname:string}>
+     * @return array
      */
     public static function courses_for_current_user(): array {
         $courseids = get_user_capability_course(

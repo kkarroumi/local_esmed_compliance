@@ -60,11 +60,11 @@ class aggregator {
      * events to a single learner.
      *
      * @param int   $userid
-     * @param array<int, array{cmid:int,courseid:int,modulename:string,timestamp:int}> $events
+     * @param array $events
      * @param int   $capseconds
      * @param int   $now
      * @param int   $tailseconds
-     * @return array<int, array<string, mixed>>  Aggregates applied, keyed by cmid.
+     * @return array  Aggregates applied, keyed by cmid.
      */
     public function aggregate_from_events(
         int $userid,
