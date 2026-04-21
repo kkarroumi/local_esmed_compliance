@@ -65,7 +65,7 @@ class integrity_checker {
         ?array $adapters = null
     ) {
         $this->archive = $archive ?? new archive_repository();
-        $this->adapters = $adapters ?? ['local' => new local_storage_adapter()];
+        $this->adapters = $adapters ?? adapter_registry::from_config();
     }
 
     /**

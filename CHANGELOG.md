@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 13 — S3 / S3-compatible storage adapter)
+- `classes/archive/s3_storage_adapter.php`: AWS Signature Version 4
+  signed PUT/GET client against the configured bucket using path-style
+  addressing (so it talks to AWS, OVH, Scaleway, MinIO, Ceph, etc.).
+  Matches `local_storage_adapter` write-once semantics — idempotent on
+  identical bytes, raises on divergent bytes. HTTP is injected as a
+  callable so tests assert signatures and response handling without
+  touching the network.
+- `classes/archive/adapter_registry.php`: `from_config()` builds the
+  `[name => adapter]` map from site settings. `local` is always
+  registered so historical archives stay verifiable after an admin
+  flips the active adapter; `s3` is added when region, bucket, access
+  key and secret key are all populated. `active()` resolves the
+  adapter named by `archive_storage_adapter` for fresh writes.
+- `archive\integrity_checker` and `archive\verifier`: default adapter
+  map now comes from `adapter_registry::from_config()` instead of a
+  hardcoded `['local' => ...]`, so S3-sealed rows verify correctly
+  once credentials are set.
+- `tests/s3_storage_adapter_test.php`: SigV4 Authorization header
+  shape, URL composition, idempotent re-store on matching bytes,
+  refusal on divergent bytes, 404 → null on fetch, 5xx → raise,
+  constructor guards on empty credentials, AWS endpoint fallback.
+- `tests/adapter_registry_test.php`: local-only by default, both
+  adapters when S3 config is complete, S3 skipped when credentials
+  are incomplete, `active()` selection and unknown-selection fallback.
+- Plugin version bumped to `2026042012`.
+
 ### Added (iteration 12 — inline acknowledge button on open-alerts table)
 - `templates/dashboard.mustache`: per-row "Acknowledge" button with
   `data-action="ack"` and `data-alertid`, plus a visually-hidden
