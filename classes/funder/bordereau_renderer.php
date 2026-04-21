@@ -15,19 +15,47 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and metadata.
+ * Bordereau renderer contract.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_esmed_compliance\funder;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042005;
-$plugin->release   = '0.6.0-alpha (Build: 2026042005)';
-$plugin->requires  = 2023100900;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [403, 405];
-$plugin->dependencies = [];
+/**
+ * Renders a bordereau payload into a concrete format (PDF or CSV).
+ */
+interface bordereau_renderer {
+
+    /**
+     * File extension the renderer produces, without the leading dot.
+     *
+     * @return string
+     */
+    public function extension(): string;
+
+    /**
+     * MIME type of the produced blob.
+     *
+     * @return string
+     */
+    public function mime_type(): string;
+
+    /**
+     * Render the payload into bytes.
+     *
+     * @param bordereau_payload $payload
+     * @param string|null       $verificationtoken
+     * @param string|null       $verificationurl
+     * @return string
+     */
+    public function render(
+        bordereau_payload $payload,
+        ?string $verificationtoken = null,
+        ?string $verificationurl = null
+    ): string;
+}

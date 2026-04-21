@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 6 — funder statements: bordereau financeur PDF + CSV)
+- `classes/funder/funder_link_repository.php`: CRUD over
+  `local_esmed_funder_link` with whitelisted funder types
+  (`CPF`, `FT`, `OPCO`, `REGION`, `AUTRE`). `upsert` preserves previously
+  stored attributes when the caller omits them, so partial edits behave
+  like patches.
+- `classes/funder/{bordereau_payload, bordereau_builder}.php`: immutable
+  payload value object plus builder that rolls up every enrolled learner
+  on a course, summing closed-session durations clipped to the funder
+  period (`[session, session] ∩ [periodstart, periodend]`). Learners are
+  stably sorted by `[lastname, firstname, userid]` so regenerating a
+  bordereau on unchanged data produces byte-identical output.
+- `classes/funder/{bordereau_renderer, csv_bordereau_renderer,
+  tcpdf_bordereau_renderer}.php`: renderer contract plus two concrete
+  implementations. The CSV renderer is RFC 4180 compliant (UTF-8 BOM,
+  CRLF line endings, RFC-style quoting) with thirteen learner columns
+  and optional verification-token footer rows. The TCPDF renderer emits
+  a landscape A4 document with organisation, funder, course and learners
+  blocks plus a QR-coded verification URL.
+- `classes/funder/bordereau_service.php`: orchestrator sealing the PDF
+  and CSV renditions as an atomic pair — one payload snapshot, two
+  unique verification tokens, a shared `bordereau_group` id recorded in
+  `metadata_json` so an audit can pull both formats of the same
+  reconciliation event. Filename layout
+  `bordereau/YYYY/MM/fX_cY_<tokenprefix>.<ext>`.
+- `tests/fixtures/fake_bordereau_renderer.php` +
+  `tests/{funder_link_repository, bordereau_builder, bordereau_service,
+  csv_bordereau_renderer}_test.php`: 21 PHPUnit tests covering funder
+  link CRUD (create/update/remove/reject), period clipping with
+  straddling sessions, open-session exclusion, PDF+CSV pair sealing
+  (group id, distinct tokens, stored-bytes hash match, per-renderer URL
+  wiring), retention defaulting and filename layout. CSV tests verify
+  the BOM, RFC 4180 quoting, deterministic output and token footer.
+- Lang FR/EN extended with 24 bordereau headings, column labels and
+  metadata strings plus `funder_link_notfound`.
+- Plugin version bumped to `2026042005`.
+
 ### Added (iteration 5 — attestation d'assiduité and public verification)
 - `classes/archive/storage_adapter.php` interface + `local_storage_adapter`
   implementation: write-once filesystem backend with safe relative-path

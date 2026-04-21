@@ -52,6 +52,30 @@ $string['verify_computed_hash'] = 'Empreinte SHA-256 recalculée';
 // Erreurs archivage.
 $string['tokengenfailed'] = 'Impossible de générer un jeton de vérification unique après plusieurs tentatives.';
 
+// Bordereau financeur.
+$string['funder_link_notfound'] = 'La liaison financeur demandée n\'existe plus.';
+$string['bordereau_heading'] = 'Bordereau financeur';
+$string['bordereau_subtitle'] = 'Récapitulatif des heures réalisées par apprenant';
+$string['bordereau_funder'] = 'Financeur';
+$string['bordereau_dossier'] = 'Dossier';
+$string['bordereau_opco'] = 'OPCO';
+$string['bordereau_action_intitule'] = 'Intitulé de l\'action';
+$string['bordereau_hours_planned'] = 'Heures prévues';
+$string['bordereau_period'] = 'Période';
+$string['bordereau_course_code'] = 'Code du cours';
+$string['bordereau_learner_count'] = 'Nombre d\'apprenants';
+$string['bordereau_total_duration'] = 'Durée totale réalisée';
+$string['bordereau_col_rank'] = '#';
+$string['bordereau_col_lastname'] = 'Nom';
+$string['bordereau_col_firstname'] = 'Prénom';
+$string['bordereau_col_email'] = 'Email';
+$string['bordereau_col_idnumber'] = 'Identifiant';
+$string['bordereau_col_sessions'] = 'Sessions';
+$string['bordereau_col_duration'] = 'Durée';
+$string['bordereau_total_row'] = 'Total général';
+$string['bordereau_empty'] = 'Aucun apprenant inscrit';
+$string['bordereau_generated_at'] = 'Généré le';
+
 // Catégories réglementaires d\'évaluations.
 $string['assessment_type_quiz_pedago'] = 'Quiz pédagogique';
 $string['assessment_type_devoir_formatif'] = 'Devoir formatif';

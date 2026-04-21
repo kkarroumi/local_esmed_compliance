@@ -52,6 +52,30 @@ $string['verify_computed_hash'] = 'Recomputed SHA-256';
 // Archive errors.
 $string['tokengenfailed'] = 'Unable to generate a unique verification token after several attempts.';
 
+// Funder bordereau.
+$string['funder_link_notfound'] = 'The requested funder link no longer exists.';
+$string['bordereau_heading'] = 'Funder statement';
+$string['bordereau_subtitle'] = 'Summary of hours completed per learner';
+$string['bordereau_funder'] = 'Funder';
+$string['bordereau_dossier'] = 'Dossier';
+$string['bordereau_opco'] = 'OPCO';
+$string['bordereau_action_intitule'] = 'Action title';
+$string['bordereau_hours_planned'] = 'Planned hours';
+$string['bordereau_period'] = 'Period';
+$string['bordereau_course_code'] = 'Course code';
+$string['bordereau_learner_count'] = 'Number of learners';
+$string['bordereau_total_duration'] = 'Total realised duration';
+$string['bordereau_col_rank'] = '#';
+$string['bordereau_col_lastname'] = 'Last name';
+$string['bordereau_col_firstname'] = 'First name';
+$string['bordereau_col_email'] = 'Email';
+$string['bordereau_col_idnumber'] = 'ID number';
+$string['bordereau_col_sessions'] = 'Sessions';
+$string['bordereau_col_duration'] = 'Duration';
+$string['bordereau_total_row'] = 'Grand total';
+$string['bordereau_empty'] = 'No enrolled learners';
+$string['bordereau_generated_at'] = 'Generated on';
+
 // Assessment regulatory categories.
 $string['assessment_type_quiz_pedago'] = 'Pedagogical quiz';
 $string['assessment_type_devoir_formatif'] = 'Formative assignment';
