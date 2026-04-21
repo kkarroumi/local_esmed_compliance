@@ -35,6 +35,26 @@ $string['no'] = 'Non';
 // Tâches planifiées.
 $string['task_session_timeout'] = 'Clore les sessions de conformité inactives';
 $string['task_aggregate_activity'] = 'Agréger l\'activité apprenante dans le journal de conformité';
+$string['task_verify_archive_integrity'] = 'Vérifier l\'intégrité des archives scellées (recalcul par lot)';
+
+// Tableau de bord.
+$string['dashboard_heading'] = 'Tableau de bord conformité';
+$string['dashboard_generated_at'] = 'Dernière actualisation :';
+$string['dashboard_sessions'] = 'Sessions';
+$string['dashboard_sessions_open'] = 'Ouvertes actuellement';
+$string['dashboard_sessions_closed_24h'] = 'Clôturées sur 24 h';
+$string['dashboard_sessions_hours_today'] = 'Heures enregistrées aujourd\'hui';
+$string['dashboard_archives'] = 'Archives scellées';
+$string['dashboard_archives_total'] = 'Total';
+$string['dashboard_archives_attestations'] = 'Attestations d\'assiduité';
+$string['dashboard_archives_bordereaux'] = 'Bordereaux financeurs';
+$string['dashboard_alerts'] = 'Alertes';
+$string['dashboard_alerts_unacknowledged'] = 'Non acquittées';
+$string['dashboard_alerts_last_7_days'] = '7 derniers jours';
+$string['dashboard_integrity'] = 'Intégrité des archives';
+$string['dashboard_integrity_valid'] = 'Valides';
+$string['dashboard_integrity_tampered'] = 'Altérées';
+$string['dashboard_integrity_missing'] = 'Manquantes';
 
 // Point de vérification publique.
 $string['verify_title'] = 'Vérification d\'un document de conformité';
@@ -99,6 +119,10 @@ $string['setting_activity_delta_cap_minutes'] = 'Plafond du delta inter-vues (mi
 $string['setting_activity_delta_cap_minutes_desc'] = 'Durée maximale comptabilisée entre deux consultations consécutives d\'un même module.';
 $string['setting_retention_years'] = 'Durée de conservation (années)';
 $string['setting_retention_years_desc'] = 'Durée pendant laquelle les documents scellés sont conservés avant de devenir éligibles à la purge.';
+$string['setting_dashboard_refresh_seconds'] = 'Fréquence d\'actualisation du tableau de bord (secondes)';
+$string['setting_dashboard_refresh_seconds_desc'] = 'Fréquence à laquelle le tableau de bord interroge l\'endpoint de métriques tant que l\'onglet est visible.';
+$string['setting_integrity_batch_size'] = 'Taille du lot de vérification d\'intégrité';
+$string['setting_integrity_batch_size_desc'] = 'Nombre maximal d\'archives scellées dont l\'empreinte est recalculée à chaque exécution de la tâche d\'intégrité.';
 $string['setting_funder_default'] = 'Financeur par défaut';
 $string['setting_funder_default_desc'] = 'Type de financeur présélectionné lors de la liaison d\'un nouveau cours. Laissez vide pour imposer un choix explicite.';
 $string['funder_none'] = 'Aucun';

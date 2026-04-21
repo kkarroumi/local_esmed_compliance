@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 7 — WORM integrity + compliance dashboard)
+- `db/install.xml` + `db/upgrade.php`: new `local_esmed_integrity_event`
+  table — an append-only log of archive integrity verdicts (`valid`,
+  `tampered`, `missing`) so the history itself constitutes an audit
+  trail. Plugin version bumped to `2026042006`.
+- `classes/archive/integrity_checker.php`: re-hashes the least recently
+  verified archives in configurable batches and writes one event per
+  check. Uses a portable `COALESCE(...,0)` + ASC ordering so never-
+  checked rows are picked first, and a self-join `NOT EXISTS` query to
+  count the latest-status per archive without relying on a single
+  column of cached state.
+- `classes/task/verify_archive_integrity_task.php` + `db/tasks.php`:
+  scheduled every six hours (offset to minute 37) to drain the archive
+  index without competing with session or aggregation tasks.
+- `classes/dashboard/metrics_provider.php`: collects point-in-time
+  counters — open sessions, sessions closed in the last 24h, hours
+  recorded today, archive totals split by type, unacknowledged / 7-day
+  alerts, archives in each integrity status — and returns a single
+  ready-to-render bundle.
+- `classes/output/renderer.php` + `templates/dashboard.mustache`:
+  Mustache-based dashboard with four counter cards and `data-field`
+  attributes so the JS can update values in place. Cards with alerts
+  or integrity problems pick up an `esmed-card-warn` modifier.
+- `dashboard.php` (guarded by `viewdashboard` capability) registers the
+  AMD module with endpoint, sesskey and refresh interval, then renders
+  the dashboard with current metrics.
+- `ajax/metrics.php`: JSON endpoint (session-cookie + sesskey) returning
+  the same context the renderer consumes, so polling updates the page
+  without a full re-render.
+- `amd/src/dashboard.js` (+ minified build): polls the metrics
+  endpoint at the configured cadence while the tab is visible, walks
+  every `data-field` path and updates `.textContent` in place.
+- `settings.php`: adds two new settings (`dashboard_refresh_seconds`,
+  `integrity_batch_size`) and registers the dashboard as an
+  `admin_externalpage` under the plugin category.
+- `tests/{integrity_checker,metrics_provider}_test.php`: 9 PHPUnit
+  tests covering intact / tampered / missing detection, unknown-adapter
+  handling, never-checked-first batch ordering, empty-install zeroes,
+  session counters across the 24h window, archive type splits and
+  alert filtering.
+- Lang FR/EN extended with 20 dashboard + task + settings strings.
+
 ### Added (iteration 6 — funder statements: bordereau financeur PDF + CSV)
 - `classes/funder/funder_link_repository.php`: CRUD over
   `local_esmed_funder_link` with whitelisted funder types

@@ -35,6 +35,26 @@ $string['no'] = 'No';
 // Scheduled tasks.
 $string['task_session_timeout'] = 'Close idle compliance sessions';
 $string['task_aggregate_activity'] = 'Aggregate learner activity into the compliance log';
+$string['task_verify_archive_integrity'] = 'Verify sealed archive integrity (re-hash batch)';
+
+// Dashboard.
+$string['dashboard_heading'] = 'Compliance dashboard';
+$string['dashboard_generated_at'] = 'Last refreshed:';
+$string['dashboard_sessions'] = 'Sessions';
+$string['dashboard_sessions_open'] = 'Open now';
+$string['dashboard_sessions_closed_24h'] = 'Closed in the last 24h';
+$string['dashboard_sessions_hours_today'] = 'Hours recorded today';
+$string['dashboard_archives'] = 'Sealed archives';
+$string['dashboard_archives_total'] = 'Total';
+$string['dashboard_archives_attestations'] = 'Attendance certificates';
+$string['dashboard_archives_bordereaux'] = 'Funder statements';
+$string['dashboard_alerts'] = 'Alerts';
+$string['dashboard_alerts_unacknowledged'] = 'Unacknowledged';
+$string['dashboard_alerts_last_7_days'] = 'Last 7 days';
+$string['dashboard_integrity'] = 'Archive integrity';
+$string['dashboard_integrity_valid'] = 'Valid';
+$string['dashboard_integrity_tampered'] = 'Tampered';
+$string['dashboard_integrity_missing'] = 'Missing';
 
 // Public attestation verification endpoint.
 $string['verify_title'] = 'Compliance document verification';
@@ -99,6 +119,10 @@ $string['setting_activity_delta_cap_minutes'] = 'Per-module delta cap (minutes)'
 $string['setting_activity_delta_cap_minutes_desc'] = 'Maximum duration counted between two consecutive module views.';
 $string['setting_retention_years'] = 'Retention period (years)';
 $string['setting_retention_years_desc'] = 'How long sealed documents are kept before they become eligible for purge.';
+$string['setting_dashboard_refresh_seconds'] = 'Dashboard refresh interval (seconds)';
+$string['setting_dashboard_refresh_seconds_desc'] = 'How often the compliance dashboard polls the metrics endpoint while the tab is visible.';
+$string['setting_integrity_batch_size'] = 'Integrity check batch size';
+$string['setting_integrity_batch_size_desc'] = 'Maximum number of sealed archives re-hashed per run of the integrity task.';
 $string['setting_funder_default'] = 'Default funder';
 $string['setting_funder_default_desc'] = 'Funder type pre-selected when linking a new course. Leave empty to force an explicit choice.';
 $string['funder_none'] = 'None';
