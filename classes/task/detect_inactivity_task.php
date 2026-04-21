@@ -25,7 +25,9 @@
 namespace local_esmed_compliance\task;
 
 use core\task\scheduled_task;
+use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\alert\inactivity_detector;
+use local_esmed_compliance\alert\notifier;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -55,13 +57,22 @@ class detect_inactivity_task extends scheduled_task {
             $thresholddays = 7;
         }
 
-        $tally = (new inactivity_detector())->run($thresholddays, time());
+        $now = time();
+        $tally = (new inactivity_detector())->run($thresholddays, $now);
+
+        $repo = new alert_repository();
+        $notifier = new notifier($repo);
+        $notified = 0;
+        foreach ($repo->find_pending_notification() as $alertid) {
+            $notified += $notifier->notify($alertid, $now);
+        }
 
         mtrace(sprintf(
-            'local_esmed_compliance: detect_inactivity_task scanned %d (raised=%d, skipped_open=%d).',
+            'local_esmed_compliance: detect_inactivity_task scanned %d (raised=%d, skipped_open=%d, recipients_notified=%d).',
             $tally['scanned'],
             $tally['raised'],
-            $tally['skipped_open']
+            $tally['skipped_open'],
+            $notified
         ));
     }
 }

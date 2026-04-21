@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 10 — alert notifications via Moodle messaging)
+- `db/messages.php`: declares the `alert_inactivity` message provider
+  gated by `local/esmed_compliance:managealerts`, with popup + email
+  defaults so operators receive notifications through the channels
+  they already configured.
+- `classes/alert/notifier.php`: sends one Moodle `\core\message\message`
+  per operator holding `managealerts` in the alert's context (course
+  context when the alert carries a courseid, system context otherwise),
+  excludes the learner themselves, and stamps `notified_at` so the
+  dispatch is idempotent across subsequent task runs. Accepts an
+  injectable sender callable for testability.
+- `alert_repository::find_pending_notification()`: returns open alerts
+  where `notified_at IS NULL`, oldest first.
+- `classes/task/detect_inactivity_task.php`: after raising alerts,
+  drains pending notifications via the notifier and adds a
+  `recipients_notified=N` counter to the mtrace output.
+- `tests/alert_notifier_test.php`: verifies the course-operator
+  routing with learner exclusion, the idempotent re-notify no-op, and
+  the safe no-op for unknown alert ids. Plugin version bumped to
+  `2026042009`.
+
 ### Added (iteration 9 — inactivity alerts + acknowledgement)
 - `classes/alert/alert_repository.php`: data access for
   `local_esmed_alerts` with `has_open_alert`, `raise`, `acknowledge`

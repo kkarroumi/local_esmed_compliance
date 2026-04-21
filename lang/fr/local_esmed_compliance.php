@@ -242,3 +242,7 @@ $string['setting_inactivity_threshold_days'] = 'Seuil d\'inactivité (jours)';
 $string['setting_inactivity_threshold_days_desc'] = 'Nombre de jours sans session certifiable avant qu\'une alerte d\'inactivité ne soit émise pour un apprenant inscrit.';
 $string['alertnotfound'] = 'Alerte introuvable.';
 $string['esmed_compliance:managealerts'] = 'Acquitter les alertes de conformité';
+
+$string['messageprovider:alert_inactivity'] = 'Alerte d\'inactivité apprenant';
+$string['message_alert_inactivity_subject'] = 'Alerte de conformité : inactivité apprenant détectée';
+$string['message_alert_inactivity_body'] = 'Une alerte d\'inactivité (#{$a->alertid}) a été émise pour l\'utilisateur {$a->userid} sur le cours {$a->courseid} à {$a->triggered_at}. Consultez-la dans le tableau de bord de conformité.';

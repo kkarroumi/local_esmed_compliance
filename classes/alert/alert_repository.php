@@ -134,4 +134,29 @@ class alert_repository {
         $row = $DB->get_record(self::TABLE, ['id' => $alertid]);
         return $row ?: null;
     }
+
+    /**
+     * Return ids of open alerts that have never been notified.
+     *
+     * @param int $limit
+     * @return int[]
+     * @throws dml_exception
+     */
+    public function find_pending_notification(int $limit = 200): array {
+        global $DB;
+        $rows = $DB->get_records_select(
+            self::TABLE,
+            'notified_at IS NULL',
+            [],
+            'triggered_at ASC, id ASC',
+            'id',
+            0,
+            $limit
+        );
+        $ids = [];
+        foreach ($rows as $row) {
+            $ids[] = (int) $row->id;
+        }
+        return $ids;
+    }
 }

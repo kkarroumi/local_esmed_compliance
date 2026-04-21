@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and metadata.
+ * Message provider declarations.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -24,10 +24,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042009;
-$plugin->release   = '0.10.0-alpha (Build: 2026042009)';
-$plugin->requires  = 2023100900;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [403, 405];
-$plugin->dependencies = [];
+$messageproviders = [
+
+    'alert_inactivity' => [
+        'capability' => 'local/esmed_compliance:managealerts',
+        'defaults'   => [
+            'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN + MESSAGE_DEFAULT_LOGGEDOFF,
+            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDOFF,
+        ],
+    ],
+];

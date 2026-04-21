@@ -242,3 +242,7 @@ $string['setting_inactivity_threshold_days'] = 'Inactivity threshold (days)';
 $string['setting_inactivity_threshold_days_desc'] = 'Number of days without a certifiable session before an inactivity alert is raised against an enrolled learner.';
 $string['alertnotfound'] = 'Alert not found.';
 $string['esmed_compliance:managealerts'] = 'Acknowledge compliance alerts';
+
+$string['messageprovider:alert_inactivity'] = 'Learner inactivity alert';
+$string['message_alert_inactivity_subject'] = 'Compliance alert: learner inactivity detected';
+$string['message_alert_inactivity_body'] = 'An inactivity alert (#{$a->alertid}) was raised for user {$a->userid} on course {$a->courseid} at {$a->triggered_at}. Review it in the compliance dashboard.';
