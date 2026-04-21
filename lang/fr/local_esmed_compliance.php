@@ -36,6 +36,22 @@ $string['no'] = 'Non';
 $string['task_session_timeout'] = 'Clore les sessions de conformité inactives';
 $string['task_aggregate_activity'] = 'Agréger l\'activité apprenante dans le journal de conformité';
 
+// Point de vérification publique.
+$string['verify_title'] = 'Vérification d\'un document de conformité';
+$string['verify_heading'] = 'Vérifier un document de conformité scellé';
+$string['verify_missing_token'] = 'Aucun jeton de vérification n\'a été fourni. Scannez le QR code du document ou collez le jeton dans l\'URL.';
+$string['verify_unknown'] = 'Ce jeton de vérification ne correspond à aucun document scellé. Il a peut-être été mal saisi ou révoqué.';
+$string['verify_missing'] = 'Le document scellé est référencé dans nos archives mais son fichier n\'est plus accessible. Veuillez contacter l\'organisme de formation.';
+$string['verify_tampered'] = 'Le document a été récupéré mais son empreinte actuelle ne correspond pas à celle scellée à l\'émission. Contrôle d\'intégrité échoué.';
+$string['verify_valid'] = 'Ce document est valide : son empreinte actuelle correspond à celle scellée à l\'émission.';
+$string['verify_archive_type'] = 'Type de document';
+$string['verify_sealed_at'] = 'Scellé le';
+$string['verify_sealed_hash'] = 'Empreinte SHA-256 scellée';
+$string['verify_computed_hash'] = 'Empreinte SHA-256 recalculée';
+
+// Erreurs archivage.
+$string['tokengenfailed'] = 'Impossible de générer un jeton de vérification unique après plusieurs tentatives.';
+
 // Catégories réglementaires d\'évaluations.
 $string['assessment_type_quiz_pedago'] = 'Quiz pédagogique';
 $string['assessment_type_devoir_formatif'] = 'Devoir formatif';

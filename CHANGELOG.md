@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 5 — attestation d'assiduité and public verification)
+- `classes/archive/storage_adapter.php` interface + `local_storage_adapter`
+  implementation: write-once filesystem backend with safe relative-path
+  normalisation, atomic `.tmp` + `rename` writes and idempotent store
+  (identical bytes under the same name succeed; divergent bytes raise).
+- `classes/archive/archive_repository.php`: sealed document persistence
+  keyed by `verification_token` (unique), with a hardened
+  `generate_unique_token()` that retries on collision before failing.
+- `classes/attestation/{attestation_payload, attestation_builder,
+  attestation_renderer, tcpdf_attestation_renderer}.php`: payload value
+  object, evidence gatherer summing closed sessions and indexed
+  assessments for a (user, course), renderer interface and default
+  TCPDF-backed implementation producing an A4 attestation d'assiduité
+  with organisation block, learner block, session table, assessment
+  table, signatory and a QR-coded verification URL.
+- `classes/attestation/attestation_service.php`: end-to-end sealing —
+  build → allocate unique token → render → `sha256` → store → index.
+  Retention window frozen at seal time (default 5 years). Filename
+  layout `attestation/YYYY/MM/uX_cY_<tokenprefix>.pdf`.
+- `classes/archive/verifier.php` + `verify.php`: public, unauthenticated
+  endpoint (`NO_MOODLE_COOKIES`) returning one of four statuses:
+  `unknown`, `missing`, `tampered`, `valid`. Reveals only archive type,
+  seal timestamp and both hashes — never learner identity.
+- `tests/fixtures/fake_{storage_adapter,attestation_renderer}.php` +
+  `tests/{archive_repository,attestation_service,verifier}_test.php`:
+  13 PHPUnit tests covering insert / token round-trip, unique token
+  format, find-by-user-course filtering, end-to-end seal with
+  hash-to-stored-bytes consistency, duration capture from closed
+  sessions, retention default, filename layout, and the four verifier
+  outcomes (unknown, valid, tampered, missing, unknown adapter).
+- Lang FR/EN extended with verification-UI and token-generation strings.
+- Plugin version bumped to `2026042004`.
+
 ### Added (iteration 4 — activity aggregation and assessment indexing)
 - `db/install.xml` + `db/upgrade.php`: new `local_esmed_assessment_tag`
   table letting compliance managers explicitly classify each cmid as

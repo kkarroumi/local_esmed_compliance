@@ -36,6 +36,22 @@ $string['no'] = 'No';
 $string['task_session_timeout'] = 'Close idle compliance sessions';
 $string['task_aggregate_activity'] = 'Aggregate learner activity into the compliance log';
 
+// Public attestation verification endpoint.
+$string['verify_title'] = 'Compliance document verification';
+$string['verify_heading'] = 'Verify a sealed compliance document';
+$string['verify_missing_token'] = 'No verification token was supplied. Scan the QR code on the document or paste the token in the URL.';
+$string['verify_unknown'] = 'This verification token does not match any sealed document. It may have been mistyped or revoked.';
+$string['verify_missing'] = 'The sealed document is referenced in our archive but its file is no longer retrievable. Please contact the training organisation.';
+$string['verify_tampered'] = 'The sealed document was retrieved but its current hash does not match the hash sealed at issuance. Integrity check failed.';
+$string['verify_valid'] = 'This document is valid: its current hash matches the hash sealed at issuance.';
+$string['verify_archive_type'] = 'Document type';
+$string['verify_sealed_at'] = 'Sealed at';
+$string['verify_sealed_hash'] = 'Sealed SHA-256';
+$string['verify_computed_hash'] = 'Recomputed SHA-256';
+
+// Archive errors.
+$string['tokengenfailed'] = 'Unable to generate a unique verification token after several attempts.';
+
 // Assessment regulatory categories.
 $string['assessment_type_quiz_pedago'] = 'Pedagogical quiz';
 $string['assessment_type_devoir_formatif'] = 'Formative assignment';

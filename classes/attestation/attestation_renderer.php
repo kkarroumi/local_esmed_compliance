@@ -15,19 +15,33 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and metadata.
+ * Attestation renderer contract.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_esmed_compliance\attestation;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042004;
-$plugin->release   = '0.5.0-alpha (Build: 2026042004)';
-$plugin->requires  = 2023100900;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [403, 405];
-$plugin->dependencies = [];
+/**
+ * Renders an attestation payload into a byte blob.
+ *
+ * The interface exists so tests can inject a deterministic stub and so
+ * future templates (different layouts per funder) can be swapped in
+ * without touching the orchestrating service.
+ */
+interface attestation_renderer {
+
+    /**
+     * Render a payload.
+     *
+     * @param attestation_payload $payload
+     * @param string|null $verificationtoken Token to embed in the footer / QR.
+     * @param string|null $verificationurl   Absolute URL the QR code should point to.
+     * @return string Raw bytes of the rendered document.
+     */
+    public function render(attestation_payload $payload, ?string $verificationtoken = null, ?string $verificationurl = null): string;
+}
