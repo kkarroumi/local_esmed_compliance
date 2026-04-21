@@ -93,6 +93,14 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
+    $general->add(new admin_setting_configtext(
+        'local_esmed_compliance/inactivity_threshold_days',
+        get_string('setting_inactivity_threshold_days', 'local_esmed_compliance'),
+        get_string('setting_inactivity_threshold_days_desc', 'local_esmed_compliance'),
+        7,
+        PARAM_INT
+    ));
+
     $funderoptions = [
         ''       => get_string('funder_none', 'local_esmed_compliance'),
         'CPF'    => get_string('funder_cpf', 'local_esmed_compliance'),

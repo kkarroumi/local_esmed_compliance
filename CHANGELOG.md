@@ -7,6 +7,142 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 13 — S3 / S3-compatible storage adapter)
+- `classes/archive/s3_storage_adapter.php`: AWS Signature Version 4
+  signed PUT/GET client against the configured bucket using path-style
+  addressing (so it talks to AWS, OVH, Scaleway, MinIO, Ceph, etc.).
+  Matches `local_storage_adapter` write-once semantics — idempotent on
+  identical bytes, raises on divergent bytes. HTTP is injected as a
+  callable so tests assert signatures and response handling without
+  touching the network.
+- `classes/archive/adapter_registry.php`: `from_config()` builds the
+  `[name => adapter]` map from site settings. `local` is always
+  registered so historical archives stay verifiable after an admin
+  flips the active adapter; `s3` is added when region, bucket, access
+  key and secret key are all populated. `active()` resolves the
+  adapter named by `archive_storage_adapter` for fresh writes.
+- `archive\integrity_checker` and `archive\verifier`: default adapter
+  map now comes from `adapter_registry::from_config()` instead of a
+  hardcoded `['local' => ...]`, so S3-sealed rows verify correctly
+  once credentials are set.
+- `tests/s3_storage_adapter_test.php`: SigV4 Authorization header
+  shape, URL composition, idempotent re-store on matching bytes,
+  refusal on divergent bytes, 404 → null on fetch, 5xx → raise,
+  constructor guards on empty credentials, AWS endpoint fallback.
+- `tests/adapter_registry_test.php`: local-only by default, both
+  adapters when S3 config is complete, S3 skipped when credentials
+  are incomplete, `active()` selection and unknown-selection fallback.
+- Plugin version bumped to `2026042012`.
+
+### Added (iteration 12 — inline acknowledge button on open-alerts table)
+- `templates/dashboard.mustache`: per-row "Acknowledge" button with
+  `data-action="ack"` and `data-alertid`, plus a visually-hidden
+  "Action" header for screen readers.
+- `amd/src/dashboard.js`: now depends on `core/ajax` and delegates
+  clicks from the dashboard root to
+  `local_esmed_compliance_acknowledge_alert`, removes the row on
+  success, re-enables the button on failure, then triggers a metrics
+  refresh so the counter cards update immediately. Guards the
+  `applyMetrics` walker against nested-object leaves (e.g. the new
+  `open_alerts` array) so it does not try to coerce them to strings.
+- `amd/build/dashboard.min.js`: hand-rebuilt to match the new source.
+- Plugin version bumped to `2026042011`.
+
+### Added (iteration 11 — open-alerts list on the compliance dashboard)
+- `alert_repository::find_open_alerts()`: returns the N most recent
+  unacknowledged alerts joined with `{user}` and `{course}` so the
+  dashboard can show "Jane Doe · MyCourse · 2 days ago" without
+  per-row follow-up queries. Uses `core_user\fields::for_name()` for
+  Moodle-standards-compliant name selection.
+- `dashboard\metrics_provider`: new `open_alerts` key in the bundle
+  returned by `collect()`, defaulting to the top 20 rows.
+- `output\renderer::build_template_context`: preformats `triggered_at`
+  with `userdate()` and surfaces a `has_open_alerts` flag so Mustache
+  can switch between an empty-state paragraph and the table.
+- `templates/dashboard.mustache`: new "Open alerts" section rendered
+  below the four counter cards, with `data-alertid` on each row so
+  iteration 12 can bolt an acknowledge button on top.
+- `tests/open_alerts_dashboard_test.php`: verifies the DESC/unacked
+  filter, the metrics-provider wiring, the renderer context shape
+  including the empty case. Plugin version bumped to `2026042010`.
+
+### Added (iteration 10 — alert notifications via Moodle messaging)
+- `db/messages.php`: declares the `alert_inactivity` message provider
+  gated by `local/esmed_compliance:managealerts`, with popup + email
+  defaults so operators receive notifications through the channels
+  they already configured.
+- `classes/alert/notifier.php`: sends one Moodle `\core\message\message`
+  per operator holding `managealerts` in the alert's context (course
+  context when the alert carries a courseid, system context otherwise),
+  excludes the learner themselves, and stamps `notified_at` so the
+  dispatch is idempotent across subsequent task runs. Accepts an
+  injectable sender callable for testability.
+- `alert_repository::find_pending_notification()`: returns open alerts
+  where `notified_at IS NULL`, oldest first.
+- `classes/task/detect_inactivity_task.php`: after raising alerts,
+  drains pending notifications via the notifier and adds a
+  `recipients_notified=N` counter to the mtrace output.
+- `tests/alert_notifier_test.php`: verifies the course-operator
+  routing with learner exclusion, the idempotent re-notify no-op, and
+  the safe no-op for unknown alert ids. Plugin version bumped to
+  `2026042009`.
+
+### Added (iteration 9 — inactivity alerts + acknowledgement)
+- `classes/alert/alert_repository.php`: data access for
+  `local_esmed_alerts` with `has_open_alert`, `raise`, `acknowledge`
+  and `get`. Acknowledgement is idempotent (re-ack preserves the first
+  actor/timestamp).
+- `classes/alert/inactivity_detector.php`: scans active enrolments via
+  `{user_enrolments}/{enrol}` and flags learners whose last certifiable
+  session ended more than `inactivity_threshold_days` ago (or who have
+  never had one). Open sessions suppress the alert. Repeated runs are
+  idempotent thanks to the `has_open_alert` guard.
+- `classes/task/detect_inactivity_task.php` + `db/tasks.php`:
+  daily at 03:13 — off-peak and offset from the other tasks.
+- `classes/external/acknowledge_alert.php` +
+  `local/esmed_compliance:managealerts` capability: webservice entry
+  point so operators can clear open alerts over the REST API; gated at
+  the system context, idempotent, raises `alertnotfound` for unknown
+  ids instead of silently succeeding. Registered in `db/services.php`.
+- `settings.php`: adds `inactivity_threshold_days` (default 7) under
+  General.
+- `tests/inactivity_detector_test.php`,
+  `tests/external/acknowledge_alert_test.php`: coverage for the
+  detector (raises / skips recent / skips open / idempotent re-run),
+  the repository (idempotent ack) and the external function
+  (capability gate + unknown-id exception). Plugin version bumped to
+  `2026042008`.
+
+### Added (iteration 8 — REST webservices + CI pipeline)
+- `classes/external/verify_token.php`: anonymous-safe webservice
+  endpoint that wraps the existing `archive\verifier` and returns the
+  integrity status (`valid`, `tampered`, `missing`, `unknown`) plus
+  sealed/computed hashes for a public token. Callable by any
+  authenticated user — the token itself is the authority.
+- `classes/external/get_dashboard_metrics.php`: mirrors the Mustache
+  dashboard context over webservice, gated by
+  `local/esmed_compliance:viewdashboard` at the system context so UI
+  and API consumers see the same data under identical authorisation.
+- `classes/external/get_learner_summary.php`: (userid, courseid)
+  summary combining session seconds, activity dwell time, module
+  views, modules touched and sealed-attestation count. Authorises
+  both learners (via `viewownreports` on their own user context) and
+  managers (via `viewdashboard` at course context) with a single
+  explicit OR, so learners cannot peek at each other.
+- `db/services.php`: registers the three functions and defines the
+  `local_esmed_compliance_service` restricted-users webservice so
+  deployments can provision per-funder API tokens.
+- `tests/external/verify_token_test.php`,
+  `tests/external/get_dashboard_metrics_test.php`,
+  `tests/external/get_learner_summary_test.php`: parameter-validation
+  and capability-gate coverage, using `external_api::clean_returnvalue`
+  to verify the declared return structures round-trip cleanly.
+- `.github/workflows/ci.yml`: `moodle-plugin-ci` matrix running
+  phplint / phpcpd / phpmd / codechecker / phpdoc / validate /
+  savepoints / mustache / grunt / phpunit across PHP 8.1–8.3 and
+  Moodle 4.03–4.05 (LTS) on both pgsql and mariadb. Plugin version
+  bumped to `2026042007`.
+
 ### Added (iteration 7 — WORM integrity + compliance dashboard)
 - `db/install.xml` + `db/upgrade.php`: new `local_esmed_integrity_event`
   table — an append-only log of archive integrity verdicts (`valid`,

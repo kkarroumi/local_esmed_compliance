@@ -230,3 +230,28 @@ $string['privacy:subcontext:archives'] = 'Compliance archives';
 $string['privacy:subcontext:alerts'] = 'Compliance alerts';
 
 $string['privacy:legalretention'] = 'Attendance evidence is kept for the legal retention period required by article L.6353-1 of the French Labour Code and the Qualiopi framework. Requests for erasure covering data still within this window are partially honoured: only data outside the legal perimeter is deleted, and direct identifiers such as IP address and user-agent are redacted.';
+
+$string['webservice_verify_token'] = 'Verify a sealed document by its public token.';
+$string['webservice_get_dashboard_metrics'] = 'Return point-in-time compliance dashboard counters.';
+$string['webservice_get_learner_summary'] = 'Return the compliance summary for one learner in one course.';
+$string['webservice_acknowledge_alert'] = 'Acknowledge an open compliance alert.';
+$string['webservice_service_name'] = 'ESMED compliance service';
+
+$string['task_detect_inactivity'] = 'Detect inactive learners and raise compliance alerts';
+$string['setting_inactivity_threshold_days'] = 'Inactivity threshold (days)';
+$string['setting_inactivity_threshold_days_desc'] = 'Number of days without a certifiable session before an inactivity alert is raised against an enrolled learner.';
+$string['alertnotfound'] = 'Alert not found.';
+$string['esmed_compliance:managealerts'] = 'Acknowledge compliance alerts';
+
+$string['messageprovider:alert_inactivity'] = 'Learner inactivity alert';
+$string['message_alert_inactivity_subject'] = 'Compliance alert: learner inactivity detected';
+$string['message_alert_inactivity_body'] = 'An inactivity alert (#{$a->alertid}) was raised for user {$a->userid} on course {$a->courseid} at {$a->triggered_at}. Review it in the compliance dashboard.';
+
+$string['dashboard_open_alerts'] = 'Open alerts';
+$string['dashboard_open_alerts_learner'] = 'Learner';
+$string['dashboard_open_alerts_course'] = 'Course';
+$string['dashboard_open_alerts_type'] = 'Type';
+$string['dashboard_open_alerts_triggered_at'] = 'Triggered at';
+$string['dashboard_open_alerts_empty'] = 'No open alerts — nothing to acknowledge.';
+$string['dashboard_open_alerts_action'] = 'Action';
+$string['dashboard_open_alerts_ack'] = 'Acknowledge';

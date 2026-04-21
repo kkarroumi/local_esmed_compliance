@@ -230,3 +230,28 @@ $string['privacy:subcontext:archives'] = 'Archives conformité';
 $string['privacy:subcontext:alerts'] = 'Alertes conformité';
 
 $string['privacy:legalretention'] = 'Les preuves d\'assiduité sont conservées pendant la durée légale requise par l\'article L.6353-1 du Code du travail et le référentiel Qualiopi. Les demandes d\'effacement portant sur des données encore dans cette fenêtre ne sont honorées que partiellement : seules les données hors périmètre légal sont supprimées, et les identifiants directs tels que l\'adresse IP et le user-agent sont masqués.';
+
+$string['webservice_verify_token'] = 'Vérifier un document scellé via son jeton public.';
+$string['webservice_get_dashboard_metrics'] = 'Retourner les indicateurs du tableau de bord de conformité.';
+$string['webservice_get_learner_summary'] = 'Retourner le récapitulatif de conformité d\'un apprenant pour un cours.';
+$string['webservice_acknowledge_alert'] = 'Acquitter une alerte de conformité ouverte.';
+$string['webservice_service_name'] = 'Service de conformité ESMED';
+
+$string['task_detect_inactivity'] = 'Détecter les apprenants inactifs et émettre des alertes de conformité';
+$string['setting_inactivity_threshold_days'] = 'Seuil d\'inactivité (jours)';
+$string['setting_inactivity_threshold_days_desc'] = 'Nombre de jours sans session certifiable avant qu\'une alerte d\'inactivité ne soit émise pour un apprenant inscrit.';
+$string['alertnotfound'] = 'Alerte introuvable.';
+$string['esmed_compliance:managealerts'] = 'Acquitter les alertes de conformité';
+
+$string['messageprovider:alert_inactivity'] = 'Alerte d\'inactivité apprenant';
+$string['message_alert_inactivity_subject'] = 'Alerte de conformité : inactivité apprenant détectée';
+$string['message_alert_inactivity_body'] = 'Une alerte d\'inactivité (#{$a->alertid}) a été émise pour l\'utilisateur {$a->userid} sur le cours {$a->courseid} à {$a->triggered_at}. Consultez-la dans le tableau de bord de conformité.';
+
+$string['dashboard_open_alerts'] = 'Alertes ouvertes';
+$string['dashboard_open_alerts_learner'] = 'Apprenant';
+$string['dashboard_open_alerts_course'] = 'Cours';
+$string['dashboard_open_alerts_type'] = 'Type';
+$string['dashboard_open_alerts_triggered_at'] = 'Émise le';
+$string['dashboard_open_alerts_empty'] = 'Aucune alerte ouverte — rien à acquitter.';
+$string['dashboard_open_alerts_action'] = 'Action';
+$string['dashboard_open_alerts_ack'] = 'Acquitter';
