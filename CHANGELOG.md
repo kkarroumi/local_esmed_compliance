@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 8 — REST webservices + CI pipeline)
+- `classes/external/verify_token.php`: anonymous-safe webservice
+  endpoint that wraps the existing `archive\verifier` and returns the
+  integrity status (`valid`, `tampered`, `missing`, `unknown`) plus
+  sealed/computed hashes for a public token. Callable by any
+  authenticated user — the token itself is the authority.
+- `classes/external/get_dashboard_metrics.php`: mirrors the Mustache
+  dashboard context over webservice, gated by
+  `local/esmed_compliance:viewdashboard` at the system context so UI
+  and API consumers see the same data under identical authorisation.
+- `classes/external/get_learner_summary.php`: (userid, courseid)
+  summary combining session seconds, activity dwell time, module
+  views, modules touched and sealed-attestation count. Authorises
+  both learners (via `viewownreports` on their own user context) and
+  managers (via `viewdashboard` at course context) with a single
+  explicit OR, so learners cannot peek at each other.
+- `db/services.php`: registers the three functions and defines the
+  `local_esmed_compliance_service` restricted-users webservice so
+  deployments can provision per-funder API tokens.
+- `tests/external/verify_token_test.php`,
+  `tests/external/get_dashboard_metrics_test.php`,
+  `tests/external/get_learner_summary_test.php`: parameter-validation
+  and capability-gate coverage, using `external_api::clean_returnvalue`
+  to verify the declared return structures round-trip cleanly.
+- `.github/workflows/ci.yml`: `moodle-plugin-ci` matrix running
+  phplint / phpcpd / phpmd / codechecker / phpdoc / validate /
+  savepoints / mustache / grunt / phpunit across PHP 8.1–8.3 and
+  Moodle 4.03–4.05 (LTS) on both pgsql and mariadb. Plugin version
+  bumped to `2026042007`.
+
 ### Added (iteration 7 — WORM integrity + compliance dashboard)
 - `db/install.xml` + `db/upgrade.php`: new `local_esmed_integrity_event`
   table — an append-only log of archive integrity verdicts (`valid`,

@@ -230,3 +230,8 @@ $string['privacy:subcontext:archives'] = 'Archives conformité';
 $string['privacy:subcontext:alerts'] = 'Alertes conformité';
 
 $string['privacy:legalretention'] = 'Les preuves d\'assiduité sont conservées pendant la durée légale requise par l\'article L.6353-1 du Code du travail et le référentiel Qualiopi. Les demandes d\'effacement portant sur des données encore dans cette fenêtre ne sont honorées que partiellement : seules les données hors périmètre légal sont supprimées, et les identifiants directs tels que l\'adresse IP et le user-agent sont masqués.';
+
+$string['webservice_verify_token'] = 'Vérifier un document scellé via son jeton public.';
+$string['webservice_get_dashboard_metrics'] = 'Retourner les indicateurs du tableau de bord de conformité.';
+$string['webservice_get_learner_summary'] = 'Retourner le récapitulatif de conformité d\'un apprenant pour un cours.';
+$string['webservice_service_name'] = 'Service de conformité ESMED';

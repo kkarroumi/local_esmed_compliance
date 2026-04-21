@@ -230,3 +230,8 @@ $string['privacy:subcontext:archives'] = 'Compliance archives';
 $string['privacy:subcontext:alerts'] = 'Compliance alerts';
 
 $string['privacy:legalretention'] = 'Attendance evidence is kept for the legal retention period required by article L.6353-1 of the French Labour Code and the Qualiopi framework. Requests for erasure covering data still within this window are partially honoured: only data outside the legal perimeter is deleted, and direct identifiers such as IP address and user-agent are redacted.';
+
+$string['webservice_verify_token'] = 'Verify a sealed document by its public token.';
+$string['webservice_get_dashboard_metrics'] = 'Return point-in-time compliance dashboard counters.';
+$string['webservice_get_learner_summary'] = 'Return the compliance summary for one learner in one course.';
+$string['webservice_service_name'] = 'ESMED compliance service';
