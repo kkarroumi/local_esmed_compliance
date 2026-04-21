@@ -253,3 +253,5 @@ $string['dashboard_open_alerts_course'] = 'Cours';
 $string['dashboard_open_alerts_type'] = 'Type';
 $string['dashboard_open_alerts_triggered_at'] = 'Émise le';
 $string['dashboard_open_alerts_empty'] = 'Aucune alerte ouverte — rien à acquitter.';
+$string['dashboard_open_alerts_action'] = 'Action';
+$string['dashboard_open_alerts_ack'] = 'Acquitter';

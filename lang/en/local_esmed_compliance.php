@@ -253,3 +253,5 @@ $string['dashboard_open_alerts_course'] = 'Course';
 $string['dashboard_open_alerts_type'] = 'Type';
 $string['dashboard_open_alerts_triggered_at'] = 'Triggered at';
 $string['dashboard_open_alerts_empty'] = 'No open alerts — nothing to acknowledge.';
+$string['dashboard_open_alerts_action'] = 'Action';
+$string['dashboard_open_alerts_ack'] = 'Acknowledge';

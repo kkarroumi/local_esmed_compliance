@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 12 — inline acknowledge button on open-alerts table)
+- `templates/dashboard.mustache`: per-row "Acknowledge" button with
+  `data-action="ack"` and `data-alertid`, plus a visually-hidden
+  "Action" header for screen readers.
+- `amd/src/dashboard.js`: now depends on `core/ajax` and delegates
+  clicks from the dashboard root to
+  `local_esmed_compliance_acknowledge_alert`, removes the row on
+  success, re-enables the button on failure, then triggers a metrics
+  refresh so the counter cards update immediately. Guards the
+  `applyMetrics` walker against nested-object leaves (e.g. the new
+  `open_alerts` array) so it does not try to coerce them to strings.
+- `amd/build/dashboard.min.js`: hand-rebuilt to match the new source.
+- Plugin version bumped to `2026042011`.
+
 ### Added (iteration 11 — open-alerts list on the compliance dashboard)
 - `alert_repository::find_open_alerts()`: returns the N most recent
   unacknowledged alerts joined with `{user}` and `{course}` so the

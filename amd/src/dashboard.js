@@ -18,13 +18,14 @@
  *
  * Polls the metrics endpoint at a fixed interval and updates every
  * element with a matching `data-field` attribute in place, so the
- * page feels live without a full re-render.
+ * page feels live without a full re-render. Also delegates clicks on
+ * per-row acknowledge buttons to the acknowledge_alert webservice.
  *
  * @module     local_esmed_compliance/dashboard
  * @copyright  2026 ESMED
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['core/log'], function(Log) {
+define(['core/log', 'core/ajax'], function(Log, Ajax) {
     'use strict';
 
     var Dashboard = {
@@ -39,6 +40,7 @@ define(['core/log'], function(Log) {
             Dashboard.config = config;
             Dashboard.schedule();
             document.addEventListener('visibilitychange', Dashboard.onVisibilityChange);
+            Dashboard.bindAckHandler();
         },
 
         schedule: function() {
@@ -93,7 +95,7 @@ define(['core/log'], function(Log) {
                     }
                     value = value[path[i]];
                 }
-                if (value !== null && value !== undefined) {
+                if (value !== null && value !== undefined && typeof value !== 'object') {
                     node.textContent = String(value);
                 }
             });
@@ -103,6 +105,47 @@ define(['core/log'], function(Log) {
             if (document.visibilityState === 'visible') {
                 Dashboard.refresh();
             }
+        },
+
+        bindAckHandler: function() {
+            var root = document.getElementById('esmed-compliance-dashboard');
+            if (!root) {
+                return;
+            }
+            root.addEventListener('click', function(event) {
+                var target = event.target;
+                if (!target || target.getAttribute('data-action') !== 'ack') {
+                    return;
+                }
+                event.preventDefault();
+                Dashboard.acknowledgeAlert(target);
+            });
+        },
+
+        acknowledgeAlert: function(button) {
+            var alertid = parseInt(button.getAttribute('data-alertid'), 10);
+            if (!alertid) {
+                return;
+            }
+            button.disabled = true;
+            Ajax.call([{
+                methodname: 'local_esmed_compliance_acknowledge_alert',
+                args: {alertid: alertid}
+            }])[0].then(function(response) {
+                if (response && response.acknowledged) {
+                    var row = button.closest('tr');
+                    if (row && row.parentNode) {
+                        row.parentNode.removeChild(row);
+                    }
+                    Dashboard.refresh();
+                } else {
+                    button.disabled = false;
+                }
+                return response;
+            }).catch(function(err) {
+                Log.debug('local_esmed_compliance/dashboard: acknowledge failed', err);
+                button.disabled = false;
+            });
         }
     };
 
