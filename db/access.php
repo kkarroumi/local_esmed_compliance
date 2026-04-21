@@ -79,4 +79,13 @@ $capabilities = [
             'manager' => CAP_ALLOW,
         ],
     ],
+
+    'local/esmed_compliance:managealerts' => [
+        'captype'      => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes'   => [
+            'manager'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+        ],
+    ],
 ];

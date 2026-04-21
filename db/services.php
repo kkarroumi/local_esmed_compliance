@@ -55,6 +55,16 @@ $functions = [
         'capabilities' => 'local/esmed_compliance:viewownreports, local/esmed_compliance:viewdashboard',
         'services'    => ['local_esmed_compliance_service'],
     ],
+
+    'local_esmed_compliance_acknowledge_alert' => [
+        'classname'   => \local_esmed_compliance\external\acknowledge_alert::class,
+        'methodname'  => 'execute',
+        'description' => 'Acknowledge an open compliance alert.',
+        'type'        => 'write',
+        'ajax'        => true,
+        'capabilities' => 'local/esmed_compliance:managealerts',
+        'services'    => ['local_esmed_compliance_service'],
+    ],
 ];
 
 $services = [
@@ -63,6 +73,7 @@ $services = [
             'local_esmed_compliance_verify_token',
             'local_esmed_compliance_get_dashboard_metrics',
             'local_esmed_compliance_get_learner_summary',
+            'local_esmed_compliance_acknowledge_alert',
         ],
         'restrictedusers' => 1,
         'enabled'         => 0,

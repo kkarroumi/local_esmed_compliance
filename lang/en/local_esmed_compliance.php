@@ -234,4 +234,11 @@ $string['privacy:legalretention'] = 'Attendance evidence is kept for the legal r
 $string['webservice_verify_token'] = 'Verify a sealed document by its public token.';
 $string['webservice_get_dashboard_metrics'] = 'Return point-in-time compliance dashboard counters.';
 $string['webservice_get_learner_summary'] = 'Return the compliance summary for one learner in one course.';
+$string['webservice_acknowledge_alert'] = 'Acknowledge an open compliance alert.';
 $string['webservice_service_name'] = 'ESMED compliance service';
+
+$string['task_detect_inactivity'] = 'Detect inactive learners and raise compliance alerts';
+$string['setting_inactivity_threshold_days'] = 'Inactivity threshold (days)';
+$string['setting_inactivity_threshold_days_desc'] = 'Number of days without a certifiable session before an inactivity alert is raised against an enrolled learner.';
+$string['alertnotfound'] = 'Alert not found.';
+$string['esmed_compliance:managealerts'] = 'Acknowledge compliance alerts';

@@ -52,4 +52,13 @@ $tasks = [
         'month'     => '*',
         'dayofweek' => '*',
     ],
+    [
+        'classname' => '\local_esmed_compliance\task\detect_inactivity_task',
+        'blocking'  => 0,
+        'minute'    => '13',
+        'hour'      => '3',
+        'day'       => '*',
+        'month'     => '*',
+        'dayofweek' => '*',
+    ],
 ];

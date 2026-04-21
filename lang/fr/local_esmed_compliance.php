@@ -234,4 +234,11 @@ $string['privacy:legalretention'] = 'Les preuves d\'assiduité sont conservées 
 $string['webservice_verify_token'] = 'Vérifier un document scellé via son jeton public.';
 $string['webservice_get_dashboard_metrics'] = 'Retourner les indicateurs du tableau de bord de conformité.';
 $string['webservice_get_learner_summary'] = 'Retourner le récapitulatif de conformité d\'un apprenant pour un cours.';
+$string['webservice_acknowledge_alert'] = 'Acquitter une alerte de conformité ouverte.';
 $string['webservice_service_name'] = 'Service de conformité ESMED';
+
+$string['task_detect_inactivity'] = 'Détecter les apprenants inactifs et émettre des alertes de conformité';
+$string['setting_inactivity_threshold_days'] = 'Seuil d\'inactivité (jours)';
+$string['setting_inactivity_threshold_days_desc'] = 'Nombre de jours sans session certifiable avant qu\'une alerte d\'inactivité ne soit émise pour un apprenant inscrit.';
+$string['alertnotfound'] = 'Alerte introuvable.';
+$string['esmed_compliance:managealerts'] = 'Acquitter les alertes de conformité';

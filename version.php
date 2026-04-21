@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_esmed_compliance';
-$plugin->version   = 2026042007;
-$plugin->release   = '0.8.0-alpha (Build: 2026042007)';
+$plugin->version   = 2026042008;
+$plugin->release   = '0.9.0-alpha (Build: 2026042008)';
 $plugin->requires  = 2023100900;
 $plugin->maturity  = MATURITY_ALPHA;
 $plugin->supported = [403, 405];

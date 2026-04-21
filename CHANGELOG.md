@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 9 — inactivity alerts + acknowledgement)
+- `classes/alert/alert_repository.php`: data access for
+  `local_esmed_alerts` with `has_open_alert`, `raise`, `acknowledge`
+  and `get`. Acknowledgement is idempotent (re-ack preserves the first
+  actor/timestamp).
+- `classes/alert/inactivity_detector.php`: scans active enrolments via
+  `{user_enrolments}/{enrol}` and flags learners whose last certifiable
+  session ended more than `inactivity_threshold_days` ago (or who have
+  never had one). Open sessions suppress the alert. Repeated runs are
+  idempotent thanks to the `has_open_alert` guard.
+- `classes/task/detect_inactivity_task.php` + `db/tasks.php`:
+  daily at 03:13 — off-peak and offset from the other tasks.
+- `classes/external/acknowledge_alert.php` +
+  `local/esmed_compliance:managealerts` capability: webservice entry
+  point so operators can clear open alerts over the REST API; gated at
+  the system context, idempotent, raises `alertnotfound` for unknown
+  ids instead of silently succeeding. Registered in `db/services.php`.
+- `settings.php`: adds `inactivity_threshold_days` (default 7) under
+  General.
+- `tests/inactivity_detector_test.php`,
+  `tests/external/acknowledge_alert_test.php`: coverage for the
+  detector (raises / skips recent / skips open / idempotent re-run),
+  the repository (idempotent ack) and the external function
+  (capability gate + unknown-id exception). Plugin version bumped to
+  `2026042008`.
+
 ### Added (iteration 8 — REST webservices + CI pipeline)
 - `classes/external/verify_token.php`: anonymous-safe webservice
   endpoint that wraps the existing `archive\verifier` and returns the
