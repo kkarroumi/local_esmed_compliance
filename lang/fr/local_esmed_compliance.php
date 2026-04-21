@@ -246,3 +246,10 @@ $string['esmed_compliance:managealerts'] = 'Acquitter les alertes de conformité
 $string['messageprovider:alert_inactivity'] = 'Alerte d\'inactivité apprenant';
 $string['message_alert_inactivity_subject'] = 'Alerte de conformité : inactivité apprenant détectée';
 $string['message_alert_inactivity_body'] = 'Une alerte d\'inactivité (#{$a->alertid}) a été émise pour l\'utilisateur {$a->userid} sur le cours {$a->courseid} à {$a->triggered_at}. Consultez-la dans le tableau de bord de conformité.';
+
+$string['dashboard_open_alerts'] = 'Alertes ouvertes';
+$string['dashboard_open_alerts_learner'] = 'Apprenant';
+$string['dashboard_open_alerts_course'] = 'Cours';
+$string['dashboard_open_alerts_type'] = 'Type';
+$string['dashboard_open_alerts_triggered_at'] = 'Émise le';
+$string['dashboard_open_alerts_empty'] = 'Aucune alerte ouverte — rien à acquitter.';

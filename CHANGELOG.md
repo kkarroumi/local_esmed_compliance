@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 11 — open-alerts list on the compliance dashboard)
+- `alert_repository::find_open_alerts()`: returns the N most recent
+  unacknowledged alerts joined with `{user}` and `{course}` so the
+  dashboard can show "Jane Doe · MyCourse · 2 days ago" without
+  per-row follow-up queries. Uses `core_user\fields::for_name()` for
+  Moodle-standards-compliant name selection.
+- `dashboard\metrics_provider`: new `open_alerts` key in the bundle
+  returned by `collect()`, defaulting to the top 20 rows.
+- `output\renderer::build_template_context`: preformats `triggered_at`
+  with `userdate()` and surfaces a `has_open_alerts` flag so Mustache
+  can switch between an empty-state paragraph and the table.
+- `templates/dashboard.mustache`: new "Open alerts" section rendered
+  below the four counter cards, with `data-alertid` on each row so
+  iteration 12 can bolt an acknowledge button on top.
+- `tests/open_alerts_dashboard_test.php`: verifies the DESC/unacked
+  filter, the metrics-provider wiring, the renderer context shape
+  including the empty case. Plugin version bumped to `2026042010`.
+
 ### Added (iteration 10 — alert notifications via Moodle messaging)
 - `db/messages.php`: declares the `alert_inactivity` message provider
   gated by `local/esmed_compliance:managealerts`, with popup + email

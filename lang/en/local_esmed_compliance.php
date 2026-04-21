@@ -246,3 +246,10 @@ $string['esmed_compliance:managealerts'] = 'Acknowledge compliance alerts';
 $string['messageprovider:alert_inactivity'] = 'Learner inactivity alert';
 $string['message_alert_inactivity_subject'] = 'Compliance alert: learner inactivity detected';
 $string['message_alert_inactivity_body'] = 'An inactivity alert (#{$a->alertid}) was raised for user {$a->userid} on course {$a->courseid} at {$a->triggered_at}. Review it in the compliance dashboard.';
+
+$string['dashboard_open_alerts'] = 'Open alerts';
+$string['dashboard_open_alerts_learner'] = 'Learner';
+$string['dashboard_open_alerts_course'] = 'Course';
+$string['dashboard_open_alerts_type'] = 'Type';
+$string['dashboard_open_alerts_triggered_at'] = 'Triggered at';
+$string['dashboard_open_alerts_empty'] = 'No open alerts — nothing to acknowledge.';

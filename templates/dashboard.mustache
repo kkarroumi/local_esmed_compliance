@@ -86,4 +86,33 @@
             </dl>
         </article>
     </section>
+
+    <section class="esmed-dashboard-open-alerts" data-field="open_alerts_section">
+        <h3>{{#str}} dashboard_open_alerts, local_esmed_compliance {{/str}}</h3>
+        {{#has_open_alerts}}
+        <table class="esmed-open-alerts-table" data-field="open_alerts_table">
+            <thead>
+                <tr>
+                    <th>{{#str}} dashboard_open_alerts_learner, local_esmed_compliance {{/str}}</th>
+                    <th>{{#str}} dashboard_open_alerts_course, local_esmed_compliance {{/str}}</th>
+                    <th>{{#str}} dashboard_open_alerts_type, local_esmed_compliance {{/str}}</th>
+                    <th>{{#str}} dashboard_open_alerts_triggered_at, local_esmed_compliance {{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#open_alerts}}
+                <tr data-alertid="{{id}}">
+                    <td>{{user_fullname}}</td>
+                    <td>{{course_fullname}}</td>
+                    <td>{{alert_type}}</td>
+                    <td>{{triggered_at}}</td>
+                </tr>
+                {{/open_alerts}}
+            </tbody>
+        </table>
+        {{/has_open_alerts}}
+        {{^has_open_alerts}}
+        <p class="esmed-open-alerts-empty">{{#str}} dashboard_open_alerts_empty, local_esmed_compliance {{/str}}</p>
+        {{/has_open_alerts}}
+    </section>
 </div>

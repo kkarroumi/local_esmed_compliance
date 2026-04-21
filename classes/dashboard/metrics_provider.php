@@ -24,6 +24,7 @@
 
 namespace local_esmed_compliance\dashboard;
 
+use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\archive\archive_repository;
 use local_esmed_compliance\archive\integrity_checker;
 
@@ -53,7 +54,18 @@ class metrics_provider {
             'archives'     => $this->archive_metrics(),
             'alerts'       => $this->alert_metrics(),
             'integrity'    => $this->integrity_metrics(),
+            'open_alerts'  => $this->open_alerts(),
         ];
+    }
+
+    /**
+     * Top-N open alerts enriched with learner and course display labels.
+     *
+     * @param int $limit
+     * @return array<int, array<string, mixed>>
+     */
+    private function open_alerts(int $limit = 20): array {
+        return (new alert_repository())->find_open_alerts($limit);
     }
 
     /**

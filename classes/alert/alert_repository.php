@@ -136,6 +136,48 @@ class alert_repository {
     }
 
     /**
+     * Return the most recent unacknowledged alerts with their learner / course display data.
+     *
+     * Joined with {user} and {course} so the dashboard can render
+     * "Jane Doe · MyCourse · 2 days ago" without a per-row follow-up
+     * query. Returns rows ordered by triggered_at DESC so the freshest
+     * entries appear at the top.
+     *
+     * @param int $limit
+     * @return array<int, array{
+     *   id:int, userid:int, courseid:?int, alert_type:string, triggered_at:int,
+     *   user_fullname:string, course_fullname:?string
+     * }>
+     * @throws dml_exception
+     */
+    public function find_open_alerts(int $limit = 50): array {
+        global $DB;
+        $userfields = \core_user\fields::for_name()->get_sql('u', false, '', '', false)->selects;
+        $sql = "SELECT a.id, a.userid, a.courseid, a.alert_type, a.triggered_at,
+                       $userfields,
+                       c.fullname AS course_fullname
+                  FROM {" . self::TABLE . "} a
+             LEFT JOIN {user} u   ON u.id = a.userid
+             LEFT JOIN {course} c ON c.id = a.courseid
+                 WHERE a.acknowledged_at IS NULL
+              ORDER BY a.triggered_at DESC, a.id DESC";
+        $rows = $DB->get_records_sql($sql, [], 0, $limit);
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'id'              => (int) $row->id,
+                'userid'          => (int) $row->userid,
+                'courseid'        => $row->courseid !== null ? (int) $row->courseid : null,
+                'alert_type'      => (string) $row->alert_type,
+                'triggered_at'    => (int) $row->triggered_at,
+                'user_fullname'   => fullname($row),
+                'course_fullname' => $row->course_fullname !== null ? (string) $row->course_fullname : null,
+            ];
+        }
+        return $result;
+    }
+
+    /**
      * Return ids of open alerts that have never been notified.
      *
      * @param int $limit

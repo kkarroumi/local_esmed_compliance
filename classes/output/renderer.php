@@ -62,6 +62,20 @@ class renderer extends plugin_renderer_base {
         $archives = $metrics['archives'];
         $alerts = $metrics['alerts'];
         $integrity = $metrics['integrity'];
+        $openalerts = $metrics['open_alerts'] ?? [];
+
+        $alertitems = [];
+        foreach ($openalerts as $alert) {
+            $alertitems[] = [
+                'id'              => (int) $alert['id'],
+                'userid'          => (int) $alert['userid'],
+                'courseid'        => $alert['courseid'] !== null ? (int) $alert['courseid'] : 0,
+                'alert_type'      => (string) $alert['alert_type'],
+                'user_fullname'   => (string) $alert['user_fullname'],
+                'course_fullname' => $alert['course_fullname'] !== null ? (string) $alert['course_fullname'] : '',
+                'triggered_at'    => userdate((int) $alert['triggered_at']),
+            ];
+        }
 
         return [
             'generated_at' => userdate((int) $metrics['generated_at']),
@@ -86,6 +100,8 @@ class renderer extends plugin_renderer_base {
                 'missing'       => $integrity['missing'],
                 'has_problems'  => ($integrity['tampered'] + $integrity['missing']) > 0,
             ],
+            'open_alerts'      => $alertitems,
+            'has_open_alerts'  => !empty($alertitems),
         ];
     }
 
