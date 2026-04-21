@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -32,13 +32,10 @@ use local_esmed_compliance\activity\activity_repository;
 use local_esmed_compliance\assessment\indexer;
 use local_esmed_compliance\session\tracker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Static dispatcher. Each method is registered in {@see db/events.php}.
  */
 class observer {
-
     /**
      * Open a certifiable session when a user logs in.
      *

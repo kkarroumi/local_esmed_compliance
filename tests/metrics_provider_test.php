@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -29,13 +29,12 @@ use local_esmed_compliance\dashboard\metrics_provider;
 use local_esmed_compliance\session\tracker;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\dashboard\metrics_provider
  */
 final class metrics_provider_test extends \advanced_testcase {
-
     /**
      * A fresh install returns zero counters everywhere.
      */
@@ -119,6 +118,12 @@ final class metrics_provider_test extends \advanced_testcase {
         $this->assertEquals(2, $metrics['alerts']['last_7_days']);
     }
 
+    /**
+     * Build an archive index row fixture for use in the tests.
+     *
+     * @param string $type
+     * @return stdClass
+     */
     private function make_archive(string $type): stdClass {
         $r = new stdClass();
         $r->userid             = null;

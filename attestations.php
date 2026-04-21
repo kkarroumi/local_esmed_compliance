@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -45,9 +45,7 @@ $action   = optional_param('action', '', PARAM_ALPHA);
 
 $baseurl = new moodle_url('/local/esmed_compliance/attestations.php');
 
-// ---------------------------------------------------------------------
 // Download branch — stream a sealed PDF.
-// ---------------------------------------------------------------------
 if ($action === 'download') {
     require_sesskey();
     $archiveid = required_param('id', PARAM_INT);
@@ -72,7 +70,8 @@ if ($action === 'download') {
         throw new moodle_exception('attestations_archive_missing_bytes', 'local_esmed_compliance');
     }
 
-    $filename = sprintf('attestation_u%d_c%d_%s.pdf',
+    $filename = sprintf(
+        'attestation_u%d_c%d_%s.pdf',
         (int) $record->userid,
         (int) $record->courseid,
         date('Ymd', (int) $record->timestamp_sealed)
@@ -88,9 +87,7 @@ if ($action === 'download') {
     die();
 }
 
-// ---------------------------------------------------------------------
 // Course-level branches need a concrete course.
-// ---------------------------------------------------------------------
 if ($courseid > 0) {
     $course = get_course($courseid);
     $coursecontext = context_course::instance($courseid);
@@ -140,9 +137,7 @@ if ($courseid > 0) {
     exit;
 }
 
-// ---------------------------------------------------------------------
 // No courseid — show the picker. Admin page at system level.
-// ---------------------------------------------------------------------
 $syscontext = context_system::instance();
 
 // Any user that holds the capability somewhere in the course hierarchy

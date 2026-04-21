@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -31,8 +31,6 @@ use core_external\external_single_structure;
 use core_external\external_value;
 use local_esmed_compliance\dashboard\metrics_provider;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Expose the compliance dashboard counters over webservice.
  *
@@ -41,8 +39,9 @@ defined('MOODLE_INTERNAL') || die();
  * and UI users see the same data under the same authorisation rules.
  */
 class get_dashboard_metrics extends external_api {
-
     /**
+     * Declare the input parameters accepted by the webservice.
+     *
      * @return external_function_parameters
      */
     public static function execute_parameters(): external_function_parameters {
@@ -50,6 +49,8 @@ class get_dashboard_metrics extends external_api {
     }
 
     /**
+     * Execute the webservice call and return the dashboard metrics snapshot.
+     *
      * @return array<string, mixed>
      */
     public static function execute(): array {
@@ -84,6 +85,8 @@ class get_dashboard_metrics extends external_api {
     }
 
     /**
+     * Declare the shape of the value returned by the webservice.
+     *
      * @return external_single_structure
      */
     public static function execute_returns(): external_single_structure {

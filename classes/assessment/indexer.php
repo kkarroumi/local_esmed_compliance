@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,8 +26,6 @@ namespace local_esmed_compliance\assessment;
 
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Takes in a raw attempt descriptor and writes a compliance-ready row.
  *
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * guessing which quiz is a summative assessment versus a warm-up drill.
  */
 class indexer {
-
     /** @var tag_repository */
     private tag_repository $tags;
 

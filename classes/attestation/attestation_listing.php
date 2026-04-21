@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,8 +28,6 @@ use context_course;
 use core_user;
 use local_esmed_compliance\archive\archive_repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Gather the rows displayed on the attestation operator screen.
  *
@@ -44,7 +42,6 @@ defined('MOODLE_INTERNAL') || die();
  * `attestation_builder` will include when the document is generated.
  */
 class attestation_listing {
-
     /**
      * List enrolled learners and their attestation status for `$courseid`.
      *
@@ -64,7 +61,13 @@ class attestation_listing {
         global $DB;
 
         $context = context_course::instance($courseid);
-        $users = get_enrolled_users($context, '', 0, 'u.id, u.firstname, u.lastname, u.email, u.idnumber', 'u.lastname, u.firstname');
+        $users = get_enrolled_users(
+            $context,
+            '',
+            0,
+            'u.id, u.firstname, u.lastname, u.email, u.idnumber',
+            'u.lastname, u.firstname'
+        );
         if (empty($users)) {
             return [];
         }

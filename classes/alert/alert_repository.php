@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\alert;
 use dml_exception;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Persist alert rows and support idempotent creation and acknowledgement.
  *
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * question is central to avoiding duplicates.
  */
 class alert_repository {
-
     /** @var string Table name. */
     public const TABLE = 'local_esmed_alerts';
 

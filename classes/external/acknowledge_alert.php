@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -31,8 +31,6 @@ use core_external\external_single_structure;
 use core_external\external_value;
 use local_esmed_compliance\alert\alert_repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Mark an open alert as acknowledged by the calling user.
  *
@@ -41,8 +39,9 @@ defined('MOODLE_INTERNAL') || die();
  * and returns the existing state without raising an error.
  */
 class acknowledge_alert extends external_api {
-
     /**
+     * Declare the input parameters accepted by the webservice.
+     *
      * @return external_function_parameters
      */
     public static function execute_parameters(): external_function_parameters {
@@ -52,6 +51,8 @@ class acknowledge_alert extends external_api {
     }
 
     /**
+     * Execute the webservice call and acknowledge the requested alert.
+     *
      * @param int $alertid
      * @return array{acknowledged:bool, acknowledged_at:?int, acknowledged_by:?int}
      */
@@ -82,6 +83,8 @@ class acknowledge_alert extends external_api {
     }
 
     /**
+     * Declare the shape of the value returned by the webservice.
+     *
      * @return external_single_structure
      */
     public static function execute_returns(): external_single_structure {

@@ -9,6 +9,15 @@
       * baseurl    — absolute URL of funders.php
       * courses    — array of { id, fullname, shortname }
       * has_courses — boolean
+
+    Example context (json):
+    {
+        "baseurl": "https://example.test/local/esmed_compliance/funders.php",
+        "has_courses": true,
+        "courses": [
+            { "id": 12, "fullname": "Formation SST", "shortname": "SST" }
+        ]
+    }
 }}
 <section class="esmed-funder-picker">
     <p>

@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\session;
 use dml_exception;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Data access layer for certifiable sessions.
  *
@@ -36,7 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * rules and is easy to unit-test with stub repositories when needed.
  */
 class session_repository {
-
     /** @var string Table name. */
     public const TABLE = 'local_esmed_sessions';
 

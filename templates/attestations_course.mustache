@@ -18,6 +18,29 @@
     Each users[] item:
       { userid, fullname, email, idnumber, hours, attestation_count,
         has_attestation, last_sealed_at, last_archive_id }
+
+    Example context (json):
+    {
+        "courseid": 42,
+        "coursename": "Formation SST initiale",
+        "shortname": "SST-2026",
+        "baseurl": "https://example.test/local/esmed_compliance/attestations.php",
+        "sesskey": "abc123",
+        "has_users": true,
+        "users": [
+            {
+                "userid": 7,
+                "fullname": "Jane Doe",
+                "email": "jane@example.com",
+                "idnumber": "EMP-42",
+                "hours": "14.50",
+                "attestation_count": 1,
+                "has_attestation": true,
+                "last_sealed_at": "2026-02-15 09:00",
+                "last_archive_id": 99
+            }
+        ]
+    }
 }}
 <section class="esmed-attestations-course">
     <h3>{{coursename}} <small class="text-muted">({{shortname}})</small></h3>

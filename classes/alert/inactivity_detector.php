@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\alert;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Scan active enrolments for learners who have not logged a certifiable
  * session in the last N days and raise one `inactivity_7d` alert per
@@ -33,7 +31,6 @@ defined('MOODLE_INTERNAL') || die();
  * unacknowledged open alert of the same type.
  */
 class inactivity_detector {
-
     /** @var alert_repository */
     private alert_repository $alerts;
 

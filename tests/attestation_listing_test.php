@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,13 +28,12 @@ use local_esmed_compliance\archive\archive_repository;
 use local_esmed_compliance\attestation\attestation_listing;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\attestation\attestation_listing
  */
 final class attestation_listing_test extends \advanced_testcase {
-
     /**
      * Lists only actively enrolled users of the target course, each carrying
      * their total closed-session seconds plus the tally of existing

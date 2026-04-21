@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\attestation;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Turn Moodle state into a {@see attestation_payload}.
  *
@@ -35,7 +33,6 @@ defined('MOODLE_INTERNAL') || die();
  * built from sealed evidence only.
  */
 class attestation_builder {
-
     /**
      * Build an attestation payload for a (user, course) pair.
      *

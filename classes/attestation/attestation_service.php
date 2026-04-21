@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -30,8 +30,6 @@ use local_esmed_compliance\archive\local_storage_adapter;
 use local_esmed_compliance\archive\storage_adapter;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Build, render, seal and index an attestation d'assiduité end-to-end.
  *
@@ -44,7 +42,6 @@ defined('MOODLE_INTERNAL') || die();
  *      future documents).
  */
 class attestation_service {
-
     /** @var attestation_builder */
     private attestation_builder $builder;
 
@@ -71,10 +68,10 @@ class attestation_service {
         ?storage_adapter $storage = null,
         ?archive_repository $archive = null
     ) {
-        $this->builder  = $builder  ?? new attestation_builder();
+        $this->builder  = $builder ?? new attestation_builder();
         $this->renderer = $renderer ?? new tcpdf_attestation_renderer();
-        $this->storage  = $storage  ?? (adapter_registry::active() ?? new local_storage_adapter());
-        $this->archive  = $archive  ?? new archive_repository();
+        $this->storage  = $storage ?? (adapter_registry::active() ?? new local_storage_adapter());
+        $this->archive  = $archive ?? new archive_repository();
     }
 
     /**

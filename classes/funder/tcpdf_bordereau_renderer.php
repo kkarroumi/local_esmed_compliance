@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,8 +26,6 @@ namespace local_esmed_compliance\funder;
 
 use pdf;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Produce a PDF bordereau financeur with Moodle's bundled TCPDF.
  *
@@ -39,23 +37,22 @@ defined('MOODLE_INTERNAL') || die();
  * Landscape A4 so the learners table fits comfortably without wrapping.
  */
 class tcpdf_bordereau_renderer implements bordereau_renderer {
-
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function extension(): string {
         return 'pdf';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function mime_type(): string {
         return 'application/pdf';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function render(
         bordereau_payload $payload,
@@ -114,6 +111,8 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
     }
 
     /**
+     * Render the organisation identification block shown at the top of the bordereau.
+     *
      * @param array<string, mixed> $org
      */
     private static function organisation_block(array $org): string {
@@ -137,6 +136,12 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
         return implode("\n", $lines) ?: '—';
     }
 
+    /**
+     * Render the funder-details block (type, dossier, period) for the bordereau.
+     *
+     * @param bordereau_payload $payload
+     * @return string
+     */
     private static function funder_block(bordereau_payload $payload): string {
         $funder = $payload->funder;
         $lines = [];
@@ -160,6 +165,12 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
         return implode("\n", $lines);
     }
 
+    /**
+     * Render the course-details block summarising the training action.
+     *
+     * @param bordereau_payload $payload
+     * @return string
+     */
     private static function course_block(bordereau_payload $payload): string {
         $course = $payload->course;
         $lines = [(string) ($course['fullname'] ?? '')];
@@ -172,6 +183,9 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
     }
 
     /**
+     * Render the learners table listing each enrolled apprenant and their totals.
+     *
+     * @param pdf $doc
      * @param array<int, array<string, mixed>> $learners
      */
     private static function learners_table(pdf $doc, array $learners): void {
@@ -201,6 +215,12 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
         }
     }
 
+    /**
+     * Render the grand-total row under the learners table.
+     *
+     * @param pdf $doc
+     * @param bordereau_payload $payload
+     */
     private static function totals_block(pdf $doc, bordereau_payload $payload): void {
         $doc->SetFont('helvetica', 'B', 10);
         $doc->Cell(223, 6, 'Total général', 1, 0, 'R');
@@ -208,6 +228,14 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
         $doc->Ln(3);
     }
 
+    /**
+     * Render the signatory line, verification token and QR code at the foot of the bordereau.
+     *
+     * @param pdf $doc
+     * @param bordereau_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     */
     private static function signature_and_token(
         pdf $doc,
         bordereau_payload $payload,
@@ -277,6 +305,8 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
     }
 
     /**
+     * Format a numeric value using the French decimal convention.
+     *
      * @param float|int|null $value
      * @return string
      */

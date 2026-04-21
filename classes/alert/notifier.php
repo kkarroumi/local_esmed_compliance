@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\alert;
 use core\message\message;
 use core_user;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Send a Moodle message to every operator holding `managealerts` in the
  * alert's relevant context when a new alert is raised, and stamp
@@ -46,7 +44,6 @@ defined('MOODLE_INTERNAL') || die();
  * injected collaborators so tests can swap out the message sender.
  */
 class notifier {
-
     /** @var alert_repository */
     private alert_repository $alerts;
 

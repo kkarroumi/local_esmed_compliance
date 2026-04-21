@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\funder;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Produce the row shapes consumed by `templates/funder_links_list.mustache`.
  *
@@ -34,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * predictable alphabetical browse.
  */
 class funder_link_listing {
-
     /**
      * Return every funder link attached to an existing course, along with
      * the course identity fields needed to display and edit the link.

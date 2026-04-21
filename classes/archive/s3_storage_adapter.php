@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -25,8 +25,6 @@
 namespace local_esmed_compliance\archive;
 
 use RuntimeException;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Writes sealed documents to an S3 (or S3-compatible) bucket using
@@ -45,7 +43,6 @@ defined('MOODLE_INTERNAL') || die();
  * assert signatures and shape responses without touching the network.
  */
 class s3_storage_adapter implements storage_adapter {
-
     /** @var string S3 signing service id. */
     private const SERVICE = 's3';
 
@@ -101,14 +98,14 @@ class s3_storage_adapter implements storage_adapter {
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function name(): string {
         return 's3';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function store(string $bytes, string $relativename): string {
         $key = self::safe_key($relativename);
@@ -126,7 +123,7 @@ class s3_storage_adapter implements storage_adapter {
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function fetch(string $relativename): ?string {
         return $this->get_object(self::safe_key($relativename));

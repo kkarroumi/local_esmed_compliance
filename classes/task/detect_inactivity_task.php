@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -29,8 +29,6 @@ use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\alert\inactivity_detector;
 use local_esmed_compliance\alert\notifier;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Runs the inactivity detector on a daily cadence.
  *
@@ -38,8 +36,9 @@ defined('MOODLE_INTERNAL') || die();
  * to the training programme's definition of "at risk".
  */
 class detect_inactivity_task extends scheduled_task {
-
     /**
+     * Human-readable name shown in the Moodle scheduled-tasks admin UI.
+     *
      * @return string
      */
     public function get_name(): string {

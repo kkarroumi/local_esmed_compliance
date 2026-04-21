@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,14 +28,13 @@ use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\alert\inactivity_detector;
 use local_esmed_compliance\session\tracker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\alert\inactivity_detector
  * @covers \local_esmed_compliance\alert\alert_repository
  */
 final class inactivity_detector_test extends \advanced_testcase {
-
     /**
      * Enrolled learner with no session and no enrolment newer than threshold raises an alert.
      */

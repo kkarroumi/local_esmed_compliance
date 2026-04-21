@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -256,7 +256,7 @@ $string['dashboard_open_alerts_empty'] = 'Aucune alerte ouverte — rien à acqu
 $string['dashboard_open_alerts_action'] = 'Action';
 $string['dashboard_open_alerts_ack'] = 'Acquitter';
 
-// Écran opérateur — attestations d'assiduité.
+// Ecran operateur — attestations d'assiduité.
 $string['attestations_page_title'] = 'Attestations d\'assiduité';
 $string['attestations_picker_heading'] = 'Choisir un cours';
 $string['attestations_picker_intro'] = 'Sélectionnez un cours pour consulter les apprenants inscrits et générer une attestation d\'assiduité.';
@@ -283,7 +283,7 @@ $string['attestations_archive_missing_bytes'] = 'Le fichier scellé n\'est plus 
 $string['attestations_method_not_allowed'] = 'Cette action doit être soumise via le formulaire.';
 $string['attestations_user_not_enrolled'] = 'L\'utilisateur sélectionné n\'est pas activement inscrit à ce cours.';
 
-// Écran opérateur — liens financeurs.
+// Ecran operateur — liens financeurs.
 $string['funders_page_title'] = 'Liens financeurs';
 $string['funders_link_new'] = 'Lier un nouveau cours';
 $string['funders_back_to_list'] = 'Retour aux liens financeurs';

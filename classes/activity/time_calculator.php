@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\activity;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Convert a stream of module-view events into per-module time deltas.
  *
@@ -40,7 +38,6 @@ defined('MOODLE_INTERNAL') || die();
  * rules without a Moodle bootstrap.
  */
 final class time_calculator {
-
     /**
      * Compute per-module aggregates from a chronological list of view events.
      *
@@ -68,7 +65,14 @@ final class time_calculator {
      * @param array<int, array{cmid:int,courseid:int,modulename:string,timestamp:int}> $events
      * @param int $capseconds   Maximum delta attributed to a single transition.
      * @param int $tailseconds  Credit assigned to the final view of a run (<= cap).
-     * @return array<int, array{courseid:int,modulename:string,first_access:int,last_access:int,time_spent_seconds:int,views_count:int}>
+     * @return array<int, array{
+     *     courseid:int,
+     *     modulename:string,
+     *     first_access:int,
+     *     last_access:int,
+     *     time_spent_seconds:int,
+     *     views_count:int
+     * }>
      */
     public static function aggregate(array $events, int $capseconds, int $tailseconds = 60): array {
         if ($capseconds < 0) {

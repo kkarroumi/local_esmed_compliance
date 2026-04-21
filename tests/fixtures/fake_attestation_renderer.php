@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\tests\fixtures;
 use local_esmed_compliance\attestation\attestation_payload;
 use local_esmed_compliance\attestation\attestation_renderer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Renders a predictable serialisation of the payload so tests can assert
  * the hash without pulling in TCPDF. The renderer also records the
@@ -36,13 +34,20 @@ defined('MOODLE_INTERNAL') || die();
  * them through.
  */
 final class fake_attestation_renderer implements attestation_renderer {
-
     /** @var string|null */
     public ?string $lasttoken = null;
 
     /** @var string|null */
     public ?string $lasturl = null;
 
+    /**
+     * Render a deterministic fake attestation payload as a string.
+     *
+     * @param attestation_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     * @return string
+     */
     public function render(
         attestation_payload $payload,
         ?string $verificationtoken = null,

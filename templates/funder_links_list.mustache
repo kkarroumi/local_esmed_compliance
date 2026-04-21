@@ -14,6 +14,25 @@
     Each links[] item:
       { id, courseid, course_fullname, course_shortname,
         funder_type_label, dossier_number, hours, period }
+
+    Example context (json):
+    {
+        "baseurl": "https://example.test/local/esmed_compliance/funders.php",
+        "sesskey": "abc123",
+        "has_links": true,
+        "links": [
+            {
+                "id": 1,
+                "courseid": 42,
+                "course_fullname": "Formation SST initiale",
+                "course_shortname": "SST-2026",
+                "funder_type_label": "CPF",
+                "dossier_number": "CPF-12345",
+                "hours": "14.00",
+                "period": "01/02/2026 — 15/02/2026"
+            }
+        ]
+    }
 }}
 <section class="esmed-funder-links">
     <p>

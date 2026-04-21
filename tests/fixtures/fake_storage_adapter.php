@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,37 +26,52 @@ namespace local_esmed_compliance\tests\fixtures;
 
 use local_esmed_compliance\archive\storage_adapter;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * In-memory storage: keeps everything in a hash so tests can mutate the
  * persisted bytes to exercise tampered / missing outcomes without
  * touching the filesystem.
  */
 final class fake_storage_adapter implements storage_adapter {
-
     /** @var array<string, string> */
     public array $files = [];
 
+    /**
+     * Return the fixture storage adapter name.
+     */
     public function name(): string {
         return 'local';
     }
 
+    /**
+     * Store bytes in-memory for the test.
+     */
     public function store(string $bytes, string $relativename): string {
         $this->files[$relativename] = $bytes;
         return $relativename;
     }
 
+    /**
+     * Fetch previously stored bytes.
+     */
     public function fetch(string $relativename): ?string {
         return $this->files[$relativename] ?? null;
     }
 
-    /** Mutate a stored blob to simulate tampering. */
+    /**
+     * Mutate a stored blob to simulate tampering.
+     *
+     * @param string $relativename
+     * @param string $newbytes
+     */
     public function tamper(string $relativename, string $newbytes): void {
         $this->files[$relativename] = $newbytes;
     }
 
-    /** Drop a stored blob to simulate a missing file. */
+    /**
+     * Drop a stored blob to simulate a missing file.
+     *
+     * @param string $relativename
+     */
     public function remove(string $relativename): void {
         unset($this->files[$relativename]);
     }

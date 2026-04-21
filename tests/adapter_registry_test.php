@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,13 +28,12 @@ use local_esmed_compliance\archive\adapter_registry;
 use local_esmed_compliance\archive\local_storage_adapter;
 use local_esmed_compliance\archive\s3_storage_adapter;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\archive\adapter_registry
  */
 final class adapter_registry_test extends \advanced_testcase {
-
     /**
      * With no S3 credentials set, only the local adapter is registered.
      */

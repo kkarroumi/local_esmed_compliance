@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\archive;
 use dml_exception;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Persist and look up sealed document index rows.
  *
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * and can be revoked by deleting the row.
  */
 class archive_repository {
-
     /** @var string Table name. */
     public const TABLE = 'local_esmed_archive_index';
 

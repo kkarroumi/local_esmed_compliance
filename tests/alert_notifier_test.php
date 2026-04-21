@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\alert\notifier;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\alert\notifier
  */
 final class alert_notifier_test extends \advanced_testcase {
-
     /**
      * Operators with managealerts at the course context receive the message;
      * the learner themselves is excluded; notified_at is stamped.

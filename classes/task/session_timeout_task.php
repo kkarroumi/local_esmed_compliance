@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\task;
 use core\task\scheduled_task;
 use local_esmed_compliance\session\tracker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Closes open sessions whose last heartbeat is older than the configured idle window.
  *
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * the threshold is closed as `timeout`.
  */
 class session_timeout_task extends scheduled_task {
-
     /**
      * Task display name shown on the Scheduled tasks admin page.
      *

@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\funder\bordereau_payload;
 use local_esmed_compliance\funder\csv_bordereau_renderer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\funder\csv_bordereau_renderer
  */
 final class csv_bordereau_renderer_test extends \advanced_testcase {
-
     /**
      * Header row starts with the BOM, uses comma separators and CRLF line endings.
      */
@@ -46,7 +45,8 @@ final class csv_bordereau_renderer_test extends \advanced_testcase {
         // Strip the BOM for header comparison.
         $header = substr($lines[0], 3);
         $this->assertSame(
-            'user_id,lastname,firstname,email,idnumber,sessions_count,duration_seconds,duration_hours,first_session,last_session,funder_type,dossier_number,course_shortname',
+            'user_id,lastname,firstname,email,idnumber,sessions_count,duration_seconds,duration_hours,'
+                . 'first_session,last_session,funder_type,dossier_number,course_shortname',
             $header
         );
     }

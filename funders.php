@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -48,9 +48,7 @@ $PAGE->set_heading(get_string('funders_page_title', 'local_esmed_compliance'));
 
 $action = optional_param('action', '', PARAM_ALPHA);
 
-// ---------------------------------------------------------------------
 // Delete branch — POST + sesskey.
-// ---------------------------------------------------------------------
 if ($action === 'delete') {
     require_sesskey();
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -62,9 +60,7 @@ if ($action === 'delete') {
     redirect($baseurl);
 }
 
-// ---------------------------------------------------------------------
 // Course picker — any course not yet linked.
-// ---------------------------------------------------------------------
 if ($action === 'pick') {
     global $DB;
     $PAGE->set_url(new moodle_url($baseurl, ['action' => 'pick']));
@@ -92,9 +88,7 @@ if ($action === 'pick') {
     exit;
 }
 
-// ---------------------------------------------------------------------
 // Edit branch — form display + submit.
-// ---------------------------------------------------------------------
 if ($action === 'edit') {
     $courseid = required_param('courseid', PARAM_INT);
     $course = get_course($courseid);
@@ -141,9 +135,7 @@ if ($action === 'edit') {
     exit;
 }
 
-// ---------------------------------------------------------------------
 // Default — list view.
-// ---------------------------------------------------------------------
 $PAGE->set_url($baseurl);
 
 $rows = (new funder_link_listing())->all();

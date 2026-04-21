@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\attestation;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Renders an attestation payload into a byte blob.
  *
@@ -34,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * without touching the orchestrating service.
  */
 interface attestation_renderer {
-
     /**
      * Render a payload.
      *
@@ -43,5 +40,9 @@ interface attestation_renderer {
      * @param string|null $verificationurl   Absolute URL the QR code should point to.
      * @return string Raw bytes of the rendered document.
      */
-    public function render(attestation_payload $payload, ?string $verificationtoken = null, ?string $verificationurl = null): string;
+    public function render(
+        attestation_payload $payload,
+        ?string $verificationtoken = null,
+        ?string $verificationurl = null
+    ): string;
 }

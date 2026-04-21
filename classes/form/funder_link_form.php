@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -41,9 +41,8 @@ require_once($CFG->libdir . '/formslib.php');
  *   - `existing`:  stdClass|null — the current funder_link row, if any
  */
 class funder_link_form extends moodleform {
-
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     protected function definition() {
         $mform = $this->_form;
@@ -138,18 +137,22 @@ class funder_link_form extends moodleform {
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        if (!empty($data['start_date']) && !empty($data['end_date'])
-            && (int) $data['start_date'] > (int) $data['end_date']) {
+        if (
+            !empty($data['start_date']) && !empty($data['end_date'])
+            && (int) $data['start_date'] > (int) $data['end_date']
+        ) {
             $errors['end_date'] = get_string('funders_error_end_before_start', 'local_esmed_compliance');
         }
 
-        if (isset($data['total_hours_planned']) && $data['total_hours_planned'] !== ''
-            && (float) $data['total_hours_planned'] < 0) {
+        if (
+            isset($data['total_hours_planned']) && $data['total_hours_planned'] !== ''
+            && (float) $data['total_hours_planned'] < 0
+        ) {
             $errors['total_hours_planned'] = get_string('funders_error_negative_hours', 'local_esmed_compliance');
         }
 
