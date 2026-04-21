@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,8 +28,6 @@ use local_esmed_compliance\alert\alert_repository;
 use local_esmed_compliance\archive\archive_repository;
 use local_esmed_compliance\archive\integrity_checker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Compute point-in-time compliance counters backing the dashboard.
  *
@@ -39,7 +37,6 @@ defined('MOODLE_INTERNAL') || die();
  * array is ready to pass straight to a Mustache renderer.
  */
 class metrics_provider {
-
     /**
      * Build the full metrics bundle.
      *

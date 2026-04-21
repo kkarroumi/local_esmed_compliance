@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,16 +27,15 @@ namespace local_esmed_compliance\task;
 use core\task\scheduled_task;
 use local_esmed_compliance\archive\integrity_checker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Re-hashes the least-recently-checked archives and appends a verdict
  * to {local_esmed_integrity_event}, making tamper and loss detectable
  * without waiting for someone to visit the public verify endpoint.
  */
 class verify_archive_integrity_task extends scheduled_task {
-
     /**
+     * Human-readable name shown in the Moodle scheduled-tasks admin UI.
+     *
      * @return string
      */
     public function get_name(): string {

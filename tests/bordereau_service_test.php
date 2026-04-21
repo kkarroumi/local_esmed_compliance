@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -38,10 +38,11 @@ require_once(__DIR__ . '/fixtures/fake_bordereau_renderer.php');
 require_once(__DIR__ . '/fixtures/fake_storage_adapter.php');
 
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\funder\bordereau_service
  */
 final class bordereau_service_test extends \advanced_testcase {
-
     /**
      * Generate seals one PDF and one CSV row sharing a common bordereau_group.
      */

@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,8 +26,6 @@ namespace local_esmed_compliance\archive;
 
 use RuntimeException;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Writes sealed documents under a configurable directory on the local
  * filesystem.
@@ -38,7 +36,6 @@ defined('MOODLE_INTERNAL') || die();
  * reflecting the write-once spirit of the contract.
  */
 class local_storage_adapter implements storage_adapter {
-
     /** @var string Absolute root directory managed by this adapter. */
     private string $root;
 
@@ -57,14 +54,14 @@ class local_storage_adapter implements storage_adapter {
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function name(): string {
         return 'local';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function store(string $bytes, string $relativename): string {
         $safe = self::safe_relative_path($relativename);
@@ -98,7 +95,7 @@ class local_storage_adapter implements storage_adapter {
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function fetch(string $relativename): ?string {
         $safe = self::safe_relative_path($relativename);

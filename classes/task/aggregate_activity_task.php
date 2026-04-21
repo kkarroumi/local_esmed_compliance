@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,14 +27,11 @@ namespace local_esmed_compliance\task;
 use core\task\scheduled_task;
 use local_esmed_compliance\activity\aggregator;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Reads new module-view events from the standard logstore and folds them
  * into {local_esmed_activity_log}. Runs every fifteen minutes by default.
  */
 class aggregate_activity_task extends scheduled_task {
-
     /**
      * Task display name shown on the Scheduled tasks admin page.
      *

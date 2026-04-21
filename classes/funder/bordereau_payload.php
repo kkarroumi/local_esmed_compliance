@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\funder;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Immutable snapshot of a bordereau financeur.
  *
@@ -36,27 +34,37 @@ defined('MOODLE_INTERNAL') || die();
  * deterministic functions of this object.
  */
 final class bordereau_payload {
-
     /**
-     * @param array<string, mixed> $organisation   Training organisation identity.
-     * @param array<string, mixed> $funder         Funder type, dossier, period, action label.
-     * @param array<string, mixed> $course         Course metadata.
-     * @param array<int, array<string, mixed>> $learners
-     * @param int                  $totalseconds   Sum of certifiable seconds across all learners.
-     * @param int                  $learnercount   Number of enrolled learners in the payload.
-     * @param int|null             $periodstart
-     * @param int|null             $periodend
-     * @param int                  $generatedat
+     * Build a new bordereau payload with every field the renderer needs.
+     *
+     * @param array<string, mixed> $organisation Training organisation identity.
+     * @param array<string, mixed> $funder Funder type, dossier, period, action label.
+     * @param array<string, mixed> $course Course metadata.
+     * @param array<int, array<string, mixed>> $learners Per-learner rows.
+     * @param int $totalseconds Sum of certifiable seconds across all learners.
+     * @param int $learnercount Number of enrolled learners in the payload.
+     * @param int|null $periodstart Start of the funder period (unix timestamp).
+     * @param int|null $periodend End of the funder period (unix timestamp).
+     * @param int $generatedat When the payload was built (unix timestamp).
      */
     public function __construct(
+        /** @var array<string, mixed> Training organisation identity. */
         public readonly array $organisation,
+        /** @var array<string, mixed> Funder type, dossier, period, action label. */
         public readonly array $funder,
+        /** @var array<string, mixed> Course metadata. */
         public readonly array $course,
+        /** @var array<int, array<string, mixed>> Per-learner rows. */
         public readonly array $learners,
+        /** @var int Sum of certifiable seconds across all learners. */
         public readonly int $totalseconds,
+        /** @var int Number of enrolled learners in the payload. */
         public readonly int $learnercount,
+        /** @var int|null Start of the funder period (unix timestamp). */
         public readonly ?int $periodstart,
+        /** @var int|null End of the funder period (unix timestamp). */
         public readonly ?int $periodend,
+        /** @var int When the payload was built (unix timestamp). */
         public readonly int $generatedat
     ) {
     }

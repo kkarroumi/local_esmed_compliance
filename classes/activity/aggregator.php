@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\activity;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Consume new module-view events from the standard logstore and fold them
  * into {local_esmed_activity_log}.
@@ -35,7 +33,6 @@ defined('MOODLE_INTERNAL') || die();
  * strictly new events.
  */
 class aggregator {
-
     /** @var string Config key for the logstore checkpoint. */
     public const CHECKPOINT_CONFIG_KEY = 'activity_aggregator_checkpoint';
 

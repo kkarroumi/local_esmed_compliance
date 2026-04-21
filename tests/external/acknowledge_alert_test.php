@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance\external;
 use core_external\external_api;
 use local_esmed_compliance\alert\alert_repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\external\acknowledge_alert
  */
 final class acknowledge_alert_test extends \advanced_testcase {
-
     /**
      * Admin with managealerts can acknowledge an open alert and the payload reports it.
      */

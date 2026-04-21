@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\tests\fixtures;
 use local_esmed_compliance\funder\bordereau_payload;
 use local_esmed_compliance\funder\bordereau_renderer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Tunable fake renderer so bordereau_service tests can run without TCPDF.
  *
@@ -36,7 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * service instantiation can exercise the PDF + CSV pairing logic.
  */
 final class fake_bordereau_renderer implements bordereau_renderer {
-
     /** @var string */
     private string $extension;
 
@@ -49,19 +46,39 @@ final class fake_bordereau_renderer implements bordereau_renderer {
     /** @var string|null */
     public ?string $lasturl = null;
 
+    /**
+     * Build the fake renderer announcing the given extension and mime type.
+     *
+     * @param string $extension
+     * @param string $mimetype
+     */
     public function __construct(string $extension = 'pdf', string $mimetype = 'application/pdf') {
         $this->extension = $extension;
         $this->mimetype = $mimetype;
     }
 
+    /**
+     * Return the fixture document extension.
+     */
     public function extension(): string {
         return $this->extension;
     }
 
+    /**
+     * Return the fixture document mime type.
+     */
     public function mime_type(): string {
         return $this->mimetype;
     }
 
+    /**
+     * Render a deterministic fake bordereau payload as a string.
+     *
+     * @param bordereau_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     * @return string
+     */
     public function render(
         bordereau_payload $payload,
         ?string $verificationtoken = null,

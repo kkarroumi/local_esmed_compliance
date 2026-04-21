@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -37,10 +37,11 @@ require_once(__DIR__ . '/fixtures/fake_attestation_renderer.php');
 require_once(__DIR__ . '/fixtures/fake_storage_adapter.php');
 
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\archive\verifier
  */
 final class verifier_test extends \advanced_testcase {
-
     /**
      * A token that has never been sealed returns STATUS_UNKNOWN.
      */

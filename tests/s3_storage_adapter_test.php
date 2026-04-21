@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\archive\s3_storage_adapter;
 use RuntimeException;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\archive\s3_storage_adapter
  */
 final class s3_storage_adapter_test extends \advanced_testcase {
-
     /**
      * store() PUTs the bytes to the expected URL and emits a SigV4 Authorization header.
      */

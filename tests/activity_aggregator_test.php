@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,14 +27,13 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\activity\activity_repository;
 use local_esmed_compliance\activity\aggregator;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\activity\aggregator
  * @covers \local_esmed_compliance\activity\activity_repository
  */
 final class activity_aggregator_test extends \advanced_testcase {
-
     /**
      * Folding a stream creates one row per cmid and credits time.
      */
@@ -45,8 +44,8 @@ final class activity_aggregator_test extends \advanced_testcase {
 
         $events = [
             $this->event(101, 10, 'resource', 1700000000),
-            $this->event(102, 10, 'quiz',     1700000120),
-            $this->event(102, 10, 'quiz',     1700000300),
+            $this->event(102, 10, 'quiz', 1700000120),
+            $this->event(102, 10, 'quiz', 1700000300),
         ];
 
         (new aggregator())->aggregate_from_events((int) $user->id, $events, 900, 1700000400, 60);
@@ -147,7 +146,12 @@ final class activity_aggregator_test extends \advanced_testcase {
             60
         );
         (new activity_repository())->set_completion_state(
-            (int) $user->id, 42, 501, 'quiz', 1, 1700000500
+            (int) $user->id,
+            42,
+            501,
+            'quiz',
+            1,
+            1700000500
         );
 
         $row = $DB->get_record(activity_repository::TABLE, ['userid' => $user->id, 'cmid' => 501]);

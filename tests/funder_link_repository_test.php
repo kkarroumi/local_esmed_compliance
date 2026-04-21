@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,13 +26,12 @@ namespace local_esmed_compliance;
 
 use local_esmed_compliance\funder\funder_link_repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\funder\funder_link_repository
  */
 final class funder_link_repository_test extends \advanced_testcase {
-
     /**
      * Upsert inserts when no link exists for the course.
      */

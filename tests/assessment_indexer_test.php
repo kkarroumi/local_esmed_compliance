@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -28,15 +28,14 @@ use local_esmed_compliance\assessment\assessment_repository;
 use local_esmed_compliance\assessment\indexer;
 use local_esmed_compliance\assessment\tag_repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\assessment\indexer
  * @covers \local_esmed_compliance\assessment\assessment_repository
  * @covers \local_esmed_compliance\assessment\tag_repository
  */
 final class assessment_indexer_test extends \advanced_testcase {
-
     /**
      * An attempt on an untagged module is ignored.
      */
@@ -131,7 +130,14 @@ final class assessment_indexer_test extends \advanced_testcase {
         (new tag_repository())->set_type(555, 10, tag_repository::TYPE_DEVOIR_FORMATIF, null, 1700000000);
 
         $id = (new indexer())->index_attempt(
-            (int) $user->id, 10, 555, 0.0, 0.0, 1700000500, 'assign_submission', 4242
+            (int) $user->id,
+            10,
+            555,
+            0.0,
+            0.0,
+            1700000500,
+            'assign_submission',
+            4242
         );
 
         $record = $DB->get_record(assessment_repository::TABLE, ['id' => $id], '*', MUST_EXIST);
@@ -160,7 +166,14 @@ final class assessment_indexer_test extends \advanced_testcase {
         $tags->clear(555);
 
         $id = (new indexer())->index_attempt(
-            (int) $user->id, 10, 555, 8.0, 10.0, 1700000500, 'quiz_attempts', 9001
+            (int) $user->id,
+            10,
+            555,
+            8.0,
+            10.0,
+            1700000500,
+            'quiz_attempts',
+            9001
         );
 
         $this->assertNull($id);

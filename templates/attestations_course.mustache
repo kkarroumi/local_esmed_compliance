@@ -1,0 +1,100 @@
+{{!
+    @template local_esmed_compliance/attestations_course
+
+    Per-course attestation operator table. For each enrolled learner,
+    shows the sealed-session hours accumulated so far, whether an
+    attestation has already been sealed for (learner, course), and
+    exposes two primary actions: "Generate" (POST) and "Download" (GET).
+
+    Context variables:
+      * courseid         — course id for hidden form fields
+      * coursename       — formatted course full name
+      * shortname        — formatted course short name
+      * baseurl          — URL of attestations.php (no query string)
+      * sesskey          — Moodle session key (CSRF)
+      * users            — array of row shapes
+      * has_users        — boolean
+
+    Each users[] item:
+      { userid, fullname, email, idnumber, hours, attestation_count,
+        has_attestation, last_sealed_at, last_archive_id }
+
+    Example context (json):
+    {
+        "courseid": 42,
+        "coursename": "Formation SST initiale",
+        "shortname": "SST-2026",
+        "baseurl": "https://example.test/local/esmed_compliance/attestations.php",
+        "sesskey": "abc123",
+        "has_users": true,
+        "users": [
+            {
+                "userid": 7,
+                "fullname": "Jane Doe",
+                "email": "jane@example.com",
+                "idnumber": "EMP-42",
+                "hours": "14.50",
+                "attestation_count": 1,
+                "has_attestation": true,
+                "last_sealed_at": "2026-02-15 09:00",
+                "last_archive_id": 99
+            }
+        ]
+    }
+}}
+<section class="esmed-attestations-course">
+    <h3>{{coursename}} <small class="text-muted">({{shortname}})</small></h3>
+    <p>
+        <a href="{{baseurl}}">
+            &laquo; {{#str}} attestations_back_to_courses, local_esmed_compliance {{/str}}
+        </a>
+    </p>
+
+    {{#has_users}}
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th scope="col">{{#str}} attestations_col_learner, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_email, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_idnumber, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_hours, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_count, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_last, local_esmed_compliance {{/str}}</th>
+                    <th scope="col"><span class="sr-only">{{#str}} attestations_col_actions, local_esmed_compliance {{/str}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#users}}
+                    <tr>
+                        <td>{{fullname}}</td>
+                        <td>{{email}}</td>
+                        <td>{{idnumber}}</td>
+                        <td>{{hours}}</td>
+                        <td>{{attestation_count}}</td>
+                        <td>{{last_sealed_at}}</td>
+                        <td>
+                            <form method="post" action="{{baseurl}}" style="display:inline-block; margin-right: 0.5rem;">
+                                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                                <input type="hidden" name="courseid" value="{{courseid}}">
+                                <input type="hidden" name="userid" value="{{userid}}">
+                                <input type="hidden" name="action" value="generate">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    {{#str}} attestations_action_generate, local_esmed_compliance {{/str}}
+                                </button>
+                            </form>
+                            {{#has_attestation}}
+                                <a class="btn btn-secondary btn-sm"
+                                   href="{{baseurl}}?action=download&amp;id={{last_archive_id}}&amp;sesskey={{sesskey}}">
+                                    {{#str}} attestations_action_download, local_esmed_compliance {{/str}}
+                                </a>
+                            {{/has_attestation}}
+                        </td>
+                    </tr>
+                {{/users}}
+            </tbody>
+        </table>
+    {{/has_users}}
+    {{^has_users}}
+        <p><em>{{#str}} attestations_empty, local_esmed_compliance {{/str}}</em></p>
+    {{/has_users}}
+</section>

@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -255,3 +255,64 @@ $string['dashboard_open_alerts_triggered_at'] = 'Émise le';
 $string['dashboard_open_alerts_empty'] = 'Aucune alerte ouverte — rien à acquitter.';
 $string['dashboard_open_alerts_action'] = 'Action';
 $string['dashboard_open_alerts_ack'] = 'Acquitter';
+
+// Ecran operateur — attestations d'assiduité.
+$string['attestations_page_title'] = 'Attestations d\'assiduité';
+$string['attestations_picker_heading'] = 'Choisir un cours';
+$string['attestations_picker_intro'] = 'Sélectionnez un cours pour consulter les apprenants inscrits et générer une attestation d\'assiduité.';
+$string['attestations_picker_open'] = 'Ouvrir';
+$string['attestations_picker_empty'] = 'Aucun cours disponible — il faut la capacité « Générer des attestations d\'assiduité » sur au moins un cours.';
+$string['attestations_col_course'] = 'Cours';
+$string['attestations_col_shortname'] = 'Nom abrégé';
+$string['attestations_col_actions'] = 'Actions';
+$string['attestations_col_learner'] = 'Apprenant';
+$string['attestations_col_email'] = 'Courriel';
+$string['attestations_col_idnumber'] = 'Numéro d\'identification';
+$string['attestations_col_hours'] = 'Heures';
+$string['attestations_col_count'] = 'Scellées';
+$string['attestations_col_last'] = 'Dernière génération';
+$string['attestations_action_generate'] = 'Générer';
+$string['attestations_action_download'] = 'Télécharger';
+$string['attestations_back_to_courses'] = 'Retour aux cours';
+$string['attestations_empty'] = 'Aucun apprenant inscrit — rien à attester pour l\'instant.';
+$string['attestations_generated_ok'] = 'Attestation d\'assiduité scellée (jeton {$a->token}…).';
+$string['attestations_generated_error'] = 'Impossible de sceller l\'attestation : {$a}';
+$string['attestations_archive_not_found'] = 'Archive introuvable.';
+$string['attestations_storage_unavailable'] = 'Adaptateur de stockage indisponible pour cette archive.';
+$string['attestations_archive_missing_bytes'] = 'Le fichier scellé n\'est plus récupérable depuis le stockage.';
+$string['attestations_method_not_allowed'] = 'Cette action doit être soumise via le formulaire.';
+$string['attestations_user_not_enrolled'] = 'L\'utilisateur sélectionné n\'est pas activement inscrit à ce cours.';
+
+// Ecran operateur — liens financeurs.
+$string['funders_page_title'] = 'Liens financeurs';
+$string['funders_link_new'] = 'Lier un nouveau cours';
+$string['funders_back_to_list'] = 'Retour aux liens financeurs';
+$string['funders_col_course'] = 'Cours';
+$string['funders_col_type'] = 'Financeur';
+$string['funders_col_dossier'] = 'Dossier';
+$string['funders_col_hours'] = 'Heures prévues';
+$string['funders_col_period'] = 'Période';
+$string['funders_col_actions'] = 'Actions';
+$string['funders_action_edit'] = 'Modifier';
+$string['funders_action_delete'] = 'Supprimer';
+$string['funders_action_save'] = 'Enregistrer le lien';
+$string['funders_picker_link'] = 'Lier';
+$string['funders_picker_all_linked'] = 'Tous les cours sont déjà liés à un financeur.';
+$string['funders_empty'] = 'Aucun cours n\'est actuellement lié à un financeur.';
+$string['funders_create_heading'] = 'Lier un cours à un financeur';
+$string['funders_edit_heading'] = 'Modifier le lien financeur';
+$string['funders_field_course'] = 'Cours';
+$string['funders_field_type'] = 'Financeur';
+$string['funders_field_dossier'] = 'Numéro de dossier';
+$string['funders_field_action'] = 'Intitulé officiel de l\'action';
+$string['funders_field_opco_name'] = 'Nom de l\'OPCO';
+$string['funders_field_hours'] = 'Heures prévues';
+$string['funders_field_start_date'] = 'Date de début';
+$string['funders_field_end_date'] = 'Date de fin';
+$string['funders_saved_ok'] = 'Lien financeur enregistré.';
+$string['funders_deleted_ok'] = 'Lien financeur supprimé.';
+$string['funders_confirm_delete'] = 'Supprimer le lien financeur de ce cours ?';
+$string['funders_method_not_allowed'] = 'Cette action doit être soumise via le formulaire.';
+$string['funders_error_end_before_start'] = 'La date de fin ne peut pas être antérieure à la date de début.';
+$string['funders_error_negative_hours'] = 'Les heures prévues doivent être positives ou nulles.';
+$string['funders_error_bad_type'] = 'Type de financeur inconnu.';

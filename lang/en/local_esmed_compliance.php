@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -255,3 +255,64 @@ $string['dashboard_open_alerts_triggered_at'] = 'Triggered at';
 $string['dashboard_open_alerts_empty'] = 'No open alerts — nothing to acknowledge.';
 $string['dashboard_open_alerts_action'] = 'Action';
 $string['dashboard_open_alerts_ack'] = 'Acknowledge';
+
+// Attestation operator screen.
+$string['attestations_page_title'] = 'Attendance certificates';
+$string['attestations_picker_heading'] = 'Pick a course';
+$string['attestations_picker_intro'] = 'Select a course to review enrolled learners and generate an attendance certificate.';
+$string['attestations_picker_open'] = 'Open';
+$string['attestations_picker_empty'] = 'No course available — you need the "Generate attendance certificates" capability on at least one course.';
+$string['attestations_col_course'] = 'Course';
+$string['attestations_col_shortname'] = 'Short name';
+$string['attestations_col_actions'] = 'Actions';
+$string['attestations_col_learner'] = 'Learner';
+$string['attestations_col_email'] = 'Email';
+$string['attestations_col_idnumber'] = 'ID number';
+$string['attestations_col_hours'] = 'Hours';
+$string['attestations_col_count'] = 'Sealed';
+$string['attestations_col_last'] = 'Last generated';
+$string['attestations_action_generate'] = 'Generate';
+$string['attestations_action_download'] = 'Download';
+$string['attestations_back_to_courses'] = 'Back to courses';
+$string['attestations_empty'] = 'No enrolled learners — nothing to attest yet.';
+$string['attestations_generated_ok'] = 'Attendance certificate sealed (token {$a->token}…).';
+$string['attestations_generated_error'] = 'Could not seal the attendance certificate: {$a}';
+$string['attestations_archive_not_found'] = 'Archive not found.';
+$string['attestations_storage_unavailable'] = 'Storage adapter unavailable for this archive.';
+$string['attestations_archive_missing_bytes'] = 'The sealed file is no longer retrievable from storage.';
+$string['attestations_method_not_allowed'] = 'This action must be submitted through the form.';
+$string['attestations_user_not_enrolled'] = 'The selected user is not actively enrolled in this course.';
+
+// Funder links operator screen.
+$string['funders_page_title'] = 'Funder links';
+$string['funders_link_new'] = 'Link a new course';
+$string['funders_back_to_list'] = 'Back to funder links';
+$string['funders_col_course'] = 'Course';
+$string['funders_col_type'] = 'Funder';
+$string['funders_col_dossier'] = 'Dossier';
+$string['funders_col_hours'] = 'Planned hours';
+$string['funders_col_period'] = 'Period';
+$string['funders_col_actions'] = 'Actions';
+$string['funders_action_edit'] = 'Edit';
+$string['funders_action_delete'] = 'Remove';
+$string['funders_action_save'] = 'Save link';
+$string['funders_picker_link'] = 'Link';
+$string['funders_picker_all_linked'] = 'Every course already carries a funder link.';
+$string['funders_empty'] = 'No course is currently linked to a funder.';
+$string['funders_create_heading'] = 'Link a course to a funder';
+$string['funders_edit_heading'] = 'Edit funder link';
+$string['funders_field_course'] = 'Course';
+$string['funders_field_type'] = 'Funder';
+$string['funders_field_dossier'] = 'Dossier number';
+$string['funders_field_action'] = 'Official action title';
+$string['funders_field_opco_name'] = 'OPCO name';
+$string['funders_field_hours'] = 'Planned hours';
+$string['funders_field_start_date'] = 'Start date';
+$string['funders_field_end_date'] = 'End date';
+$string['funders_saved_ok'] = 'Funder link saved.';
+$string['funders_deleted_ok'] = 'Funder link removed.';
+$string['funders_confirm_delete'] = 'Remove the funder link for this course?';
+$string['funders_method_not_allowed'] = 'This action must be submitted through the form.';
+$string['funders_error_end_before_start'] = 'End date cannot be earlier than start date.';
+$string['funders_error_negative_hours'] = 'Planned hours must be zero or positive.';
+$string['funders_error_bad_type'] = 'Unknown funder type.';

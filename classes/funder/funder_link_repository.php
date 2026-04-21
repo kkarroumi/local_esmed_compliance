@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,8 +27,6 @@ namespace local_esmed_compliance\funder;
 use dml_exception;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * CRUD for the (course → funder) link.
  *
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * so re-linking a course behaves like an update.
  */
 class funder_link_repository {
-
     /** @var string Table name. */
     public const TABLE = 'local_esmed_funder_link';
 
@@ -91,12 +88,12 @@ class funder_link_repository {
         $record = $existing ?: new stdClass();
         $record->courseid            = $courseid;
         $record->funder_type         = $fundertype;
-        $record->dossier_number      = $attributes['dossier_number']      ?? ($existing->dossier_number ?? null);
+        $record->dossier_number      = $attributes['dossier_number'] ?? ($existing->dossier_number ?? null);
         $record->total_hours_planned = $attributes['total_hours_planned'] ?? ($existing->total_hours_planned ?? null);
-        $record->start_date          = $attributes['start_date']          ?? ($existing->start_date ?? null);
-        $record->end_date            = $attributes['end_date']            ?? ($existing->end_date ?? null);
-        $record->action_intitule     = $attributes['action_intitule']     ?? ($existing->action_intitule ?? null);
-        $record->opco_name           = $attributes['opco_name']           ?? ($existing->opco_name ?? null);
+        $record->start_date          = $attributes['start_date'] ?? ($existing->start_date ?? null);
+        $record->end_date            = $attributes['end_date'] ?? ($existing->end_date ?? null);
+        $record->action_intitule     = $attributes['action_intitule'] ?? ($existing->action_intitule ?? null);
+        $record->opco_name           = $attributes['opco_name'] ?? ($existing->opco_name ?? null);
         $record->timemodified        = $now;
 
         if ($existing) {

@@ -7,6 +7,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (iteration 15 — operator CRUD for funder links)
+- `funders.php`: single-URL controller with four branches — list
+  (default), course picker (`action=pick`), create/edit form
+  (`action=edit&courseid=…`), delete (POST `action=delete` +
+  `require_sesskey()`). Whole page gated by
+  `local/esmed_compliance:manageconfig` at system context.
+- `classes/funder/funder_link_listing.php`: `all()` joins
+  `local_esmed_funder_link` with `course` and returns one row per
+  linked course, ordered alphabetically by course full name, with
+  funder type, dossier number, OPCO name, planned hours, action
+  intitulé and the period boundaries.
+- `classes/form/funder_link_form.php`: Moodle form for create/edit —
+  funder-type select, dossier number, OPCO name (shown only for OPCO),
+  planned hours, action intitulé, optional start/end dates with
+  `end ≥ start` validation and non-negative hours validation.
+- `classes/output/renderer.php`: `render_funder_links_list()` and
+  `render_funder_course_picker()`.
+- `templates/funder_links_list.mustache`: table with inline edit +
+  POST-form delete (JS confirm) per row.
+- `templates/funder_course_picker.mustache`: course list for the
+  create flow, restricted to courses without an existing link.
+- `settings.php`: admin-menu entry "Financeurs & dispositifs" under
+  the plugin category, gated on `manageconfig`.
+- `lang/en/` + `lang/fr/`: 34 new strings — page title, column and
+  field labels, funder-type options, action labels, success / error
+  notifications, delete confirmation prompt.
+- `tests/funder_link_listing_test.php`: verifies alphabetical
+  ordering, funder metadata projection and empty-table behaviour.
+
+### Added (iteration 14 — operator screen to generate attendance certificates)
+- `attestations.php`: single-URL controller that dispatches four
+  actions — course picker (no courseid), per-course enrolled-learner
+  table (GET courseid), seal-and-redirect (POST action=generate) and
+  PDF streaming (GET action=download&id=…). POST-only generation plus
+  `require_sesskey()` on both write paths. Per-course capability gate
+  via `local/esmed_compliance:generateattestation`.
+- `classes/attestation/attestation_listing.php`:
+  `list_for_course()` aggregates closed-session seconds and counts
+  already-sealed attestations per enrolled learner in a single pass,
+  including the archive id of the most recent attestation so the
+  "Download" button links directly to it.
+  `courses_for_current_user()` lists every course where the caller
+  holds the `generateattestation` capability, powering the picker.
+- `classes/archive/archive_repository.php`: `find_by_id()` for
+  archive-row lookup by primary key (used by the download action).
+- `classes/attestation/attestation_service.php`: default storage
+  adapter now resolves through `adapter_registry::active()` so fresh
+  attestations land on the admin-selected backend (local or S3)
+  instead of always the local filesystem.
+- `classes/output/renderer.php`: two new render methods —
+  `render_attestations_course_picker()` and
+  `render_attestations_for_course()` — plus a shared hours formatter.
+- `templates/attestations_course_picker.mustache`,
+  `templates/attestations_course.mustache`: course list and
+  per-course enrolled-users table with inline generate / download
+  actions.
+- `settings.php`: admin-menu entry "Attestations d'assiduité" under
+  the plugin category.
+- `lang/en/` + `lang/fr/`: 24 new strings covering the page title,
+  table headers, action labels, success and error notifications, and
+  empty-state messages.
+- `tests/attestation_listing_test.php`: confirms the listing scopes
+  to enrolled users only, ignores open sessions, aggregates across
+  multiple closed sessions, ignores archives from other courses, and
+  zero-fills fresh learners.
+- Plugin version bumped to `2026042013`.
+
 ### Added (iteration 13 — S3 / S3-compatible storage adapter)
 - `classes/archive/s3_storage_adapter.php`: AWS Signature Version 4
   signed PUT/GET client against the configured bucket using path-style

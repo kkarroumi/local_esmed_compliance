@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,14 +24,11 @@
 
 namespace local_esmed_compliance\archive;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Look up a sealed document by its public verification token and
  * confirm the stored file still matches the hash that was sealed.
  */
 class verifier {
-
     /** @var string Verification status: token unknown. */
     public const STATUS_UNKNOWN = 'unknown';
     /** @var string Verification status: file missing from storage. */

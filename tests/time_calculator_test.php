@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,13 +26,12 @@ namespace local_esmed_compliance;
 
 use local_esmed_compliance\activity\time_calculator;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\activity\time_calculator
  */
 final class time_calculator_test extends \advanced_testcase {
-
     /**
      * An empty event stream produces no aggregates.
      */
@@ -62,8 +61,8 @@ final class time_calculator_test extends \advanced_testcase {
     public function test_within_cap_attribution(): void {
         $events = [
             $this->event(101, 10, 'resource', 1700000000),
-            $this->event(102, 10, 'quiz',     1700000120), // +120s credited to 101.
-            $this->event(102, 10, 'quiz',     1700000300), // +180s credited to 102.
+            $this->event(102, 10, 'quiz', 1700000120), // Credits +120s to 101.
+            $this->event(102, 10, 'quiz', 1700000300), // Credits +180s to 102.
         ];
         $result = time_calculator::aggregate($events, 900, 60);
 
@@ -81,7 +80,7 @@ final class time_calculator_test extends \advanced_testcase {
         $events = [
             $this->event(101, 10, 'resource', 1700000000),
             // 2 hours later, same user comes back on a different module.
-            $this->event(102, 10, 'quiz',     1700007200),
+            $this->event(102, 10, 'quiz', 1700007200),
         ];
         $result = time_calculator::aggregate($events, 900, 60);
 
@@ -97,7 +96,7 @@ final class time_calculator_test extends \advanced_testcase {
     public function test_zero_cap_credits_tail_only(): void {
         $events = [
             $this->event(101, 10, 'resource', 1700000000),
-            $this->event(102, 10, 'quiz',     1700000060),
+            $this->event(102, 10, 'quiz', 1700000060),
         ];
         $result = time_calculator::aggregate($events, 0, 0);
         $this->assertEquals(0, $result[101]['time_spent_seconds']);

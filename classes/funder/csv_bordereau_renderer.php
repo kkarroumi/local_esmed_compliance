@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\funder;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Produce a deterministic UTF-8 CSV bordereau.
  *
@@ -35,7 +33,6 @@ defined('MOODLE_INTERNAL') || die();
  * auto-detects the encoding.
  */
 class csv_bordereau_renderer implements bordereau_renderer {
-
     /** @var string Byte order mark for UTF-8, so Excel opens accented text correctly. */
     private const BOM = "\xEF\xBB\xBF";
 
@@ -43,21 +40,21 @@ class csv_bordereau_renderer implements bordereau_renderer {
     private const EOL = "\r\n";
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function extension(): string {
         return 'csv';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function mime_type(): string {
         return 'text/csv; charset=utf-8';
     }
 
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function render(
         bordereau_payload $payload,
@@ -92,7 +89,7 @@ class csv_bordereau_renderer implements bordereau_renderer {
                 (string) $learner['duration'],
                 self::hours((int) $learner['duration']),
                 $learner['first_session'] !== null ? self::date_iso((int) $learner['first_session']) : '',
-                $learner['last_session']  !== null ? self::date_iso((int) $learner['last_session'])  : '',
+                $learner['last_session'] !== null ? self::date_iso((int) $learner['last_session']) : '',
                 (string) $payload->funder['type'],
                 (string) $payload->funder['dossier_number'],
                 (string) $payload->course['shortname'],

@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,8 +26,6 @@ namespace local_esmed_compliance\attestation;
 
 use pdf;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Produce a PDF attestation d'assiduité with Moodle's bundled TCPDF.
  *
@@ -40,9 +38,8 @@ defined('MOODLE_INTERNAL') || die();
  * French regulatory document (article D.6353-4 of the Code du travail).
  */
 class tcpdf_attestation_renderer implements attestation_renderer {
-
     /**
-     * @inheritDoc
+     * Inherits from parent.
      */
     public function render(
         attestation_payload $payload,
@@ -106,6 +103,8 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     }
 
     /**
+     * Render the organisation block shown at the top of the attestation.
+     *
      * @param array<string, mixed> $org
      */
     private static function organisation_block(array $org): string {
@@ -130,6 +129,8 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     }
 
     /**
+     * Render the learner identity block shown on the attestation.
+     *
      * @param array<string, mixed> $learner
      */
     private static function learner_block(array $learner): string {
@@ -147,6 +148,12 @@ class tcpdf_attestation_renderer implements attestation_renderer {
         return implode("\n", $lines) ?: '—';
     }
 
+    /**
+     * Render the course / period / total duration block shown on the attestation.
+     *
+     * @param attestation_payload $payload
+     * @return string
+     */
     private static function course_block(attestation_payload $payload): string {
         $course = $payload->course;
         $lines = [$course['fullname'] ?? ''];
@@ -159,6 +166,9 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     }
 
     /**
+     * Render the certified-sessions table inside the attestation.
+     *
+     * @param pdf $doc
      * @param array<int, array<string, mixed>> $sessions
      */
     private static function sessions_table(pdf $doc, array $sessions): void {
@@ -182,6 +192,9 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     }
 
     /**
+     * Render the assessments table inside the attestation.
+     *
+     * @param pdf $doc
      * @param array<int, array<string, mixed>> $assessments
      */
     private static function assessments_table(pdf $doc, array $assessments): void {
@@ -206,6 +219,14 @@ class tcpdf_attestation_renderer implements attestation_renderer {
         }
     }
 
+    /**
+     * Render the signatory, verification token and QR code footer.
+     *
+     * @param pdf $doc
+     * @param attestation_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     */
     private static function signature_and_token(
         pdf $doc,
         attestation_payload $payload,
@@ -251,6 +272,8 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     }
 
     /**
+     * Format a numeric value for display in the attestation.
+     *
      * @param float|int|null $value
      * @return string
      */

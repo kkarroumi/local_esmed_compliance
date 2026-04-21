@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,8 +26,6 @@ namespace local_esmed_compliance\funder;
 
 use context_course;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Aggregate certifiable session time for every enrolled learner on a
  * given funder link, clipped to the funder period when set.
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * when attendance is nil.
  */
 class bordereau_builder {
-
     /** @var funder_link_repository */
     private funder_link_repository $links;
 
@@ -69,9 +66,14 @@ class bordereau_builder {
         $course = $DB->get_record('course', ['id' => $link->courseid], 'id, fullname, shortname, startdate, enddate', MUST_EXIST);
 
         $periodstart = $link->start_date !== null ? (int) $link->start_date : null;
-        $periodend   = $link->end_date   !== null ? (int) $link->end_date   : null;
+        $periodend   = $link->end_date !== null ? (int) $link->end_date : null;
 
-        $enrolled = get_enrolled_users(context_course::instance($link->courseid), '', 0, 'u.id, u.firstname, u.lastname, u.email, u.idnumber');
+        $enrolled = get_enrolled_users(
+            context_course::instance($link->courseid),
+            '',
+            0,
+            'u.id, u.firstname, u.lastname, u.email, u.idnumber'
+        );
 
         $learners = [];
         $totalseconds = 0;
@@ -164,7 +166,7 @@ class bordereau_builder {
             $total += $end - $start;
             $count++;
             $first = $first === null ? $start : min($first, $start);
-            $last  = $last  === null ? $end   : max($last, $end);
+            $last  = $last === null ? $end : max($last, $end);
         }
 
         return [

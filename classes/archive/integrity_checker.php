@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\archive;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Periodically re-hashes stored archives and appends a verdict to
  * `{local_esmed_integrity_event}` so tampering or loss is detected
@@ -37,7 +35,6 @@ defined('MOODLE_INTERNAL') || die();
  * the rows that have been checked least recently — or never at all.
  */
 class integrity_checker {
-
     /** @var string Integrity event table. */
     public const EVENT_TABLE = 'local_esmed_integrity_event';
 
@@ -98,7 +95,13 @@ class integrity_checker {
         $candidates = $DB->get_records_sql($sql, [], 0, $batchsize);
 
         foreach ($candidates as $row) {
-            $status = $this->check_one((int) $row->id, (string) $row->storage_adapter, (string) $row->file_path, (string) $row->sha256_hash, $now);
+            $status = $this->check_one(
+                (int) $row->id,
+                (string) $row->storage_adapter,
+                (string) $row->file_path,
+                (string) $row->sha256_hash,
+                $now
+            );
             $tally['checked']++;
             $tally[$status]++;
         }

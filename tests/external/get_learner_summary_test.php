@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance\external;
 use core_external\external_api;
 use local_esmed_compliance\session\tracker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\external\get_learner_summary
  */
 final class get_learner_summary_test extends \advanced_testcase {
-
     /**
      * The learner's own summary is reachable via viewownreports and reflects closed-session totals.
      */

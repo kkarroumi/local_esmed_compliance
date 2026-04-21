@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -24,8 +24,6 @@
 
 namespace local_esmed_compliance\attestation;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Immutable snapshot of everything the renderer needs to produce an attestation.
  *
@@ -36,27 +34,37 @@ defined('MOODLE_INTERNAL') || die();
  * assessments, and the signatory.
  */
 final class attestation_payload {
-
     /**
-     * @param array<string, mixed> $organisation    Training organisation identity.
-     * @param array<string, mixed> $learner         Learner identity.
-     * @param array<string, mixed> $course          Course metadata.
-     * @param int                  $totalseconds    Aggregated certifiable duration.
-     * @param int|null             $periodstart     Start of the training period (unix timestamp).
-     * @param int|null             $periodend       End of the training period (unix timestamp).
-     * @param array<int, array<string, mixed>> $sessions      Per-session breakdown.
-     * @param array<int, array<string, mixed>> $assessments   Per-assessment breakdown.
-     * @param int                  $generatedat     When the payload was built.
+     * Build a new payload instance with all fields required by the renderer.
+     *
+     * @param array<string, mixed> $organisation Training organisation identity.
+     * @param array<string, mixed> $learner Learner identity.
+     * @param array<string, mixed> $course Course metadata.
+     * @param int $totalseconds Aggregated certifiable duration.
+     * @param int|null $periodstart Start of the training period (unix timestamp).
+     * @param int|null $periodend End of the training period (unix timestamp).
+     * @param array<int, array<string, mixed>> $sessions Per-session breakdown.
+     * @param array<int, array<string, mixed>> $assessments Per-assessment breakdown.
+     * @param int $generatedat When the payload was built.
      */
     public function __construct(
+        /** @var array<string, mixed> Training organisation identity. */
         public readonly array $organisation,
+        /** @var array<string, mixed> Learner identity. */
         public readonly array $learner,
+        /** @var array<string, mixed> Course metadata. */
         public readonly array $course,
+        /** @var int Aggregated certifiable duration in seconds. */
         public readonly int $totalseconds,
+        /** @var int|null Start of the training period (unix timestamp). */
         public readonly ?int $periodstart,
+        /** @var int|null End of the training period (unix timestamp). */
         public readonly ?int $periodend,
+        /** @var array<int, array<string, mixed>> Per-session breakdown. */
         public readonly array $sessions,
+        /** @var array<int, array<string, mixed>> Per-assessment breakdown. */
         public readonly array $assessments,
+        /** @var int When the payload was built (unix timestamp). */
         public readonly int $generatedat
     ) {
     }

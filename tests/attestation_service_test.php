@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -37,12 +37,13 @@ require_once(__DIR__ . '/fixtures/fake_attestation_renderer.php');
 require_once(__DIR__ . '/fixtures/fake_storage_adapter.php');
 
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\attestation\attestation_service
  * @covers \local_esmed_compliance\attestation\attestation_builder
  * @covers \local_esmed_compliance\attestation\attestation_payload
  */
 final class attestation_service_test extends \advanced_testcase {
-
     /**
      * Generate a sealed attestation end-to-end and assert the hash is bound to the stored bytes.
      */

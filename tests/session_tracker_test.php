@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,14 +27,13 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\session\session_repository;
 use local_esmed_compliance\session\tracker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\session\tracker
  * @covers \local_esmed_compliance\session\session_repository
  */
 final class session_tracker_test extends \advanced_testcase {
-
     /**
      * Opening a session for a user with none open must create one record.
      */
@@ -166,11 +165,11 @@ final class session_tracker_test extends \advanced_testcase {
 
         $tracker = new tracker();
 
-        // user1 opened a session and received one heartbeat, but is now silent.
+        // User1 opened a session and received one heartbeat, but is now silent.
         $s1 = $tracker->open_session((int) $user1->id, null, null, null, 1700000000);
         $tracker->record_heartbeat((int) $user1->id, 1700000050);
 
-        // user2 opened a session and never beat (crash).
+        // User2 opened a session and never beat (crash).
         $s2 = $tracker->open_session((int) $user2->id, null, null, null, 1700000000);
         $DB->set_field('local_esmed_sessions', 'last_heartbeat', null, ['id' => $s2]);
 

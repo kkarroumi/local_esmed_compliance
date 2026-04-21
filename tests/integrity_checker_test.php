@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -34,10 +34,11 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/fixtures/fake_storage_adapter.php');
 
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\archive\integrity_checker
  */
 final class integrity_checker_test extends \advanced_testcase {
-
     /**
      * A sealed archive with intact bytes logs a `valid` event.
      */
@@ -147,6 +148,13 @@ final class integrity_checker_test extends \advanced_testcase {
         return (new archive_repository())->insert($record);
     }
 
+    /**
+     * Build an archive index row fixture for use in the tests.
+     *
+     * @param string $filepath
+     * @param string $hash
+     * @return stdClass
+     */
     private function make_record(string $filepath, string $hash): stdClass {
         $r = new stdClass();
         $r->userid             = null;

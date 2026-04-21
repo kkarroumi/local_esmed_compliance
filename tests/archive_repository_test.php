@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -27,13 +27,12 @@ namespace local_esmed_compliance;
 use local_esmed_compliance\archive\archive_repository;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\archive\archive_repository
  */
 final class archive_repository_test extends \advanced_testcase {
-
     /**
      * Insert + find_by_token round-trip preserves every sealed field.
      */
@@ -108,6 +107,8 @@ final class archive_repository_test extends \advanced_testcase {
     }
 
     /**
+     * Build an archive index row fixture for use in the tests.
+     *
      * @param int    $userid
      * @param int    $courseid
      * @param string $type

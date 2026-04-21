@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -29,8 +29,6 @@ use local_esmed_compliance\archive\local_storage_adapter;
 use local_esmed_compliance\archive\storage_adapter;
 use stdClass;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Build, render, seal and index a bordereau financeur as a PDF+CSV pair.
  *
@@ -44,7 +42,6 @@ defined('MOODLE_INTERNAL') || die();
  * decides whether to rollback.
  */
 class bordereau_service {
-
     /** @var bordereau_builder */
     private bordereau_builder $builder;
 
@@ -76,11 +73,11 @@ class bordereau_service {
         ?storage_adapter $storage = null,
         ?archive_repository $archive = null
     ) {
-        $this->builder     = $builder     ?? new bordereau_builder();
+        $this->builder     = $builder ?? new bordereau_builder();
         $this->pdfrenderer = $pdfrenderer ?? new tcpdf_bordereau_renderer();
         $this->csvrenderer = $csvrenderer ?? new csv_bordereau_renderer();
-        $this->storage     = $storage     ?? new local_storage_adapter();
-        $this->archive     = $archive     ?? new archive_repository();
+        $this->storage     = $storage ?? new local_storage_adapter();
+        $this->archive     = $archive ?? new archive_repository();
     }
 
     /**

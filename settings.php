@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -30,16 +30,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-
     $category = new admin_category(
         'local_esmed_compliance',
         get_string('pluginname', 'local_esmed_compliance')
     );
     $ADMIN->add('localplugins', $category);
 
-    // ---------------------------------------------------------------
     // General.
-    // ---------------------------------------------------------------
     $general = new admin_settingpage(
         'local_esmed_compliance_general',
         get_string('settings_general', 'local_esmed_compliance')
@@ -119,9 +116,7 @@ if ($hassiteconfig) {
 
     $category->add('local_esmed_compliance', $general);
 
-    // ---------------------------------------------------------------
     // Branding.
-    // ---------------------------------------------------------------
     $branding = new admin_settingpage(
         'local_esmed_compliance_branding',
         get_string('settings_branding', 'local_esmed_compliance')
@@ -188,9 +183,7 @@ if ($hassiteconfig) {
 
     $category->add('local_esmed_compliance', $branding);
 
-    // ---------------------------------------------------------------
     // Archive.
-    // ---------------------------------------------------------------
     $archive = new admin_settingpage(
         'local_esmed_compliance_archive',
         get_string('settings_archive', 'local_esmed_compliance')
@@ -262,13 +255,27 @@ if ($hassiteconfig) {
 
     $category->add('local_esmed_compliance', $archive);
 
-    // ---------------------------------------------------------------
     // External page: compliance dashboard.
-    // ---------------------------------------------------------------
     $category->add('local_esmed_compliance', new admin_externalpage(
         'local_esmed_compliance_dashboard',
         get_string('dashboard', 'local_esmed_compliance'),
         new moodle_url('/local/esmed_compliance/dashboard.php'),
         'local/esmed_compliance:viewdashboard'
+    ));
+
+    // External page: attestation operator screen.
+    $category->add('local_esmed_compliance', new admin_externalpage(
+        'local_esmed_compliance_attestations',
+        get_string('attestations_page_title', 'local_esmed_compliance'),
+        new moodle_url('/local/esmed_compliance/attestations.php'),
+        'local/esmed_compliance:viewdashboard'
+    ));
+
+    // External page: funder links management.
+    $category->add('local_esmed_compliance', new admin_externalpage(
+        'local_esmed_compliance_funders',
+        get_string('funders_page_title', 'local_esmed_compliance'),
+        new moodle_url('/local/esmed_compliance/funders.php'),
+        'local/esmed_compliance:manageconfig'
     ));
 }

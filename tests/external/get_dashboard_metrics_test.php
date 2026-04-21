@@ -8,7 +8,7 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
@@ -26,13 +26,12 @@ namespace local_esmed_compliance\external;
 
 use core_external\external_api;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
+ * Tests for the  component.
+ *
  * @covers \local_esmed_compliance\external\get_dashboard_metrics
  */
 final class get_dashboard_metrics_test extends \advanced_testcase {
-
     /**
      * Managers (who have viewdashboard) receive the full shape, all zeros on empty install.
      */
