@@ -24,6 +24,7 @@
 
 namespace local_esmed_compliance\attestation;
 
+use local_esmed_compliance\archive\adapter_registry;
 use local_esmed_compliance\archive\archive_repository;
 use local_esmed_compliance\archive\local_storage_adapter;
 use local_esmed_compliance\archive\storage_adapter;
@@ -72,7 +73,7 @@ class attestation_service {
     ) {
         $this->builder  = $builder  ?? new attestation_builder();
         $this->renderer = $renderer ?? new tcpdf_attestation_renderer();
-        $this->storage  = $storage  ?? new local_storage_adapter();
+        $this->storage  = $storage  ?? (adapter_registry::active() ?? new local_storage_adapter());
         $this->archive  = $archive  ?? new archive_repository();
     }
 

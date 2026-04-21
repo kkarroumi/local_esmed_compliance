@@ -271,4 +271,14 @@ if ($hassiteconfig) {
         new moodle_url('/local/esmed_compliance/dashboard.php'),
         'local/esmed_compliance:viewdashboard'
     ));
+
+    // ---------------------------------------------------------------
+    // External page: attestation operator screen.
+    // ---------------------------------------------------------------
+    $category->add('local_esmed_compliance', new admin_externalpage(
+        'local_esmed_compliance_attestations',
+        get_string('attestations_page_title', 'local_esmed_compliance'),
+        new moodle_url('/local/esmed_compliance/attestations.php'),
+        'local/esmed_compliance:viewdashboard'
+    ));
 }

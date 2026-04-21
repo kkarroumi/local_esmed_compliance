@@ -106,6 +106,66 @@ class renderer extends plugin_renderer_base {
     }
 
     /**
+     * Render the course picker shown when no courseid is provided.
+     *
+     * @param array<int, array{id:int, fullname:string, shortname:string}> $courses
+     * @param \moodle_url                                                  $baseurl
+     * @return string
+     */
+    public function render_attestations_course_picker(array $courses, \moodle_url $baseurl): string {
+        return $this->render_from_template('local_esmed_compliance/attestations_course_picker', [
+            'baseurl'     => $baseurl->out(false),
+            'courses'     => $courses,
+            'has_courses' => !empty($courses),
+        ]);
+    }
+
+    /**
+     * Render the enrolled-users table for one course.
+     *
+     * @param \stdClass                $course
+     * @param array<int, array<mixed>> $rows Output of {@see attestation_listing::list_for_course()}.
+     * @param \moodle_url              $baseurl
+     * @param string                   $sesskey
+     * @return string
+     */
+    public function render_attestations_for_course(
+        \stdClass $course,
+        array $rows,
+        \moodle_url $baseurl,
+        string $sesskey
+    ): string {
+        $users = [];
+        foreach ($rows as $row) {
+            $users[] = [
+                'userid'            => (int) $row['userid'],
+                'fullname'          => (string) $row['fullname'],
+                'email'             => (string) $row['email'],
+                'idnumber'          => (string) $row['idnumber'],
+                'hours'             => self::format_hours((int) $row['total_seconds']),
+                'attestation_count' => (int) $row['attestation_count'],
+                'has_attestation'   => ((int) $row['attestation_count']) > 0,
+                'last_sealed_at'    => $row['last_sealed_at'] !== null
+                    ? userdate((int) $row['last_sealed_at'])
+                    : '',
+                'last_archive_id'   => $row['last_archive_id'] !== null
+                    ? (int) $row['last_archive_id']
+                    : 0,
+            ];
+        }
+
+        return $this->render_from_template('local_esmed_compliance/attestations_course', [
+            'courseid'     => (int) $course->id,
+            'coursename'   => format_string($course->fullname),
+            'shortname'    => format_string($course->shortname),
+            'baseurl'      => $baseurl->out(false),
+            'sesskey'      => $sesskey,
+            'users'        => $users,
+            'has_users'    => !empty($users),
+        ]);
+    }
+
+    /**
      * Format seconds as French-style hours "1.50 h".
      *
      * @param int $seconds

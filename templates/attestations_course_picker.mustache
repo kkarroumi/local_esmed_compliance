@@ -1,0 +1,54 @@
+{{!
+    @template local_esmed_compliance/attestations_course_picker
+
+    Course picker shown on the attestations page when no courseid
+    has been selected yet. Lists every course where the current
+    operator can generate attestations.
+
+    Context variables:
+      * baseurl         — base URL of attestations.php
+      * courses         — array of { id, fullname, shortname }
+      * has_courses     — boolean, true when the list is non-empty
+
+    Example context (json):
+    {
+        "baseurl": "https://example.test/local/esmed_compliance/attestations.php",
+        "has_courses": true,
+        "courses": [
+            { "id": 12, "fullname": "Formation SST", "shortname": "SST" }
+        ]
+    }
+}}
+<section class="esmed-attestations-picker">
+    <h3>{{#str}} attestations_picker_heading, local_esmed_compliance {{/str}}</h3>
+    <p>{{#str}} attestations_picker_intro, local_esmed_compliance {{/str}}</p>
+
+    {{#has_courses}}
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th scope="col">{{#str}} attestations_col_course, local_esmed_compliance {{/str}}</th>
+                    <th scope="col">{{#str}} attestations_col_shortname, local_esmed_compliance {{/str}}</th>
+                    <th scope="col"><span class="sr-only">{{#str}} attestations_col_actions, local_esmed_compliance {{/str}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#courses}}
+                    <tr>
+                        <td>{{fullname}}</td>
+                        <td>{{shortname}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm"
+                               href="{{baseurl}}?courseid={{id}}">
+                                {{#str}} attestations_picker_open, local_esmed_compliance {{/str}}
+                            </a>
+                        </td>
+                    </tr>
+                {{/courses}}
+            </tbody>
+        </table>
+    {{/has_courses}}
+    {{^has_courses}}
+        <p><em>{{#str}} attestations_picker_empty, local_esmed_compliance {{/str}}</em></p>
+    {{/has_courses}}
+</section>

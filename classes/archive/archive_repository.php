@@ -76,6 +76,19 @@ class archive_repository {
     }
 
     /**
+     * Find an archived document by its primary key.
+     *
+     * @param int $id
+     * @return stdClass|null
+     * @throws dml_exception
+     */
+    public function find_by_id(int $id): ?stdClass {
+        global $DB;
+        $record = $DB->get_record(self::TABLE, ['id' => $id]);
+        return $record ?: null;
+    }
+
+    /**
      * Find every archived document of a given type for a user / course pair.
      *
      * Useful for "I already generated the attestation, don't re-seal" checks.
