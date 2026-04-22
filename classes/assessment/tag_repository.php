@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_assessment_tag}.
+ * Data access layer for {local_esmed_compliance_assessment_tag}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -31,13 +31,13 @@ use stdClass;
  * Tags course modules with their regulatory assessment category.
  *
  * A tag is required before attempts on a module are indexed in the
- * `local_esmed_assessment_index`. Untagged modules are deliberately
+ * `local_esmed_compliance_assessment_index`. Untagged modules are deliberately
  * ignored: the plugin refuses to guess what qualifies as a summative
  * assessment.
  */
 class tag_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_assessment_tag';
+    public const TABLE = 'local_esmed_compliance_assessment_tag';
 
     /** @var string Quiz used for pedagogical purposes (not graded for certification). */
     public const TYPE_QUIZ_PEDAGO = 'quiz_pedago';

@@ -27,7 +27,7 @@ namespace local_esmed_compliance\funder;
 /**
  * Immutable snapshot of a bordereau financeur.
  *
- * One payload corresponds to one `local_esmed_funder_link` row, rolled
+ * One payload corresponds to one `local_esmed_compliance_funder_link` row, rolled
  * over all enrolled learners within the (optional) funder period.
  * Hashing the payload is enough to detect after-the-fact mutations of
  * any learner's contribution; both the PDF and CSV renderers are

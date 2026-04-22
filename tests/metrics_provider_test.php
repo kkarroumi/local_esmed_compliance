@@ -99,14 +99,14 @@ final class metrics_provider_test extends \advanced_testcase {
         $user = $this->getDataGenerator()->create_user();
 
         // Unacknowledged, triggered yesterday.
-        $DB->insert_record('local_esmed_alerts', (object) [
+        $DB->insert_record('local_esmed_compliance_alerts', (object) [
             'userid'          => $user->id,
             'alert_type'      => 'inactivity_7d',
             'triggered_at'    => time() - 86400,
             'acknowledged_at' => null,
         ]);
         // Acknowledged but still within the 7-day window.
-        $DB->insert_record('local_esmed_alerts', (object) [
+        $DB->insert_record('local_esmed_compliance_alerts', (object) [
             'userid'          => $user->id,
             'alert_type'      => 'inactivity_7d',
             'triggered_at'    => time() - 2 * 86400,

@@ -26,7 +26,7 @@ namespace local_esmed_compliance\activity;
 
 /**
  * Consume new module-view events from the standard logstore and fold them
- * into {local_esmed_activity_log}.
+ * into {local_esmed_compliance_activity_log}.
  *
  * The aggregator is idempotent and resumable: it persists the highest
  * log id it has processed in plugin config, so repeated runs pick up

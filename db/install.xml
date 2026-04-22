@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_esmed_funder_link" COMMENT="Links a Moodle course to a funding body and official training action.">
+    <TABLE NAME="local_esmed_compliance_funder_link" COMMENT="Links a Moodle course to a funding body and official training action.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -28,7 +28,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_sessions" COMMENT="Certifiable learner sessions used as attendance evidence (D.6353-4).">
+    <TABLE NAME="local_esmed_compliance_sessions" COMMENT="Certifiable learner sessions used as attendance evidence (D.6353-4).">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -49,7 +49,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
         <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
-        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_funder_link" REFFIELDS="id"/>
+        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_compliance_funder_link" REFFIELDS="id"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="idx_user_sessionstart" UNIQUE="false" FIELDS="userid, session_start"/>
@@ -59,7 +59,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_activity_log" COMMENT="Aggregated time spent and view counters per learner and course module.">
+    <TABLE NAME="local_esmed_compliance_activity_log" COMMENT="Aggregated time spent and view counters per learner and course module.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -86,7 +86,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_assessment_index" COMMENT="Regulatory categorisation of each assessment attempt.">
+    <TABLE NAME="local_esmed_compliance_assessment_index" COMMENT="Regulatory categorisation of each assessment attempt.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -114,7 +114,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_assessment_tag" COMMENT="Regulatory classification assigned to a course module by compliance managers.">
+    <TABLE NAME="local_esmed_compliance_assessment_tag" COMMENT="Regulatory classification assigned to a course module by compliance managers.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -136,7 +136,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_archive_index" COMMENT="Index of sealed archived documents (attestations, bordereaux, session logs).">
+    <TABLE NAME="local_esmed_compliance_archive_index" COMMENT="Index of sealed archived documents (attestations, bordereaux, session logs).">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
@@ -155,7 +155,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="fk_userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
         <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
-        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_funder_link" REFFIELDS="id"/>
+        <KEY NAME="fk_funderid" TYPE="foreign" FIELDS="funderid" REFTABLE="local_esmed_compliance_funder_link" REFFIELDS="id"/>
         <KEY NAME="uk_verification_token" TYPE="unique" FIELDS="verification_token"/>
       </KEYS>
       <INDEXES>
@@ -165,7 +165,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_alerts" COMMENT="History of alerts raised for learner dropout and inactivity.">
+    <TABLE NAME="local_esmed_compliance_alerts" COMMENT="History of alerts raised for learner dropout and inactivity.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -190,7 +190,7 @@
       </INDEXES>
     </TABLE>
 
-    <TABLE NAME="local_esmed_integrity_event" COMMENT="Append-only log of archive integrity checks (valid / tampered / missing).">
+    <TABLE NAME="local_esmed_compliance_integrity_event" COMMENT="Append-only log of archive integrity checks (valid / tampered / missing).">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="archive_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -200,7 +200,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="fk_archive_id" TYPE="foreign" FIELDS="archive_id" REFTABLE="local_esmed_archive_index" REFFIELDS="id"/>
+        <KEY NAME="fk_archive_id" TYPE="foreign" FIELDS="archive_id" REFTABLE="local_esmed_compliance_archive_index" REFFIELDS="id"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="idx_archive_checked" UNIQUE="false" FIELDS="archive_id, checked_at"/>

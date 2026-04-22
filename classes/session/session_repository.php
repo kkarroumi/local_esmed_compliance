@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_sessions}.
+ * Data access layer for {local_esmed_compliance_sessions}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -35,7 +35,7 @@ use stdClass;
  */
 class session_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_sessions';
+    public const TABLE = 'local_esmed_compliance_sessions';
 
     /**
      * Return the currently open session for a user, if any.

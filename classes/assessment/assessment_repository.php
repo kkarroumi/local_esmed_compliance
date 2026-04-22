@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_assessment_index}.
+ * Data access layer for {local_esmed_compliance_assessment_index}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -35,7 +35,7 @@ use stdClass;
  */
 class assessment_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_assessment_index';
+    public const TABLE = 'local_esmed_compliance_assessment_index';
 
     /**
      * Insert a record if the (source table, source attempt id) pair is new.

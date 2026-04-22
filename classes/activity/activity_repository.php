@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_activity_log}.
+ * Data access layer for {local_esmed_compliance_activity_log}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -32,7 +32,7 @@ use stdClass;
  */
 class activity_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_activity_log';
+    public const TABLE = 'local_esmed_compliance_activity_log';
 
     /**
      * Increment the aggregates for a (user, cmid) pair, creating the row on first write.

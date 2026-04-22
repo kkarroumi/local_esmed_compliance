@@ -48,7 +48,7 @@ final class attestation_listing_test extends \advanced_testcase {
         $other   = $this->getDataGenerator()->create_user(); // Not enrolled — must not appear.
 
         // Closed session worth 90 minutes.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $student->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700000000,
@@ -59,7 +59,7 @@ final class attestation_listing_test extends \advanced_testcase {
             'user_agent'       => null,
         ]);
         // Open session — must be ignored by the aggregate.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $student->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700100000,
@@ -71,7 +71,7 @@ final class attestation_listing_test extends \advanced_testcase {
         ]);
         // Closed session attributed to a completely different user —
         // does not leak into the student's total.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $other->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700000000,

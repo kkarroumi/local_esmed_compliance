@@ -67,7 +67,7 @@ class attestation_listing {
 
         // Aggregate total closed-session seconds per user.
         $sumsql = "SELECT userid, COALESCE(SUM(duration_seconds), 0) AS total_seconds
-                     FROM {local_esmed_sessions}
+                     FROM {local_esmed_compliance_sessions}
                     WHERE userid {$useridsql}
                       AND session_end IS NOT NULL
                  GROUP BY userid";

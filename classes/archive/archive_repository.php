@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_archive_index}.
+ * Data access layer for {local_esmed_compliance_archive_index}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -36,7 +36,7 @@ use stdClass;
  */
 class archive_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_archive_index';
+    public const TABLE = 'local_esmed_compliance_archive_index';
 
     /** @var string Archive type for attestations d'assiduité (D.6353-4). */
     public const TYPE_ATTESTATION_ASSIDUITE = 'attestation_assiduite';

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Create / edit form for {local_esmed_funder_link}.
+ * Create / edit form for {local_esmed_compliance_funder_link}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED

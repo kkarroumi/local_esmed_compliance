@@ -75,12 +75,12 @@ class metrics_provider {
         global $DB;
 
         $open = (int) $DB->count_records_sql(
-            'SELECT COUNT(1) FROM {local_esmed_sessions} WHERE session_end IS NULL'
+            'SELECT COUNT(1) FROM {local_esmed_compliance_sessions} WHERE session_end IS NULL'
         );
 
         $since24h = $now - 86400;
         $closedrecently = (int) $DB->count_records_select(
-            'local_esmed_sessions',
+            'local_esmed_compliance_sessions',
             'session_end IS NOT NULL AND session_end >= :since',
             ['since' => $since24h]
         );
@@ -88,7 +88,7 @@ class metrics_provider {
         $todaystart = strtotime('today', $now) ?: $now - ($now % 86400);
         $secondstoday = (int) $DB->get_field_sql(
             "SELECT COALESCE(SUM(duration_seconds), 0)
-               FROM {local_esmed_sessions}
+               FROM {local_esmed_compliance_sessions}
               WHERE session_end IS NOT NULL
                 AND session_end >= :from",
             ['from' => $todaystart]
@@ -132,12 +132,12 @@ class metrics_provider {
     private function alert_metrics(): array {
         global $DB;
         $unacked = (int) $DB->count_records_select(
-            'local_esmed_alerts',
+            'local_esmed_compliance_alerts',
             'acknowledged_at IS NULL'
         );
         $weekago = time() - 7 * 86400;
         $lastweek = (int) $DB->count_records_select(
-            'local_esmed_alerts',
+            'local_esmed_compliance_alerts',
             'triggered_at >= :since',
             ['since' => $weekago]
         );

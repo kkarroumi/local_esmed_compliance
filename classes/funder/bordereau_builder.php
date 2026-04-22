@@ -140,7 +140,7 @@ class bordereau_builder {
         global $DB;
 
         $sql = "SELECT id, session_start, session_end
-                  FROM {local_esmed_sessions}
+                  FROM {local_esmed_compliance_sessions}
                  WHERE userid = :userid
                    AND session_end IS NOT NULL";
         $rows = $DB->get_records_sql($sql, ['userid' => $userid]);

@@ -29,7 +29,7 @@ use local_esmed_compliance\activity\aggregator;
 
 /**
  * Reads new module-view events from the standard logstore and folds them
- * into {local_esmed_activity_log}. Runs every fifteen minutes by default.
+ * into {local_esmed_compliance_activity_log}. Runs every fifteen minutes by default.
  */
 class aggregate_activity_task extends scheduled_task {
     /**

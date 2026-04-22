@@ -34,7 +34,7 @@ namespace local_esmed_compliance\archive;
  */
 interface storage_adapter {
     /**
-     * Short identifier persisted in `local_esmed_archive_index.storage_adapter`.
+     * Short identifier persisted in `local_esmed_compliance_archive_index.storage_adapter`.
      *
      * @return string
      */

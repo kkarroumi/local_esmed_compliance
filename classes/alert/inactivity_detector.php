@@ -67,12 +67,12 @@ class inactivity_detector {
         $sql = "SELECT ue.userid AS userid,
                        e.courseid AS courseid,
                        (SELECT MAX(s.session_end)
-                          FROM {local_esmed_sessions} s
+                          FROM {local_esmed_compliance_sessions} s
                          WHERE s.userid = ue.userid
                            AND s.courseid = e.courseid
                            AND s.session_end IS NOT NULL) AS last_session_end,
                        (SELECT COUNT(1)
-                          FROM {local_esmed_sessions} s
+                          FROM {local_esmed_compliance_sessions} s
                          WHERE s.userid = ue.userid
                            AND s.courseid = e.courseid
                            AND s.session_end IS NULL) AS open_sessions

@@ -36,7 +36,7 @@ function xmldb_local_esmed_compliance_upgrade($oldversion) {
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2026042003) {
-        $table = new xmldb_table('local_esmed_assessment_tag');
+        $table = new xmldb_table('local_esmed_compliance_assessment_tag');
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('cmid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
         $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
@@ -60,7 +60,7 @@ function xmldb_local_esmed_compliance_upgrade($oldversion) {
     }
 
     if ($oldversion < 2026042006) {
-        $table = new xmldb_table('local_esmed_integrity_event');
+        $table = new xmldb_table('local_esmed_compliance_integrity_event');
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('archive_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
         $table->add_field('checked_at', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
@@ -68,7 +68,7 @@ function xmldb_local_esmed_compliance_upgrade($oldversion) {
         $table->add_field('observed_hash', XMLDB_TYPE_CHAR, '64', null, null, null, null);
 
         $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
-        $table->add_key('fk_archive_id', XMLDB_KEY_FOREIGN, ['archive_id'], 'local_esmed_archive_index', ['id']);
+        $table->add_key('fk_archive_id', XMLDB_KEY_FOREIGN, ['archive_id'], 'local_esmed_compliance_archive_index', ['id']);
         $table->add_index('idx_archive_checked', XMLDB_INDEX_NOTUNIQUE, ['archive_id', 'checked_at']);
         $table->add_index('idx_status', XMLDB_INDEX_NOTUNIQUE, ['status']);
 
@@ -77,6 +77,30 @@ function xmldb_local_esmed_compliance_upgrade($oldversion) {
         }
 
         upgrade_plugin_savepoint(true, 2026042006, 'local', 'esmed_compliance');
+    }
+
+    if ($oldversion < 2026042201) {
+        // Rename all tables from the historical `local_esmed_*` prefix to `local_esmed_compliance_*`
+        // so that the plugin satisfies the moodle-plugin-ci table-prefix check (tables must start
+        // with the component name). Only affects installations that pre-date this version.
+        $renames = [
+            'local_esmed_funder_link'      => 'local_esmed_compliance_funder_link',
+            'local_esmed_sessions'         => 'local_esmed_compliance_sessions',
+            'local_esmed_activity_log'     => 'local_esmed_compliance_activity_log',
+            'local_esmed_assessment_index' => 'local_esmed_compliance_assessment_index',
+            'local_esmed_assessment_tag'   => 'local_esmed_compliance_assessment_tag',
+            'local_esmed_archive_index'    => 'local_esmed_compliance_archive_index',
+            'local_esmed_alerts'           => 'local_esmed_compliance_alerts',
+            'local_esmed_integrity_event'  => 'local_esmed_compliance_integrity_event',
+        ];
+        foreach ($renames as $oldname => $newname) {
+            $oldtable = new xmldb_table($oldname);
+            if ($dbman->table_exists($oldtable)) {
+                $dbman->rename_table($oldtable, $newname);
+            }
+        }
+
+        upgrade_plugin_savepoint(true, 2026042201, 'local', 'esmed_compliance');
     }
 
     return true;

@@ -87,28 +87,28 @@ class get_learner_summary extends external_api {
 
         $sessionseconds = (int) $DB->get_field_sql(
             "SELECT COALESCE(SUM(duration_seconds), 0)
-               FROM {local_esmed_sessions}
+               FROM {local_esmed_compliance_sessions}
               WHERE userid = :uid AND courseid = :cid AND session_end IS NOT NULL",
             ['uid' => $userid, 'cid' => $courseid]
         );
         $activityseconds = (int) $DB->get_field_sql(
             "SELECT COALESCE(SUM(time_spent_seconds), 0)
-               FROM {local_esmed_activity_log}
+               FROM {local_esmed_compliance_activity_log}
               WHERE userid = :uid AND courseid = :cid",
             ['uid' => $userid, 'cid' => $courseid]
         );
         $totalviews = (int) $DB->get_field_sql(
             "SELECT COALESCE(SUM(views_count), 0)
-               FROM {local_esmed_activity_log}
+               FROM {local_esmed_compliance_activity_log}
               WHERE userid = :uid AND courseid = :cid",
             ['uid' => $userid, 'cid' => $courseid]
         );
         $modulestouched = (int) $DB->count_records(
-            'local_esmed_activity_log',
+            'local_esmed_compliance_activity_log',
             ['userid' => $userid, 'courseid' => $courseid]
         );
         $attestations = (int) $DB->count_records(
-            'local_esmed_archive_index',
+            'local_esmed_compliance_archive_index',
             [
                 'userid'       => $userid,
                 'courseid'     => $courseid,

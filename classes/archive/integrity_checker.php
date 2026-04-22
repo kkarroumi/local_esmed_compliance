@@ -26,7 +26,7 @@ namespace local_esmed_compliance\archive;
 
 /**
  * Periodically re-hashes stored archives and appends a verdict to
- * `{local_esmed_integrity_event}` so tampering or loss is detected
+ * `{local_esmed_compliance_integrity_event}` so tampering or loss is detected
  * independently of the (on-demand) public verifier.
  *
  * The integrity log is append-only: every run emits one event per
@@ -36,7 +36,7 @@ namespace local_esmed_compliance\archive;
  */
 class integrity_checker {
     /** @var string Integrity event table. */
-    public const EVENT_TABLE = 'local_esmed_integrity_event';
+    public const EVENT_TABLE = 'local_esmed_compliance_integrity_event';
 
     /** @var string Status: bytes present and match the sealed hash. */
     public const STATUS_VALID = 'valid';
