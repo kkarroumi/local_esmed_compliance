@@ -32,7 +32,7 @@ use local_esmed_compliance\archive\storage_adapter;
  * touching the filesystem.
  */
 final class fake_storage_adapter implements storage_adapter {
-    /** @var array<string, string> */
+    /** @var array */
     public array $files = [];
 
     /**
@@ -44,6 +44,10 @@ final class fake_storage_adapter implements storage_adapter {
 
     /**
      * Store bytes in-memory for the test.
+     *
+     * @param string $bytes
+     * @param string $relativename
+     * @return string
      */
     public function store(string $bytes, string $relativename): string {
         $this->files[$relativename] = $bytes;
@@ -52,6 +56,9 @@ final class fake_storage_adapter implements storage_adapter {
 
     /**
      * Fetch previously stored bytes.
+     *
+     * @param string $relativename
+     * @return string|null
      */
     public function fetch(string $relativename): ?string {
         return $this->files[$relativename] ?? null;

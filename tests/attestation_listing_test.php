@@ -48,7 +48,7 @@ final class attestation_listing_test extends \advanced_testcase {
         $other   = $this->getDataGenerator()->create_user(); // Not enrolled — must not appear.
 
         // Closed session worth 90 minutes.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $student->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700000000,
@@ -57,9 +57,12 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => 'logout',
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700000000,
+            'timemodified'     => 1700005400,
         ]);
         // Open session — must be ignored by the aggregate.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $student->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700100000,
@@ -68,10 +71,13 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => null,
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700100000,
+            'timemodified'     => 1700100000,
         ]);
         // Closed session attributed to a completely different user —
         // does not leak into the student's total.
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'           => (int) $other->id,
             'courseid'         => (int) $course->id,
             'session_start'    => 1700000000,
@@ -80,6 +86,9 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => 'logout',
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700000000,
+            'timemodified'     => 1700010000,
         ]);
 
         // Two sealed attestations for the (student, course) — the later one wins.
@@ -127,6 +136,11 @@ final class attestation_listing_test extends \advanced_testcase {
 
     /**
      * Helper: build a valid archive row for a sealed attestation.
+     *
+     * @param int $userid
+     * @param int $courseid
+     * @param int $sealedat
+     * @return stdClass
      */
     private function make_archive(int $userid, int $courseid, int $sealedat): stdClass {
         $r = new stdClass();

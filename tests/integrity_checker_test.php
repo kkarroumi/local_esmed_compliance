@@ -141,6 +141,11 @@ final class integrity_checker_test extends \advanced_testcase {
 
     /**
      * Helper: insert an archive row with the given file path and sealed hash.
+     *
+     * @param int $userid
+     * @param string $filepath
+     * @param string $hash
+     * @return int
      */
     private function insert_archive(int $userid, string $filepath, string $hash): int {
         $record = $this->make_record($filepath, $hash);

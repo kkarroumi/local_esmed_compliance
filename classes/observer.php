@@ -33,7 +33,7 @@ use local_esmed_compliance\assessment\indexer;
 use local_esmed_compliance\session\tracker;
 
 /**
- * Static dispatcher. Each method is registered in {@see db/events.php}.
+ * Static dispatcher. Each method is registered in db/events.php.
  */
 class observer {
     /**

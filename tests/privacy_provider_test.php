@@ -52,11 +52,11 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
 
         $this->assertEqualsCanonicalizing(
             [
-                'local_esmed_sessions',
-                'local_esmed_activity_log',
-                'local_esmed_assessment_index',
-                'local_esmed_archive_index',
-                'local_esmed_alerts',
+                'local_esmed_compliance_sessions',
+                'local_esmed_compliance_activity_log',
+                'local_esmed_compliance_assessment_index',
+                'local_esmed_compliance_archive_index',
+                'local_esmed_compliance_alerts',
             ],
             $tables
         );
@@ -82,7 +82,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $this->resetAfterTest();
         $user = $this->getDataGenerator()->create_user();
 
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'        => $user->id,
             'session_start' => time(),
             'sealed'        => 0,
@@ -108,7 +108,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $this->resetAfterTest();
         $user = $this->getDataGenerator()->create_user();
 
-        $DB->insert_record('local_esmed_alerts', (object) [
+        $DB->insert_record('local_esmed_compliance_alerts', (object) [
             'userid'       => $user->id,
             'alert_type'   => 'inactivity_7d',
             'triggered_at' => time(),
@@ -134,14 +134,14 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $user = $this->getDataGenerator()->create_user();
         $now = time();
 
-        $DB->insert_record('local_esmed_sessions', (object) [
+        $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'        => $user->id,
             'session_start' => $now,
             'sealed'        => 0,
             'timecreated'   => $now,
             'timemodified'  => $now,
         ]);
-        $DB->insert_record('local_esmed_activity_log', (object) [
+        $DB->insert_record('local_esmed_compliance_activity_log', (object) [
             'userid'             => $user->id,
             'courseid'           => 1,
             'cmid'               => 42,
@@ -173,7 +173,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $user = $this->getDataGenerator()->create_user();
         $now = time();
 
-        $sessionid = $DB->insert_record('local_esmed_sessions', (object) [
+        $sessionid = $DB->insert_record('local_esmed_compliance_sessions', (object) [
             'userid'        => $user->id,
             'session_start' => $now,
             'ip_address'    => '203.0.113.1',
@@ -182,7 +182,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
             'timecreated'   => $now,
             'timemodified'  => $now,
         ]);
-        $DB->insert_record('local_esmed_alerts', (object) [
+        $DB->insert_record('local_esmed_compliance_alerts', (object) [
             'userid'       => $user->id,
             'alert_type'   => 'inactivity_7d',
             'triggered_at' => $now,
@@ -197,14 +197,14 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
 
         provider::delete_data_for_user($approvedcontextlist);
 
-        $session = $DB->get_record('local_esmed_sessions', ['id' => $sessionid], '*', MUST_EXIST);
+        $session = $DB->get_record('local_esmed_compliance_sessions', ['id' => $sessionid], '*', MUST_EXIST);
         $this->assertNull($session->ip_address);
         $this->assertNull($session->user_agent);
         $this->assertEquals($user->id, $session->userid, 'Session evidence must remain linked to the user.');
 
         $this->assertEquals(
             0,
-            $DB->count_records('local_esmed_alerts', ['userid' => $user->id]),
+            $DB->count_records('local_esmed_compliance_alerts', ['userid' => $user->id]),
             'Operational alerts must be fully deleted.'
         );
     }
@@ -220,7 +220,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $now = time();
 
         foreach ([$user1, $user2] as $user) {
-            $DB->insert_record('local_esmed_sessions', (object) [
+            $DB->insert_record('local_esmed_compliance_sessions', (object) [
                 'userid'        => $user->id,
                 'session_start' => $now,
                 'ip_address'    => '10.0.0.1',
@@ -241,11 +241,11 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         provider::delete_data_for_users($approveduserlist);
 
         $this->assertNull(
-            $DB->get_field('local_esmed_sessions', 'ip_address', ['userid' => $user1->id])
+            $DB->get_field('local_esmed_compliance_sessions', 'ip_address', ['userid' => $user1->id])
         );
         $this->assertEquals(
             '10.0.0.1',
-            $DB->get_field('local_esmed_sessions', 'ip_address', ['userid' => $user2->id]),
+            $DB->get_field('local_esmed_compliance_sessions', 'ip_address', ['userid' => $user2->id]),
             'Users outside the approved list must be untouched.'
         );
     }

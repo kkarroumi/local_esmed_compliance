@@ -54,7 +54,12 @@ class csv_bordereau_renderer implements bordereau_renderer {
     }
 
     /**
-     * Inherits from parent.
+     * Produce CSV bytes for the given bordereau payload.
+     *
+     * @param bordereau_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     * @return string Raw CSV bytes (UTF-8 with BOM).
      */
     public function render(
         bordereau_payload $payload,
@@ -110,7 +115,7 @@ class csv_bordereau_renderer implements bordereau_renderer {
     /**
      * Join and quote one CSV row.
      *
-     * @param array<int, string> $fields
+     * @param array $fields
      * @return string
      */
     private static function join_row(array $fields): string {

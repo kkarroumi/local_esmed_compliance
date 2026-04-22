@@ -51,7 +51,7 @@ final class session_tracker_test extends \advanced_testcase {
             1700000000
         );
 
-        $record = $DB->get_record('local_esmed_sessions', ['id' => $sessionid], '*', MUST_EXIST);
+        $record = $DB->get_record('local_esmed_compliance_sessions', ['id' => $sessionid], '*', MUST_EXIST);
         $this->assertEquals($user->id, $record->userid);
         $this->assertEquals(1700000000, $record->session_start);
         $this->assertNull($record->session_end);
@@ -76,7 +76,7 @@ final class session_tracker_test extends \advanced_testcase {
         $this->assertEquals($first, $second);
         $this->assertEquals(
             1,
-            $DB->count_records('local_esmed_sessions', ['userid' => $user->id])
+            $DB->count_records('local_esmed_compliance_sessions', ['userid' => $user->id])
         );
     }
 
@@ -94,7 +94,7 @@ final class session_tracker_test extends \advanced_testcase {
         $result = $tracker->record_heartbeat((int) $user->id, 1700000050);
         $this->assertEquals($sessionid, $result);
 
-        $record = $DB->get_record('local_esmed_sessions', ['id' => $sessionid], '*', MUST_EXIST);
+        $record = $DB->get_record('local_esmed_compliance_sessions', ['id' => $sessionid], '*', MUST_EXIST);
         $this->assertEquals(1700000050, $record->last_heartbeat);
         $this->assertNull($record->session_end);
     }
@@ -112,7 +112,7 @@ final class session_tracker_test extends \advanced_testcase {
         $this->assertNull($result);
         $this->assertEquals(
             0,
-            $DB->count_records('local_esmed_sessions', ['userid' => $user->id])
+            $DB->count_records('local_esmed_compliance_sessions', ['userid' => $user->id])
         );
     }
 
@@ -134,7 +134,7 @@ final class session_tracker_test extends \advanced_testcase {
         );
         $this->assertTrue($closed);
 
-        $record = $DB->get_record('local_esmed_sessions', ['id' => $sessionid], '*', MUST_EXIST);
+        $record = $DB->get_record('local_esmed_compliance_sessions', ['id' => $sessionid], '*', MUST_EXIST);
         $this->assertEquals(1700000600, $record->session_end);
         $this->assertEquals(600, $record->duration_seconds);
         $this->assertEquals(tracker::CLOSURE_LOGOUT, $record->closure_type);
@@ -171,17 +171,17 @@ final class session_tracker_test extends \advanced_testcase {
 
         // User2 opened a session and never beat (crash).
         $s2 = $tracker->open_session((int) $user2->id, null, null, null, 1700000000);
-        $DB->set_field('local_esmed_sessions', 'last_heartbeat', null, ['id' => $s2]);
+        $DB->set_field('local_esmed_compliance_sessions', 'last_heartbeat', null, ['id' => $s2]);
 
         // Now = 1700001000, timeout = 10 minutes (600s). Threshold = 1700000400.
         $closed = $tracker->close_stale_sessions(600, 1700001000);
         $this->assertEquals(2, $closed);
 
-        $r1 = $DB->get_record('local_esmed_sessions', ['id' => $s1], '*', MUST_EXIST);
+        $r1 = $DB->get_record('local_esmed_compliance_sessions', ['id' => $s1], '*', MUST_EXIST);
         $this->assertEquals(tracker::CLOSURE_TIMEOUT, $r1->closure_type);
         $this->assertEquals(1700000050, $r1->session_end, 'Timeout must end at last heartbeat, not now.');
 
-        $r2 = $DB->get_record('local_esmed_sessions', ['id' => $s2], '*', MUST_EXIST);
+        $r2 = $DB->get_record('local_esmed_compliance_sessions', ['id' => $s2], '*', MUST_EXIST);
         $this->assertEquals(tracker::CLOSURE_CRASH, $r2->closure_type);
         $this->assertEquals(1700000000, $r2->session_end, 'Crash must end at session_start (no heartbeat).');
     }
@@ -201,7 +201,7 @@ final class session_tracker_test extends \advanced_testcase {
         $closed = $tracker->close_stale_sessions(600, 1700001000);
 
         $this->assertEquals(0, $closed);
-        $record = $DB->get_record('local_esmed_sessions', ['id' => $sessionid], '*', MUST_EXIST);
+        $record = $DB->get_record('local_esmed_compliance_sessions', ['id' => $sessionid], '*', MUST_EXIST);
         $this->assertNull($record->session_end);
     }
 

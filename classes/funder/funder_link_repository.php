@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_funder_link}.
+ * Data access layer for {local_esmed_compliance_funder_link}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -36,7 +36,7 @@ use stdClass;
  */
 class funder_link_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_funder_link';
+    public const TABLE = 'local_esmed_compliance_funder_link';
 
     /** @var string Funder type: Compte Personnel de Formation. */
     public const FUNDER_CPF = 'CPF';

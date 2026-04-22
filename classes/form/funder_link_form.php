@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Create / edit form for {local_esmed_funder_link}.
+ * Create / edit form for {local_esmed_compliance_funder_link}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -137,7 +137,11 @@ class funder_link_form extends moodleform {
     }
 
     /**
-     * Inherits from parent.
+     * Validate submitted funder link data.
+     *
+     * @param array $data
+     * @param array $files
+     * @return array
      */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);

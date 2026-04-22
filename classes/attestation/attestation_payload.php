@@ -37,22 +37,22 @@ final class attestation_payload {
     /**
      * Build a new payload instance with all fields required by the renderer.
      *
-     * @param array<string, mixed> $organisation Training organisation identity.
-     * @param array<string, mixed> $learner Learner identity.
-     * @param array<string, mixed> $course Course metadata.
+     * @param array $organisation Training organisation identity.
+     * @param array $learner Learner identity.
+     * @param array $course Course metadata.
      * @param int $totalseconds Aggregated certifiable duration.
      * @param int|null $periodstart Start of the training period (unix timestamp).
      * @param int|null $periodend End of the training period (unix timestamp).
-     * @param array<int, array<string, mixed>> $sessions Per-session breakdown.
-     * @param array<int, array<string, mixed>> $assessments Per-assessment breakdown.
+     * @param array $sessions Per-session breakdown.
+     * @param array $assessments Per-assessment breakdown.
      * @param int $generatedat When the payload was built.
      */
     public function __construct(
-        /** @var array<string, mixed> Training organisation identity. */
+        /** @var array Training organisation identity. */
         public readonly array $organisation,
-        /** @var array<string, mixed> Learner identity. */
+        /** @var array Learner identity. */
         public readonly array $learner,
-        /** @var array<string, mixed> Course metadata. */
+        /** @var array Course metadata. */
         public readonly array $course,
         /** @var int Aggregated certifiable duration in seconds. */
         public readonly int $totalseconds,
@@ -60,9 +60,9 @@ final class attestation_payload {
         public readonly ?int $periodstart,
         /** @var int|null End of the training period (unix timestamp). */
         public readonly ?int $periodend,
-        /** @var array<int, array<string, mixed>> Per-session breakdown. */
+        /** @var array Per-session breakdown. */
         public readonly array $sessions,
-        /** @var array<int, array<string, mixed>> Per-assessment breakdown. */
+        /** @var array Per-assessment breakdown. */
         public readonly array $assessments,
         /** @var int When the payload was built (unix timestamp). */
         public readonly int $generatedat
@@ -72,7 +72,7 @@ final class attestation_payload {
     /**
      * Convert to a plain array for serialisation / storage in metadata_json.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function to_array(): array {
         return [

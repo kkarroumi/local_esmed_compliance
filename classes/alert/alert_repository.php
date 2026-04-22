@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Data access layer for {local_esmed_alerts}.
+ * Data access layer for {local_esmed_compliance_alerts}.
  *
  * @package    local_esmed_compliance
  * @copyright  2026 ESMED
@@ -36,7 +36,7 @@ use stdClass;
  */
 class alert_repository {
     /** @var string Table name. */
-    public const TABLE = 'local_esmed_alerts';
+    public const TABLE = 'local_esmed_compliance_alerts';
 
     /** @var string Alert type: learner has had no session in seven days. */
     public const TYPE_INACTIVITY_7D = 'inactivity_7d';
@@ -141,10 +141,7 @@ class alert_repository {
      * entries appear at the top.
      *
      * @param int $limit
-     * @return array<int, array{
-     *   id:int, userid:int, courseid:?int, alert_type:string, triggered_at:int,
-     *   user_fullname:string, course_fullname:?string
-     * }>
+     * @return array
      * @throws dml_exception
      */
     public function find_open_alerts(int $limit = 50): array {

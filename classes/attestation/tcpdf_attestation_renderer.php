@@ -39,7 +39,12 @@ use pdf;
  */
 class tcpdf_attestation_renderer implements attestation_renderer {
     /**
-     * Inherits from parent.
+     * Produce a PDF for the given attestation payload.
+     *
+     * @param attestation_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     * @return string Raw PDF bytes.
      */
     public function render(
         attestation_payload $payload,
@@ -105,7 +110,7 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     /**
      * Render the organisation block shown at the top of the attestation.
      *
-     * @param array<string, mixed> $org
+     * @param array $org
      */
     private static function organisation_block(array $org): string {
         $lines = [];
@@ -131,7 +136,7 @@ class tcpdf_attestation_renderer implements attestation_renderer {
     /**
      * Render the learner identity block shown on the attestation.
      *
-     * @param array<string, mixed> $learner
+     * @param array $learner
      */
     private static function learner_block(array $learner): string {
         $fullname = trim(($learner['firstname'] ?? '') . ' ' . ($learner['lastname'] ?? ''));
@@ -169,7 +174,7 @@ class tcpdf_attestation_renderer implements attestation_renderer {
      * Render the certified-sessions table inside the attestation.
      *
      * @param pdf $doc
-     * @param array<int, array<string, mixed>> $sessions
+     * @param array $sessions
      */
     private static function sessions_table(pdf $doc, array $sessions): void {
         $doc->SetFont('helvetica', 'B', 9);
@@ -195,7 +200,7 @@ class tcpdf_attestation_renderer implements attestation_renderer {
      * Render the assessments table inside the attestation.
      *
      * @param pdf $doc
-     * @param array<int, array<string, mixed>> $assessments
+     * @param array $assessments
      */
     private static function assessments_table(pdf $doc, array $assessments): void {
         $doc->SetFont('helvetica', 'B', 9);

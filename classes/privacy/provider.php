@@ -57,11 +57,11 @@ class provider implements
      * @var string[]
      */
     private const USER_TABLES = [
-        'local_esmed_sessions',
-        'local_esmed_activity_log',
-        'local_esmed_assessment_index',
-        'local_esmed_archive_index',
-        'local_esmed_alerts',
+        'local_esmed_compliance_sessions',
+        'local_esmed_compliance_activity_log',
+        'local_esmed_compliance_assessment_index',
+        'local_esmed_compliance_archive_index',
+        'local_esmed_compliance_alerts',
     ];
 
     /**
@@ -73,72 +73,72 @@ class provider implements
     public static function get_metadata(collection $collection): collection {
 
         $collection->add_database_table(
-            'local_esmed_sessions',
+            'local_esmed_compliance_sessions',
             [
-                'userid'           => 'privacy:metadata:local_esmed_sessions:userid',
-                'courseid'         => 'privacy:metadata:local_esmed_sessions:courseid',
-                'session_start'    => 'privacy:metadata:local_esmed_sessions:session_start',
-                'session_end'      => 'privacy:metadata:local_esmed_sessions:session_end',
-                'duration_seconds' => 'privacy:metadata:local_esmed_sessions:duration_seconds',
-                'ip_address'       => 'privacy:metadata:local_esmed_sessions:ip_address',
-                'user_agent'       => 'privacy:metadata:local_esmed_sessions:user_agent',
-                'closure_type'     => 'privacy:metadata:local_esmed_sessions:closure_type',
+                'userid'           => 'privacy:metadata:local_esmed_compliance_sessions:userid',
+                'courseid'         => 'privacy:metadata:local_esmed_compliance_sessions:courseid',
+                'session_start'    => 'privacy:metadata:local_esmed_compliance_sessions:session_start',
+                'session_end'      => 'privacy:metadata:local_esmed_compliance_sessions:session_end',
+                'duration_seconds' => 'privacy:metadata:local_esmed_compliance_sessions:duration_seconds',
+                'ip_address'       => 'privacy:metadata:local_esmed_compliance_sessions:ip_address',
+                'user_agent'       => 'privacy:metadata:local_esmed_compliance_sessions:user_agent',
+                'closure_type'     => 'privacy:metadata:local_esmed_compliance_sessions:closure_type',
             ],
-            'privacy:metadata:local_esmed_sessions'
+            'privacy:metadata:local_esmed_compliance_sessions'
         );
 
         $collection->add_database_table(
-            'local_esmed_activity_log',
+            'local_esmed_compliance_activity_log',
             [
-                'userid'             => 'privacy:metadata:local_esmed_activity_log:userid',
-                'courseid'           => 'privacy:metadata:local_esmed_activity_log:courseid',
-                'cmid'               => 'privacy:metadata:local_esmed_activity_log:cmid',
-                'time_spent_seconds' => 'privacy:metadata:local_esmed_activity_log:time_spent_seconds',
-                'views_count'        => 'privacy:metadata:local_esmed_activity_log:views_count',
-                'completion_state'   => 'privacy:metadata:local_esmed_activity_log:completion_state',
+                'userid'             => 'privacy:metadata:local_esmed_compliance_activity_log:userid',
+                'courseid'           => 'privacy:metadata:local_esmed_compliance_activity_log:courseid',
+                'cmid'               => 'privacy:metadata:local_esmed_compliance_activity_log:cmid',
+                'time_spent_seconds' => 'privacy:metadata:local_esmed_compliance_activity_log:time_spent_seconds',
+                'views_count'        => 'privacy:metadata:local_esmed_compliance_activity_log:views_count',
+                'completion_state'   => 'privacy:metadata:local_esmed_compliance_activity_log:completion_state',
             ],
-            'privacy:metadata:local_esmed_activity_log'
+            'privacy:metadata:local_esmed_compliance_activity_log'
         );
 
         $collection->add_database_table(
-            'local_esmed_assessment_index',
+            'local_esmed_compliance_assessment_index',
             [
-                'userid'          => 'privacy:metadata:local_esmed_assessment_index:userid',
-                'courseid'        => 'privacy:metadata:local_esmed_assessment_index:courseid',
-                'cmid'            => 'privacy:metadata:local_esmed_assessment_index:cmid',
-                'assessment_type' => 'privacy:metadata:local_esmed_assessment_index:assessment_type',
-                'score'           => 'privacy:metadata:local_esmed_assessment_index:score',
-                'grade_percent'   => 'privacy:metadata:local_esmed_assessment_index:grade_percent',
-                'attempt_date'    => 'privacy:metadata:local_esmed_assessment_index:attempt_date',
+                'userid'          => 'privacy:metadata:local_esmed_compliance_assessment_index:userid',
+                'courseid'        => 'privacy:metadata:local_esmed_compliance_assessment_index:courseid',
+                'cmid'            => 'privacy:metadata:local_esmed_compliance_assessment_index:cmid',
+                'assessment_type' => 'privacy:metadata:local_esmed_compliance_assessment_index:assessment_type',
+                'score'           => 'privacy:metadata:local_esmed_compliance_assessment_index:score',
+                'grade_percent'   => 'privacy:metadata:local_esmed_compliance_assessment_index:grade_percent',
+                'attempt_date'    => 'privacy:metadata:local_esmed_compliance_assessment_index:attempt_date',
             ],
-            'privacy:metadata:local_esmed_assessment_index'
+            'privacy:metadata:local_esmed_compliance_assessment_index'
         );
 
         $collection->add_database_table(
-            'local_esmed_archive_index',
+            'local_esmed_compliance_archive_index',
             [
-                'userid'             => 'privacy:metadata:local_esmed_archive_index:userid',
-                'courseid'           => 'privacy:metadata:local_esmed_archive_index:courseid',
-                'archive_type'       => 'privacy:metadata:local_esmed_archive_index:archive_type',
-                'file_path'          => 'privacy:metadata:local_esmed_archive_index:file_path',
-                'sha256_hash'        => 'privacy:metadata:local_esmed_archive_index:sha256_hash',
-                'verification_token' => 'privacy:metadata:local_esmed_archive_index:verification_token',
-                'timestamp_sealed'   => 'privacy:metadata:local_esmed_archive_index:timestamp_sealed',
-                'retention_until'    => 'privacy:metadata:local_esmed_archive_index:retention_until',
+                'userid'             => 'privacy:metadata:local_esmed_compliance_archive_index:userid',
+                'courseid'           => 'privacy:metadata:local_esmed_compliance_archive_index:courseid',
+                'archive_type'       => 'privacy:metadata:local_esmed_compliance_archive_index:archive_type',
+                'file_path'          => 'privacy:metadata:local_esmed_compliance_archive_index:file_path',
+                'sha256_hash'        => 'privacy:metadata:local_esmed_compliance_archive_index:sha256_hash',
+                'verification_token' => 'privacy:metadata:local_esmed_compliance_archive_index:verification_token',
+                'timestamp_sealed'   => 'privacy:metadata:local_esmed_compliance_archive_index:timestamp_sealed',
+                'retention_until'    => 'privacy:metadata:local_esmed_compliance_archive_index:retention_until',
             ],
-            'privacy:metadata:local_esmed_archive_index'
+            'privacy:metadata:local_esmed_compliance_archive_index'
         );
 
         $collection->add_database_table(
-            'local_esmed_alerts',
+            'local_esmed_compliance_alerts',
             [
-                'userid'          => 'privacy:metadata:local_esmed_alerts:userid',
-                'courseid'        => 'privacy:metadata:local_esmed_alerts:courseid',
-                'alert_type'      => 'privacy:metadata:local_esmed_alerts:alert_type',
-                'alert_data_json' => 'privacy:metadata:local_esmed_alerts:alert_data_json',
-                'triggered_at'    => 'privacy:metadata:local_esmed_alerts:triggered_at',
+                'userid'          => 'privacy:metadata:local_esmed_compliance_alerts:userid',
+                'courseid'        => 'privacy:metadata:local_esmed_compliance_alerts:courseid',
+                'alert_type'      => 'privacy:metadata:local_esmed_compliance_alerts:alert_type',
+                'alert_data_json' => 'privacy:metadata:local_esmed_compliance_alerts:alert_data_json',
+                'triggered_at'    => 'privacy:metadata:local_esmed_compliance_alerts:triggered_at',
             ],
-            'privacy:metadata:local_esmed_alerts'
+            'privacy:metadata:local_esmed_compliance_alerts'
         );
 
         return $collection;
@@ -162,7 +162,7 @@ class provider implements
         }
 
         // Acknowledgements performed by staff on alerts also count as personal data.
-        if ($DB->record_exists('local_esmed_alerts', ['acknowledged_by' => $userid])) {
+        if ($DB->record_exists('local_esmed_compliance_alerts', ['acknowledged_by' => $userid])) {
             $contextlist->add_user_context($userid);
         }
 
@@ -191,7 +191,7 @@ class provider implements
             }
         }
 
-        if ($DB->record_exists('local_esmed_alerts', ['acknowledged_by' => $userid])) {
+        if ($DB->record_exists('local_esmed_compliance_alerts', ['acknowledged_by' => $userid])) {
             $userlist->add_user($userid);
         }
     }
@@ -218,31 +218,31 @@ class provider implements
 
             self::export_table_records(
                 $context,
-                'local_esmed_sessions',
+                'local_esmed_compliance_sessions',
                 $userid,
                 get_string('privacy:subcontext:sessions', 'local_esmed_compliance')
             );
             self::export_table_records(
                 $context,
-                'local_esmed_activity_log',
+                'local_esmed_compliance_activity_log',
                 $userid,
                 get_string('privacy:subcontext:activity', 'local_esmed_compliance')
             );
             self::export_table_records(
                 $context,
-                'local_esmed_assessment_index',
+                'local_esmed_compliance_assessment_index',
                 $userid,
                 get_string('privacy:subcontext:assessments', 'local_esmed_compliance')
             );
             self::export_table_records(
                 $context,
-                'local_esmed_archive_index',
+                'local_esmed_compliance_archive_index',
                 $userid,
                 get_string('privacy:subcontext:archives', 'local_esmed_compliance')
             );
             self::export_table_records(
                 $context,
-                'local_esmed_alerts',
+                'local_esmed_compliance_alerts',
                 $userid,
                 get_string('privacy:subcontext:alerts', 'local_esmed_compliance')
             );
@@ -347,21 +347,21 @@ class provider implements
         global $DB;
 
         $DB->set_field(
-            'local_esmed_sessions',
+            'local_esmed_compliance_sessions',
             'ip_address',
             null,
             ['userid' => $userid]
         );
         $DB->set_field(
-            'local_esmed_sessions',
+            'local_esmed_compliance_sessions',
             'user_agent',
             null,
             ['userid' => $userid]
         );
 
-        $DB->delete_records('local_esmed_alerts', ['userid' => $userid]);
+        $DB->delete_records('local_esmed_compliance_alerts', ['userid' => $userid]);
         $DB->set_field(
-            'local_esmed_alerts',
+            'local_esmed_compliance_alerts',
             'acknowledged_by',
             null,
             ['acknowledged_by' => $userid]

@@ -55,9 +55,9 @@ class inactivity_detector {
      * considered — users who drift into courses through cohort sync will
      * be picked up naturally.
      *
-     * @param int $thresholddays  How long without a session counts as inactive.
-     * @param int $now
-     * @return array{scanned:int, raised:int, skipped_open:int}
+     * @param int $thresholddays How long without a session counts as inactive.
+     * @param int|null $now
+     * @return array
      */
     public function run(int $thresholddays = 7, ?int $now = null): array {
         global $DB;
@@ -67,12 +67,12 @@ class inactivity_detector {
         $sql = "SELECT ue.userid AS userid,
                        e.courseid AS courseid,
                        (SELECT MAX(s.session_end)
-                          FROM {local_esmed_sessions} s
+                          FROM {local_esmed_compliance_sessions} s
                          WHERE s.userid = ue.userid
                            AND s.courseid = e.courseid
                            AND s.session_end IS NOT NULL) AS last_session_end,
                        (SELECT COUNT(1)
-                          FROM {local_esmed_sessions} s
+                          FROM {local_esmed_compliance_sessions} s
                          WHERE s.userid = ue.userid
                            AND s.courseid = e.courseid
                            AND s.session_end IS NULL) AS open_sessions

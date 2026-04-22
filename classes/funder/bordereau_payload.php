@@ -27,7 +27,7 @@ namespace local_esmed_compliance\funder;
 /**
  * Immutable snapshot of a bordereau financeur.
  *
- * One payload corresponds to one `local_esmed_funder_link` row, rolled
+ * One payload corresponds to one `local_esmed_compliance_funder_link` row, rolled
  * over all enrolled learners within the (optional) funder period.
  * Hashing the payload is enough to detect after-the-fact mutations of
  * any learner's contribution; both the PDF and CSV renderers are
@@ -37,10 +37,10 @@ final class bordereau_payload {
     /**
      * Build a new bordereau payload with every field the renderer needs.
      *
-     * @param array<string, mixed> $organisation Training organisation identity.
-     * @param array<string, mixed> $funder Funder type, dossier, period, action label.
-     * @param array<string, mixed> $course Course metadata.
-     * @param array<int, array<string, mixed>> $learners Per-learner rows.
+     * @param array $organisation Training organisation identity.
+     * @param array $funder Funder type, dossier, period, action label.
+     * @param array $course Course metadata.
+     * @param array $learners Per-learner rows.
      * @param int $totalseconds Sum of certifiable seconds across all learners.
      * @param int $learnercount Number of enrolled learners in the payload.
      * @param int|null $periodstart Start of the funder period (unix timestamp).
@@ -48,13 +48,13 @@ final class bordereau_payload {
      * @param int $generatedat When the payload was built (unix timestamp).
      */
     public function __construct(
-        /** @var array<string, mixed> Training organisation identity. */
+        /** @var array Training organisation identity. */
         public readonly array $organisation,
-        /** @var array<string, mixed> Funder type, dossier, period, action label. */
+        /** @var array Funder type, dossier, period, action label. */
         public readonly array $funder,
-        /** @var array<string, mixed> Course metadata. */
+        /** @var array Course metadata. */
         public readonly array $course,
-        /** @var array<int, array<string, mixed>> Per-learner rows. */
+        /** @var array Per-learner rows. */
         public readonly array $learners,
         /** @var int Sum of certifiable seconds across all learners. */
         public readonly int $totalseconds,
@@ -72,7 +72,7 @@ final class bordereau_payload {
     /**
      * Convert to a plain array for storage in metadata_json.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function to_array(): array {
         return [

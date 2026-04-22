@@ -26,6 +26,7 @@ namespace local_esmed_compliance\attestation;
 
 use context_course;
 use core_user;
+use core_user\fields as user_fields;
 use local_esmed_compliance\archive\archive_repository;
 
 /**
@@ -46,26 +47,22 @@ class attestation_listing {
      * List enrolled learners and their attestation status for `$courseid`.
      *
      * @param int $courseid
-     * @return array<int, array{
-     *     userid:int,
-     *     fullname:string,
-     *     email:string,
-     *     idnumber:string,
-     *     total_seconds:int,
-     *     attestation_count:int,
-     *     last_sealed_at:int|null,
-     *     last_archive_id:int|null
-     * }>
+     * @return array
      */
     public function list_for_course(int $courseid): array {
         global $DB;
 
         $context = context_course::instance($courseid);
+        // Fullname() needs the full set of user name fields, including phonetic / middlename / alternatename.
+        $namefields = implode(', ', array_map(
+            static fn (string $f): string => 'u.' . $f,
+            user_fields::get_name_fields()
+        ));
         $users = get_enrolled_users(
             $context,
             '',
             0,
-            'u.id, u.firstname, u.lastname, u.email, u.idnumber',
+            'u.id, ' . $namefields . ', u.email, u.idnumber',
             'u.lastname, u.firstname'
         );
         if (empty($users)) {
@@ -76,7 +73,7 @@ class attestation_listing {
 
         // Aggregate total closed-session seconds per user.
         $sumsql = "SELECT userid, COALESCE(SUM(duration_seconds), 0) AS total_seconds
-                     FROM {local_esmed_sessions}
+                     FROM {local_esmed_compliance_sessions}
                     WHERE userid {$useridsql}
                       AND session_end IS NOT NULL
                  GROUP BY userid";
@@ -147,7 +144,7 @@ class attestation_listing {
     /**
      * List courses the current user can generate attestations for.
      *
-     * @return array<int, array{id:int, fullname:string, shortname:string}>
+     * @return array
      */
     public static function courses_for_current_user(): array {
         $courseids = get_user_capability_course(

@@ -134,7 +134,7 @@ final class csv_bordereau_renderer_test extends \advanced_testcase {
     /**
      * Build a lightweight payload so the renderer can be exercised without DB access.
      *
-     * @param array<int, array<string, mixed>> $learners
+     * @param array $learners
      * @return bordereau_payload
      */
     private static function payload(array $learners): bordereau_payload {

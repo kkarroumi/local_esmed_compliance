@@ -38,7 +38,7 @@ class renderer extends plugin_renderer_base {
     /**
      * Render the compliance dashboard.
      *
-     * @param array<string, mixed> $metrics Output of metrics_provider::collect().
+     * @param array $metrics Output of metrics_provider::collect().
      * @return string
      */
     public function render_dashboard(array $metrics): string {
@@ -51,8 +51,8 @@ class renderer extends plugin_renderer_base {
     /**
      * Transform metrics into a template context with pre-formatted labels.
      *
-     * @param array<string, mixed> $metrics
-     * @return array<string, mixed>
+     * @param array $metrics
+     * @return array
      */
     public static function build_template_context(array $metrics): array {
         $sessions = $metrics['sessions'];
@@ -105,7 +105,7 @@ class renderer extends plugin_renderer_base {
     /**
      * Render the course picker shown when no courseid is provided.
      *
-     * @param array<int, array{id:int, fullname:string, shortname:string}> $courses
+     * @param array $courses
      * @param \moodle_url                                                  $baseurl
      * @return string
      */
@@ -121,7 +121,7 @@ class renderer extends plugin_renderer_base {
      * Render the enrolled-users table for one course.
      *
      * @param \stdClass                $course
-     * @param array<int, array<mixed>> $rows Output of {@see attestation_listing::list_for_course()}.
+     * @param array $rows Output of {@see attestation_listing::list_for_course()}.
      * @param \moodle_url              $baseurl
      * @param string                   $sesskey
      * @return string
@@ -165,7 +165,7 @@ class renderer extends plugin_renderer_base {
     /**
      * Render the funder links list.
      *
-     * @param array<int, array<string, mixed>> $rows   Pre-formatted rows.
+     * @param array $rows   Pre-formatted rows.
      * @param \moodle_url                      $baseurl
      * @param string                           $sesskey
      * @return string
@@ -182,7 +182,7 @@ class renderer extends plugin_renderer_base {
     /**
      * Render the course picker for creating a new funder link.
      *
-     * @param array<int, array{id:int, fullname:string, shortname:string}> $courses
+     * @param array $courses
      * @param \moodle_url                                                  $baseurl
      * @return string
      */

@@ -37,7 +37,7 @@ class adapter_registry {
     /**
      * Build the `[name => adapter]` map from current site config.
      *
-     * @return array<string, storage_adapter>
+     * @return array
      */
     public static function from_config(): array {
         $adapters = ['local' => new local_storage_adapter()];

@@ -54,7 +54,7 @@ class attestation_builder {
         // not to a specific course (time spent is later attributed via the
         // activity log).
         $sql = "SELECT id, session_start, session_end, duration_seconds, closure_type, ip_address
-                  FROM {local_esmed_sessions}
+                  FROM {local_esmed_compliance_sessions}
                  WHERE userid = :userid
                    AND session_end IS NOT NULL
               ORDER BY session_start ASC";
@@ -83,7 +83,7 @@ class attestation_builder {
         }
 
         $assessmentsql = "SELECT id, cmid, assessment_type, score, max_score, grade_percent, attempt_date
-                            FROM {local_esmed_assessment_index}
+                            FROM {local_esmed_compliance_assessment_index}
                            WHERE userid = :userid
                              AND courseid = :courseid
                         ORDER BY attempt_date ASC";
@@ -131,7 +131,7 @@ class attestation_builder {
     /**
      * Read the organisation identity from plugin config.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     private static function organisation_identity(): array {
         return [

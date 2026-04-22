@@ -29,7 +29,7 @@ use local_esmed_compliance\archive\integrity_checker;
 
 /**
  * Re-hashes the least-recently-checked archives and appends a verdict
- * to {local_esmed_integrity_event}, making tamper and loss detectable
+ * to {local_esmed_compliance_integrity_event}, making tamper and loss detectable
  * without waiting for someone to visit the public verify endpoint.
  */
 class verify_archive_integrity_task extends scheduled_task {

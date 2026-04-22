@@ -52,7 +52,12 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
     }
 
     /**
-     * Inherits from parent.
+     * Produce a PDF for the given bordereau payload.
+     *
+     * @param bordereau_payload $payload
+     * @param string|null $verificationtoken
+     * @param string|null $verificationurl
+     * @return string Raw PDF bytes.
      */
     public function render(
         bordereau_payload $payload,
@@ -113,7 +118,7 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
     /**
      * Render the organisation identification block shown at the top of the bordereau.
      *
-     * @param array<string, mixed> $org
+     * @param array $org
      */
     private static function organisation_block(array $org): string {
         $lines = [];
@@ -186,7 +191,7 @@ class tcpdf_bordereau_renderer implements bordereau_renderer {
      * Render the learners table listing each enrolled apprenant and their totals.
      *
      * @param pdf $doc
-     * @param array<int, array<string, mixed>> $learners
+     * @param array $learners
      */
     private static function learners_table(pdf $doc, array $learners): void {
         $doc->SetFont('helvetica', 'B', 9);

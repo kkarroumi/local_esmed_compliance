@@ -9,6 +9,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   ci:
     name: PHP ${{ matrix.php }} / Moodle ${{ matrix.moodle-branch }} / ${{ matrix.database }}
@@ -96,8 +100,22 @@ jobs:
         run: moodle-plugin-ci phpmd
 
       - name: Moodle Code Checker
+        id: codechecker
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci codechecker --max-warnings 0
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          moodle-plugin-ci codechecker -vvv --max-warnings 0 2>&1 | tee /tmp/codechecker.log
+
+      - name: Dump codechecker log to summary
+        if: ${{ always() }}
+        run: |
+          {
+            echo '## codechecker output'
+            echo '```'
+            tail -c 60000 /tmp/codechecker.log 2>/dev/null || echo '(no log)'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Moodle PHPDoc Checker
         if: ${{ !cancelled() }}
@@ -120,5 +138,52 @@ jobs:
         run: moodle-plugin-ci grunt --max-lint-warnings 0
 
       - name: PHPUnit tests
+        id: phpunit
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpunit --fail-on-warning
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          moodle-plugin-ci phpunit -vvv --verbose --fail-on-warning 2>&1 | tee /tmp/phpunit.log
+
+      - name: Dump phpunit log to summary
+        if: ${{ always() }}
+        run: |
+          {
+            echo '## phpunit output'
+            echo '```'
+            tail -c 60000 /tmp/phpunit.log 2>/dev/null || echo '(no log)'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post diagnostic output as PR comment
+        if: ${{ always() && github.event_name == 'pull_request' && (steps.codechecker.outcome == 'failure' || steps.phpunit.outcome == 'failure') }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "### Diagnostic from PHP ${{ matrix.php }} / Moodle ${{ matrix.moodle-branch }} / ${{ matrix.database }}"
+            if [ "${{ steps.codechecker.outcome }}" = "failure" ]; then
+              echo '<details><summary>codechecker log (last 30 KB)</summary>'
+              echo
+              echo '```'
+              tail -c 30000 /tmp/codechecker.log 2>/dev/null || echo '(no log)'
+              echo '```'
+              echo '</details>'
+            fi
+            if [ "${{ steps.phpunit.outcome }}" = "failure" ]; then
+              echo '<details><summary>phpunit log (last 30 KB)</summary>'
+              echo
+              echo '```'
+              tail -c 30000 /tmp/phpunit.log 2>/dev/null || echo '(no log)'
+              echo '```'
+              echo '</details>'
+            fi
+          } > /tmp/comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --body-file /tmp/comment.md
+
+      - name: Propagate codechecker / phpunit exit status
+        if: ${{ always() }}
+        run: |
+          if [ "${{ steps.codechecker.outcome }}" = "failure" ] || [ "${{ steps.phpunit.outcome }}" = "failure" ]; then
+            exit 1
+          fi

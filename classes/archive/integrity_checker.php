@@ -26,7 +26,7 @@ namespace local_esmed_compliance\archive;
 
 /**
  * Periodically re-hashes stored archives and appends a verdict to
- * `{local_esmed_integrity_event}` so tampering or loss is detected
+ * `{local_esmed_compliance_integrity_event}` so tampering or loss is detected
  * independently of the (on-demand) public verifier.
  *
  * The integrity log is append-only: every run emits one event per
@@ -36,7 +36,7 @@ namespace local_esmed_compliance\archive;
  */
 class integrity_checker {
     /** @var string Integrity event table. */
-    public const EVENT_TABLE = 'local_esmed_integrity_event';
+    public const EVENT_TABLE = 'local_esmed_compliance_integrity_event';
 
     /** @var string Status: bytes present and match the sealed hash. */
     public const STATUS_VALID = 'valid';
@@ -48,14 +48,14 @@ class integrity_checker {
     /** @var archive_repository */
     private archive_repository $archive;
 
-    /** @var array<string, storage_adapter> */
+    /** @var array */
     private array $adapters;
 
     /**
      * Constructor.
      *
      * @param archive_repository|null             $archive  Injectable for tests.
-     * @param array<string, storage_adapter>|null $adapters Map of adapter name => adapter.
+     * @param array|null $adapters Map of adapter name => adapter.
      */
     public function __construct(
         ?archive_repository $archive = null,

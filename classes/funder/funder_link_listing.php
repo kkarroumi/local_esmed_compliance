@@ -36,12 +36,7 @@ class funder_link_listing {
      * Return every funder link attached to an existing course, along with
      * the course identity fields needed to display and edit the link.
      *
-     * @return array<int, array{
-     *     id:int, courseid:int, course_fullname:string, course_shortname:string,
-     *     funder_type:string, dossier_number:string|null,
-     *     total_hours_planned:float|null, start_date:int|null, end_date:int|null,
-     *     action_intitule:string|null, opco_name:string|null, timemodified:int
-     * }>
+     * @return array
      */
     public function all(): array {
         global $DB;
