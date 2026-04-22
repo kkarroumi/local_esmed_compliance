@@ -151,6 +151,32 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Post diagnostic output as PR comment
+        if: ${{ always() && github.event_name == 'pull_request' && (steps.codechecker.outcome == 'failure' || steps.phpunit.outcome == 'failure') }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "### Diagnostic from PHP ${{ matrix.php }} / Moodle ${{ matrix.moodle-branch }} / ${{ matrix.database }}"
+            if [ "${{ steps.codechecker.outcome }}" = "failure" ]; then
+              echo '<details><summary>codechecker log (last 30 KB)</summary>'
+              echo
+              echo '```'
+              tail -c 30000 /tmp/codechecker.log 2>/dev/null || echo '(no log)'
+              echo '```'
+              echo '</details>'
+            fi
+            if [ "${{ steps.phpunit.outcome }}" = "failure" ]; then
+              echo '<details><summary>phpunit log (last 30 KB)</summary>'
+              echo
+              echo '```'
+              tail -c 30000 /tmp/phpunit.log 2>/dev/null || echo '(no log)'
+              echo '```'
+              echo '</details>'
+            fi
+          } > /tmp/comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --body-file /tmp/comment.md
+
       - name: Propagate codechecker / phpunit exit status
         if: ${{ always() }}
         run: |
