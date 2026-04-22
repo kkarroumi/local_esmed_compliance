@@ -53,7 +53,7 @@ class attestation_listing {
         global $DB;
 
         $context = context_course::instance($courseid);
-        // fullname() needs the full set of user name fields, including phonetic / middlename / alternatename.
+        // Fullname() needs the full set of user name fields, including phonetic / middlename / alternatename.
         $namefields = implode(', ', array_map(
             static fn (string $f): string => 'u.' . $f,
             user_fields::get_name_fields()
