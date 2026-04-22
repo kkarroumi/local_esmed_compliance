@@ -26,6 +26,7 @@ namespace local_esmed_compliance\attestation;
 
 use context_course;
 use core_user;
+use core_user\fields as user_fields;
 use local_esmed_compliance\archive\archive_repository;
 
 /**
@@ -52,11 +53,16 @@ class attestation_listing {
         global $DB;
 
         $context = context_course::instance($courseid);
+        // fullname() needs the full set of user name fields, including phonetic / middlename / alternatename.
+        $namefields = implode(', ', array_map(
+            static fn (string $f): string => 'u.' . $f,
+            user_fields::get_name_fields()
+        ));
         $users = get_enrolled_users(
             $context,
             '',
             0,
-            'u.id, u.firstname, u.lastname, u.email, u.idnumber',
+            'u.id, ' . $namefields . ', u.email, u.idnumber',
             'u.lastname, u.firstname'
         );
         if (empty($users)) {

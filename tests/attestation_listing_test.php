@@ -57,6 +57,9 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => 'logout',
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700000000,
+            'timemodified'     => 1700005400,
         ]);
         // Open session — must be ignored by the aggregate.
         $DB->insert_record('local_esmed_compliance_sessions', (object) [
@@ -68,6 +71,9 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => null,
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700100000,
+            'timemodified'     => 1700100000,
         ]);
         // Closed session attributed to a completely different user —
         // does not leak into the student's total.
@@ -80,6 +86,9 @@ final class attestation_listing_test extends \advanced_testcase {
             'closure_type'     => 'logout',
             'ip_address'       => null,
             'user_agent'       => null,
+            'sealed'           => 0,
+            'timecreated'      => 1700000000,
+            'timemodified'     => 1700010000,
         ]);
 
         // Two sealed attestations for the (student, course) — the later one wins.

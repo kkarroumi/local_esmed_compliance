@@ -69,13 +69,19 @@ final class alert_notifier_test extends \advanced_testcase {
      * A second notify call on the same alert is a no-op (idempotent) and sends no messages.
      */
     public function test_notify_is_idempotent(): void {
+        global $DB;
         $this->resetAfterTest();
 
         $learner = $this->getDataGenerator()->create_user();
-        $this->getDataGenerator()->create_user(); // Extra user to ensure some lookups exist.
+        // Give one real user the manager role at system context so that
+        // get_users_by_capability() returns them - site admins are never
+        // returned by that helper even though has_capability() says yes.
+        $operator = $this->getDataGenerator()->create_user();
+        $managerroleid = $DB->get_field('role', 'id', ['shortname' => 'manager'], MUST_EXIST);
+        role_assign($managerroleid, (int) $operator->id, \context_system::instance()->id);
+
         $repo = new alert_repository();
         $id = $repo->raise((int) $learner->id, null, alert_repository::TYPE_INACTIVITY_7D, [], 1700000000);
-        $this->setAdminUser(); // Admin has managealerts system-wide via manager archetype.
 
         $count = 0;
         $notifier = new notifier($repo, function ($msg) use (&$count) {
